@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <meta charset="utf-8">
+    <title>信息学院本科生毕业设计管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+
+    <!-- The styles -->
+    {% load static %}
+    <link id="bs-css" href="{% static 'css/bootstrap-cerulean.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/charisma-app.css' %}" rel="stylesheet">
+    <link href="{% static 'bower_components/fullcalendar/dist/fullcalendar.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/fullcalendar/dist/fullcalendar.print.css' %}" rel='stylesheet' media='print'>
+    <link href="{% static 'bower_components/chosen/chosen.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/colorbox/example3/colorbox.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/responsive-tables/responsive-tables.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/bootstrap-tour/build/css/bootstrap-tour.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/jquery.noty.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/noty_theme_default.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/elfinder.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/elfinder.theme.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/jquery.iphone.toggle.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/uploadify.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/animate.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-treeview.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-table.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-select.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/summernote.css' %}" rel='stylesheet'>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+    <script src="{% static 'bower_components/jquery/jquery.min.js' %}"></script>
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="{% static 'img/logo3.png' %}">
+<style type="text/css">
+.uploadtxt{ height:35px; border:1px solid #cdcdcd; width:212px;}
+.uploadfile{ position:absolute; top:0px; right:0px; height:35px; opacity:0; width:212px }
+</style>
+</head>
+
+<body>
+    <!-- topbar starts -->
+<div class="navbar navbar-default" role="navigation">
+
+    <div class="navbar-inner" >
+        <button type="button" class="navbar-toggle pull-left animated flip">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+         <img  src="{% static 'img/index.png' %}" />
+        <a class="navbar-brand" href="{% url 'teacher_index' %}" > 信息学院本科生毕业设计管理系统</a>
+
+        <!-- user dropdown starts -->
+        <div class="btn-group pull-right">
+            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <i class="glyphicon glyphicon-user"></i>
+                <span class="hidden-sm hidden-xs"> 用户名: </span>
+                <span id="userid"> 异常</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a  onclick="changepwd_onclick()">修改密码</a></li>
+                <li class="divider"></li>
+                <li><a href="/app/">退出</a></li>
+            </ul>
+        </div>
+        <!-- user dropdown ends -->
+
+    </div>
+</div>
+    <!-- topbar ends -->
+<div class="ch-container">
+
+    <!-- system modal start -->
+    <div id="ycf-alert" class="modal">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h3 class="modal-title"><i class="fa fa-exclamation-circle"></i> [Title]</h3>
+          </div>
+          <div class="modal-body">
+              <div class="input-group input-group-lg" >[Message]
+              </div>
+          </div>
+          <div class="modal-footer" >
+            <button type="button" class="btn btn-primary ok" data-dismiss="modal">[BtnOk]</button>
+            <button type="button" class="btn btn-default cancel" data-dismiss="modal">[BtnCancel]</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- system modal end -->
+
+    <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel"
+         aria-hidden="true">
+        <form class="form-horizontal" method="get" enctype="multipart/form-data" id="pwdform">
+        <div class="modal-dialog">
+            <div class="modal-content" role="document">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>修改密码</h3>
+                </div>
+
+                <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i>&nbsp;新密码</span>
+                        <input id="newpwd" type="password" class="form-control" placeholder="Password" required="required">
+                </div>
+                <br>
+                <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i>&nbsp;确认密码</span>
+                        <input id="conpwd" type="password" class="form-control" placeholder="Password" required="required">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;关闭</button>
+                    <button type="button" class="btn btn-default" onclick="pwd_onclick()" ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;确定修改</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <!-- left menu starts -->
+        <div class="col-sm-2 col-lg-2">
+            <div class="sidebar-nav">
+                <div class="nav-canvas">
+                    <div class="nav-sm nav nav-stacked">
+
+                    </div>
+                    <ul class="nav nav-pills nav-stacked main-menu">
+                        {% for menu1 in menus %}
+                        {% if menu1 %}
+                            <li class="nav-header"><i class="glyphicon glyphicon-star"></i>&nbsp;&nbsp;{{menu1.0.menu_classify}}</li>
+                            {% for menu in menu1 %}
+                                <li><a class="ajax-link" href="{{menu.menu_addr}}"><i class="glyphicon glyphicon-{{menu.menu_icon}}"></i><span>&nbsp;&nbsp;{{menu.menu_name}}</span></a>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                        {% endfor %}
+                        <div class="row">
+                                     <div class="box col-md-12">
+                                          <div class="box-inner">
+                                               <div class="box-header well" data-original-title="">
+                                                    <h2><i class="glyphicon glyphicon-user"></i>&nbsp;用户信息</h2>
+                                               </div>
+                                               <div class="box-content">
+                                                    <ul class="dashboard-list">
+                                                        <li>
+                                                        <div class="row">
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">姓&nbsp;&nbsp;名:</span>
+                                                               <label style="color: #999999;" id="teaname"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">工&nbsp;&nbsp;号:</span>
+                                                               <label style="color: #999999;" id="teaid"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">研究所:</span>
+                                                               <label style="color: #999999;" id="teainstitution"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">性&nbsp;&nbsp;别:</span>
+                                                               <label style="color: #999999;" id="teasex"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">电&nbsp;&nbsp;话:</span>
+                                                               <label style="color: #999999;" id="teatel"> sss</label>
+                                                             </div>
+                                                        </div>
+                                                        </li>
+                                                    </ul>
+                                               </div>
+                                          </div>
+                                     </div>
+                                </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--/span-->
+        <!-- left menu ends -->
+
+        <div id="content" class="col-lg-10 col-sm-10">
+                <!-- content starts -->
+            <div>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/app/teacher_index/" >毕业设计管理系统</a>
+                    </li>
+                    <li>
+                        <a href="#">毕业设计题目</a>
+                    </li>
+                </ul>
+                <div class="box-inner">
+                    <div class="box-header well" data-original-title="">
+                        <h2>毕业设计题目</h2>
+                    </div>
+                    <div class="box-content">
+                        <div class="form-group form-inline" id="tabletoolbar">
+
+                            <span>&nbsp;&nbsp;&nbsp;</span>
+                            <div id="toolbar" class="btn-group">
+
+                                <button id="btn_select" type="button" class="btn btn-default" >
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 选择学生</button>
+
+                            </div>
+                        </div>
+                        <table id="tb_info"></table>
+
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="topicModal" tabindex="-1" role="dialog" aria-labelledby="topicModalLabel" aria-hidden="true">
+        <form class="form-horizontal" method="post" enctype="multipart/form-data" id="uploadform"  role="form" onsubmit="formSubmit()">
+        <div class="modal-dialog" style="width:400px;">
+            <div class="modal-content" role="document">
+                <div class="modal-header" style="height:50px;">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+
+                    <h4 hidden="true" id="mdlPara"></h4>
+                </div>
+                <div class="modsal-body" >
+                    <div class="input-group input-group" style="margin:10px 0px 0px 30px;">
+
+                <!-- modal content begin -->
+<div class="form-group"><div class="form-group"HIDDEN="true">
+                            <label class="col-sm-4 control-label">Id：</label>
+                            <div class="col-sm-8">
+                                <input type="text"  id="txtId" class="form-control"  placeholder="题目名称">
+                            </div>
+                        </div>
+    <div class="form-group">
+                            <label class="col-sm-4 control-label">题目名称：</label>
+                            <div class="col-sm-8">
+                                <input type="text"  id="txtName" class="form-control"  placeholder="题目名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                        <label class="col-sm-4 control-label">题目简介：</label>
+                        <div class="col-sm-8">
+                            <textarea id="txtIntroduction"></textarea>
+                        </div>
+                        </div>
+
+
+                 <!-- modal content end -->
+
+                          </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn_submit" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> 保存 </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 关闭 </button>
+                </div>
+            </div>
+        </div>
+        </div>
+            </form>
+    </div>
+
+
+
+
+
+                <div class="modal fade" id="studentModal" tabindex="-1" role="dialog" aria-labelledby="studentModalLabel" aria-hidden="true">
+        <form class="form-horizontal" method="post" enctype="multipart/form-data" id="studentform"  role="form" onsubmit="formSubmit()">
+        <div class="modal-dialog" style="width:800px;">
+            <div class="modal-content" role="document">
+                <div class="modal-header" style="height:50px;">
+                    <button type="button" class="close" data-dismiss="modal" onclick="change()">×</button>
+                    <h4 >选择学生</h4>
+                    <h4 hidden="true" id="mdlStudent"></h4>
+                </div>
+                <div class="modsal-body" >
+                    <div class="input-group input-group" style="margin:10px 0px 0px 30px;">
+
+                <!-- modal content begin -->
+
+                            <div class="form-group">
+                            <label class="col-sm-4 control-label"style="width:150px;">题目名称：</label>
+                            <label class="col-sm-8"style="width:600px;">
+                                <label type="text"  id="txtName1" class="form-control"  placeholder="题目名称"></label>
+                            </label>
+                            </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"style="width:150px;">选择学生：</label>
+                            <div class="col-sm-8"style="width:600px;">
+                                <select class="selectpicker" data-width="190" title="选择学生" id="choosestudent" onchange="stuchange()">
+                                            </select>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"style="width:150px;">学号：</label>
+                            <label class="col-sm-8"style="width:600px;">
+                                <label type="text"  id="stu_no" class="form-control"  placeholder="学号"></label>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"style="width:150px;">性别：</label>
+                            <label class="col-sm-8"style="width:600px;">
+                                <label type="text"  id="stu_sex" class="form-control"  placeholder="性别"></label>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"style="width:150px;">专业班级：</label>
+                            <label class="col-sm-8"style="width:600px;">
+                                <label type="text"  id="stu_class" class="form-control"  placeholder="专业班级"></label>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"style="width:150px;">绩点：</label>
+                            <label class="col-sm-8"style="width:600px;">
+                                <label type="text"  id="stu_score" class="form-control"  placeholder="绩点"></label>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"style="width:150px;">自我介绍：</label>
+                            <label class="col-sm-8"style="width:600px;height:200px;">
+                                <label type="text"  style="width:600px ;height:200px;" id="stu_introduction" class="form-control"  placeholder="自我介绍"></label>
+                            </label>
+                        </div>
+
+
+
+                 <!-- modal content end -->
+
+                          </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn_giveup" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 弃权 </button>
+                    <button id="btn_submit1" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> 保存 </button>
+                    <button type="button" class="btn btn-default" onclick="change()"data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 关闭 </button>
+                </div>
+            </div>
+        </div>
+            </form>
+    </div>
+
+
+
+
+
+
+
+
+                  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+        <form class="form-horizontal" method="post" enctype="multipart/form-data" id="editform"  role="form" onsubmit="formSubmit()">
+        <div class="modal-dialog" style="width:400px;">
+            <div class="modal-content" role="document">
+                <div class="modal-header" style="height:50px;">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+
+                    <h4 hidden="true" id="mdlPara2"></h4>
+                </div>
+                <div class="modsal-body" >
+                    <div class="input-group input-group" style="margin:10px 0px 0px 30px;">
+
+                <!-- modal content begin -->
+<div class="form-group"><div class="form-group"HIDDEN="true">
+                            <label class="col-sm-4 control-label">Id：</label>
+                            <div class="col-sm-8">
+                                <input type="text"  id="txtId2" class="form-control"  placeholder="题目id">
+                            </div>
+                        </div>
+    <div class="form-group">
+                            <label class="col-sm-4 control-label">题目名称：</label>
+                            <div class="col-sm-8">
+                                <input type="text"  id="txtName2" class="form-control"  placeholder="题目名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                        <label class="col-sm-4 control-label">题目简介：</label>
+                        <div class="col-sm-8">
+                            <textarea id="txtIntroduction2"></textarea>
+                        </div>
+                        </div>
+
+
+                 <!-- modal content end -->
+
+                          </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn_submit2" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> 保存 </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 关闭 </button>
+                </div>
+            </div>
+        </div></div>
+            </form>
+    </div>
+
+
+                <div class="row">
+
+                </div><!--/row-->
+            </div><!--/#content.col-md-0-->
+        </div><!--/fluid-row-->
+    </div><!--/.fluid-container-->
+</div>
+<!-- external javascript -->
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+<script src="{% static 'js/bootstrap-table-zh-CN.js' %}"></script>
+<script src="{% static 'js/jquery.cookie.js' %}"></script>
+<script src="{% static 'bower_components/moment/min/moment.min.js' %}"></script>
+<script src="{% static 'bower_components/fullcalendar/dist/fullcalendar.min.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'bower_components/chosen/chosen.jquery.min.js' %}"></script>
+<script src="{% static 'bower_components/colorbox/jquery.colorbox-min.js' %}"></script>
+<script src="{% static 'js/jquery.noty.js' %}"></script>
+<script src="{% static 'bower_components/responsive-tables/responsive-tables.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap-tour/build/js/bootstrap-tour.min.js' %}"></script>
+<script src="{% static 'js/jquery.raty.min.js' %}"></script>
+<script src="{% static 'js/jquery.iphone.toggle.js' %}"></script>
+<script src="{% static 'js/jquery.autogrow-textarea.js' %}"></script>
+<script src="{% static 'js/jquery.uploadify-3.1.min.js' %}"></script>
+<script src="{% static 'js/jquery.history.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/dialog.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-treeview.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-select.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.validate.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/message_cn.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/icheck.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/summernote.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'css/lang/summernote-zh-CN.js' %}"></script>
+
+
+<script>
+    $(function(){
+        $('#userid').html(getCookie('userid'));
+        $.getJSON("{% url 'getteainfo' %}", function(ret){
+            $('#teaname').html(ret.data[0].name);
+            $('#teasex').html(ret.data[0].sex);
+            $('#teaid').html(ret.data[0].user_id);
+            $('#teainstitution').html(ret.data[0].institution_name);
+            $('#teatel').html(ret.data[0].tel);
+
+        });
+
+
+    });
+
+
+    function changepwd_onclick(){
+          $('#newpwd').val('');
+          $('#conpwd').val('');
+        $('#passwordModal').modal();
+    }
+
+    function pwd_onclick(){
+        if(checkPwd()){
+            if($('#newpwd').val()!=$('#conpwd').val()){
+                Alert(
+                {
+                    msg: '两次密码输入不一致，请重新输入',
+                });
+            }
+            else{
+                $('#passwordModal').modal('hide');
+                //$('#passwordModal').removeData("bs.modal");
+                //$('#pwdform').submit();
+                var new_pwd = $('#newpwd').val();
+                $.get("{% url 'changepassword' %}?new_pwd="+new_pwd, function(ret){
+
+
+                    Alert('密码修改成功！');
+                });
+            }
+        }
+    }
+
+    function checkPwd(){
+        if($('#newpwd').val() == ""){
+            Alert("新密码不能为空");
+            return false;
+        }
+        else if($('#conpwd').val() == ""){
+            Alert("确认密码不能为空");
+            return false;
+        }
+        return true;
+    }
+    function chineseSort(a, b){
+        return a.localeCompare(b);
+    }
+</script>
+
+<script>
+function CurentTime()          //取当前时间，格式为yyyy-mm-dd hh:ii:ss
+    {
+        var now = new Date();
+        var year = now.getFullYear();       //年
+        var month = now.getMonth() + 1;     //月
+        var day = now.getDate();           //日
+        var hh = now.getHours();            //时
+        var mm = now.getMinutes();          //分
+        var ss = now.getSeconds();          //分
+        var clock = year + "-";
+
+        if(month < 10)
+            clock += "0";
+        clock += month + "-";
+
+        if(day < 10)
+            clock += "0";
+        clock += day + " ";
+
+        if(hh < 10)
+            clock += "0";
+        clock += hh + ":";
+
+        if (mm < 10) clock += '0';
+        clock += mm + ":";
+
+        if (ss < 10) clock += '0';
+        clock += ss;
+
+        return(clock);
+    }
+
+
+
+
+function change(){
+        $('#choosestudent').html('');
+        $('#stu_sex').html('');
+        $('#stu_no').html('');
+        $('#stu_class').html('');
+        $('#stu_score').html('');
+        $('#stu_introduction').html('');
+}
+
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg))
+            return decodeURI(arr[2]);
+        else
+            return null;
+    }
+
+
+    $(function(){
+        var day1;
+        id = "{{id}}";
+        $('#userid').html(getCookie('userid'));
+
+        var myDate = new Date();
+
+        $.getJSON("{% url 'student_getdate' %}", function(ret){
+
+            var select1_start=ret.date[0].select1_start;
+
+            var select1_end=ret.date[0].select1_end;
+            var select2_start=ret.date[0].select2_start;
+
+            var select2_end=ret.date[0].select2_end;
+            var today=CurentTime();
+
+            var select1_noon=select1_start.slice(0,10)+" 14:00:00";
+            var select2_noon=select2_start.slice(0,10)+" 14:00:00";
+
+        });
+
+        var oTable = new TableInit();
+        oTable.Init();
+        var oButtonInit = new ButtonInit();
+        oButtonInit.Init();
+    });
+
+
+    var TableInit = function () {
+        var oTableInit = new Object();
+        oTableInit.Init = function () {
+            $('#tb_info').bootstrapTable({
+                url: '/app/get_teatopic',            //请求后台的URL（*）
+                method: 'get',                      //请求方式（*）
+                toolbar: '#tabletoolbar',           //工具按钮用哪个容器
+                striped: true,                      //是否显示行间隔色
+                locale:'zh-CN',
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                sortable: true,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                queryParams: oTableInit.queryParams,//传递参数（*）
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber:1,                       //初始化加载第一页，默认第一页
+                pageSize: 10,                       //每页的记录行数（*）
+                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                strictSearch: true,
+                showColumns: false,                 //是否显示所有的列
+                showRefresh: true,                  //是否显示刷新按钮
+                minimumCountColumns: 2,             //最少允许的列数
+                clickToSelect: true,                //是否启用点击选中行
+                //height: 541,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+                showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
+                cardView: false,                    //是否显示详细视图
+                detailView: false,                  //是否显示父子表
+                rowStyle: function (row, index) {
+                    //这里有5个取值代表5中颜色['active', 'success', 'info', 'warning', 'danger'];
+                    var strclass = "";
+                    if (row.work_status == '未启用') {
+                        strclass = 'danger'; //还有一个active
+                    }
+                    else {
+                        return {};
+                    }
+                    return { classes: strclass }
+                },
+
+                columns:[{
+        checkbox: true
+    }, {
+        title: "题目名称",
+        field: 'subject',
+        sortable: true,
+        valign: "middle" // 垂直
+    }, {
+        title: "题目简介",
+        field: 'introduction',
+        sortable: true,
+        valign: "middle" // 垂直
+    }, {
+        title: "学生",
+        field: 'name',
+        sortable: true,
+        valign: "middle" // 垂直
+    }, {
+        title: "性别",
+        field: 'sex',
+        sortable: true,
+        valign: "middle" // 垂直
+    }, {
+        title: "专业班级",
+        field: 'stu_class',
+        sortable: true,
+        valign: "middle" // 垂直
+    }, {
+        title: "绩点",
+        field: 'score',
+        sortable: true,
+        valign: "middle" // 垂直
+    }, {
+        title: "电话",
+        field: 'tel',
+        sortable: true,
+        valign: "middle" // 垂直
+    }, {
+        title: "个人简介",
+        field: 'stu_introduction',
+        sortable: true,
+        valign: "middle" // 垂直
+    },
+
+    ]
+
+            });
+
+           $('#tb_info').bootstrapTable('hideColumn', 'id');
+
+        };
+
+
+
+        oTableInit.queryParams = function (params) {
+            var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                limit: params.limit,   //页面大小
+                offset: params.offset, //页码
+                sort: params.sort,
+                order: params.order,
+                search:params.search
+
+            };
+            return temp;
+        };
+        return oTableInit;
+    };
+
+    function refresh() {
+        setTimeout(function() {
+            $('#tb_info').bootstrapTable('refresh');
+        }, 500);
+    }
+
+
+
+
+
+
+
+
+
+function active_add(){
+    $('#txtName').val('');
+    $('#txtIntroduction').val('');
+    num=document.getElementById("tb_info").rows.length-1;
+    if(num<4){
+       $('#mdlPara').html('');
+       $('#topicModal').modal({backdrop: 'static', keyboard: false});
+    }else{
+         alert('最多只能上传4个课题！');
+         }
+
+var subject_id;  //选中课题在topic表的id
+var selected_stu_no;   //选中学生的学号
+var state_id;    //选中课题在Appication_state表的id
+var id;
+var student;
+var num;
+var submit;
+var giveup;
+
+}
+
+ $("#btn_submit").click(function () {
+                submit_info();
+ });
+
+
+
+function submit_info() {
+        var parameters = {
+            id: $('#txtId').val(),
+            subject: $('#txtName').val(),
+            introduction: $('#txtIntroduction').val(),
+
+
+        };
+
+        if(validform().form()){
+            var url = '';
+            if($('#mdlPara').html() == ''){
+                url = "{% url 'add_topic' %}";
+            } else {
+                url = "{% url 'update_topic' %}";
+            }
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: parameters,
+                dataType: "json",
+                success: function(data){
+                    //dat = JSON.parse(data);
+                    alert(data.message);
+                    $('#topicModal').modal('hide');
+                    refresh();
+                },
+                error:  function(XMLHttpRequest, textStatus, errorThrown) {
+                    //alert(XMLHttpRequest.status);
+                    //alert(XMLHttpRequest.readyState);
+                    //alert(textStatus);
+                    alert('请检查数据并重试！');
+                }
+            });
+        }
+}
+function validform(){
+
+
+        if ($('#txtName').val() == '') {
+            alert('题目名称不能为空，请重新填写！');
+	        return false;
+        }
+
+        if ($('#txtIntroduction').val() == '') {
+            alert('题目简介不能为空，请重新填写！');
+	        return false;
+        }
+
+
+
+        return $("#uploadform").validate({
+            rules : {
+                txtCmpName : {
+                    required : true
+                },txtShortName : {
+                    required : true
+                },txtCmpContact : {
+                    required : true
+                },txtCmpTel : {
+                    required : true
+                }
+            }
+        });
+    }
+
+
+
+
+
+
+
+
+function submit2_info() {
+        var parameters1 = {
+            id:id,
+            subject1: $('#txtName2').val(),
+            introduction1: $('#txtIntroduction2').val(),
+
+
+
+        };
+
+        if(validform2().form()){
+            var url = '';
+            if($('#mdlPara2').html() == ''){
+                url = "{% url 'update_topic' %}";
+            } else {
+                url = "{% url 'add_topic' %}";
+            }
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: parameters1,
+                dataType: "json",
+                success: function(data){
+                    //dat = JSON.parse(data);
+                    alert(data.message);
+                    $('#editModal').modal('hide');
+                    refresh();
+                },
+                error:  function(XMLHttpRequest, textStatus, errorThrown) {
+                    //alert(XMLHttpRequest.status);
+                    //alert(XMLHttpRequest.readyState);
+                    //alert(textStatus);
+                    alert('请检查数据并重试！');
+                }
+            });
+        }
+}
+
+$("#btn_submit2").click(function () {
+                submit2_info();
+            });
+
+
+
+
+
+function validform2(){
+
+
+        if ($('#txtName2').val() == '') {
+            alert('题目名称不能为空，请重新填写！');
+	        return false;
+        }
+
+        if ($('#txtIntroduction2').val() == '') {
+            alert('题目简介不能为空，请重新填写！');
+	        return false;
+        }
+
+
+
+        return $("#editform").validate({
+            rules : {
+                txtCmpName : {
+                    required : true
+                },txtShortName : {
+                    required : true
+                },txtCmpContact : {
+                    required : true
+                },txtCmpTel : {
+                    required : true
+                }
+            }
+        });
+}
+
+function dates(datetime){
+
+    var timestamp = Date.parse(new Date(datetime));
+    timestamp = timestamp / 1000;
+    return timestamp
+}
+
+//dataStr日期字符串
+//dayCount 要增加的天数
+//return 增加n天后的日期字符串
+function dateAddDays(dataStr,dayCount) {
+    var strdate=dataStr; //日期字符串
+    var isdate = new Date(strdate.replace(/-/g,"/"));  //把日期字符串转换成日期格式
+    isdate = new Date((isdate/1000+(86400*dayCount))*1000);  //日期加1天
+    var pdate = isdate.getFullYear()+"-"+(isdate.getMonth()+1)+"-"+(isdate.getDate());   //把日期格式转换成字符串
+
+    return pdate;
+}
+
+$("#btn_select").click(function () {
+$('#userid').html(getCookie('userid'));
+
+
+        var myDate = new Date();
+
+
+
+        $.getJSON("{% url 'student_getdate' %}", function(ret){
+
+            //获取到数据库中教师选择学生的第一天
+            day1=ret.date[0].select3_start;
+            var day1_start=day1+" 08:00:00";
+            var day1_end=day1+" 12:00:00";
+
+            var day2_start=day1+" 12:00:00";
+            var day2_end=day1+" 13:00:00";
+
+            var day3_start=day1+" 13:00:00";
+            var day3_end=day1+" 14:00:00";
+
+            var day4_start=day1+" 14:00:00";
+            var day4_end=day1+" 15:00:00";
+
+
+            var day5_start=day1+" 15:00:00";
+            var day5_end=day1+" 16:00:00";
+
+
+            var day6_start=day1+" 16:00:00";
+            var day6_end=day1+" 17:00:00";
+
+            var today=CurentTime();
+
+
+            if(dates(today)<dates(day1_start)){
+                alert('第一志愿的学生选择于'+day1_start+'开启!');
+            }
+            else{
+                    if(dates(today)>=dates(day1_start) && dates(today)<dates(day1_end)){
+                         active_select1();
+                    }
+                    else{
+                            if(dates(today)>dates(day1_end) && dates(today)<dates(day2_start)){
+                                alert('第二志愿的学生选择于'+day2_start+'开启!');
+                            }
+                            else{
+                                    if(dates(today)>=dates(day2_start) && dates(today)<dates(day2_end)){
+                                        active_select2();
+                                    }
+                                    else{
+                                            if(dates(today)>dates(day2_end) && dates(today)<dates(day3_start)){
+                                                alert('第三志愿的学生选择于'+day3_start+'开启!');
+                                            }
+                                            else{
+                                                    if(dates(today)>=dates(day3_start) && dates(today)<dates(day3_end)){
+                                                        active_select3();
+                                                    }
+                                                    else{
+                                                            if(dates(today)>dates(day3_end) && dates(today)<dates(day4_start)){
+                                                                alert('第四志愿的学生选择于'+day4_start+'开启!');
+                                                            }
+                                                            else{
+                                                                    if(dates(today)>=dates(day4_start) && dates(today)<dates(day4_end)){
+                                                                        active_select4();
+                                                                    }
+                                                                    else{
+                                                                            if(dates(today)>dates(day4_end) && dates(today)<dates(day5_start)){
+                                                                                alert('第五志愿的学生选择于'+day4_start+'开启!');
+                                                                            }
+                                                                            else{
+                                                                                    if(dates(today)>=dates(day5_start) && dates(today)<dates(day5_end)){
+                                                                                        active_select5();
+                                                                                    }
+                                                                                    else{
+                                                                                            if(dates(today)>dates(day5_end) && dates(today)<dates(day6_start)){
+                                                                                                alert('第六志愿的学生选择于'+day6_start+'开启!');
+                                                                                            }
+                                                                                            else{
+                                                                                                    if(dates(today)>=dates(day6_start) && dates(today)<dates(day6_end)){
+                                                                                                        active_select6();
+                                                                                                    }
+                                                                                                    else{
+                                                                                                            if(dates(today)>dates(day6_end)){
+                                                                                                                alert('双选已结束！');
+                                                                                                            }
+                                                                                                    }
+                                                                                            }
+                                                                                    }
+                                                                            }
+
+                                                                    }
+                                                            }
+                                                    }
+                                            }
+                                    }
+                            }
+                    }
+            }
+        });
+
+});
+
+function active_select1(){
+
+    var select = $("#tb_info").bootstrapTable('getSelections');
+
+    if (select.length > 1) {
+          Alert('只能选择一个题目进行编辑');
+          return;
+    }
+    if (select.length <= 0) {
+          Alert('请选择一个题目');
+          return;
+    }
+
+
+    $('#txtName1').html(select[0].subject);
+    $('#stu_no').html(select[0].user_id);
+    $('#stu_class').html(select[0].stu_class);
+    $('#stu_sex').html(select[0].sex);
+    $('#stu_score').html(select[0].score);
+    $('#stu_introduction').html(select[0].stu_introduction);
+    $('#mdlStudent').html('');
+    $('#studentModal').modal({backdrop: 'static', keyboard: false});
+    submit=select[0].submit;
+    student=select[0].selected_stu_no;
+    subject_id=select[0].id;    //选中课题在topic表中的id
+    $.getJSON("{% url 'get_state' %}?subject_id="+subject_id, function(ret){
+         state_id=ret[0].id;        //选中课题在Appication_state表的id
+    });
+
+    $.getJSON("{% url 'get_student1' %}?subject_id="+subject_id, function(ret){
+        for(var i=0; i < ret.length; i++){
+             $("<option value=" + ret[i].user_id + ">" + ret[i].name + "</option>").appendTo($('#choosestudent'));
+        }
+        if(student!=''){
+             $('#choosestudent').val(student);
+        }else{
+           student=$('#choosestudent').val();
+        }
+        $('#choosestudent').selectpicker('refresh');
+    });
+
+    if(student!=''){
+             $('#choosestudent').val(student);
+    }else{
+        student=$('#choosestudent').val();
+    }
+    $('#choosestudent').selectpicker('refresh');
+
+}
+
+function active_select2(){
+ var select = $("#tb_info").bootstrapTable('getSelections');
+
+    if (select.length > 1) {
+          Alert('只能选择一个题目进行编辑');
+          return;
+    }
+    if (select.length <= 0) {
+          Alert('请选择一个题目');
+          return;
+    }
+
+
+    $('#txtName1').html(select[0].subject);
+    $('#stu_no').html(select[0].user_id);
+    $('#stu_class').html(select[0].stu_class);
+    $('#stu_sex').html(select[0].sex);
+    $('#stu_score').html(select[0].score);
+    $('#stu_introduction').html(select[0].stu_introduction);
+    $('#mdlStudent').html('');
+    $('#studentModal').modal({backdrop: 'static', keyboard: false});
+    submit=select[0].submit;
+    student=select[0].selected_stu_no;
+    subject_id=select[0].id;    //选中课题在topic表中的id
+
+
+
+    $.getJSON("{% url 'get_state' %}?subject_id="+subject_id, function(ret){
+         state_id=ret[0].id;        //选中课题在Appication_state表的id
+    });
+    $.getJSON("{% url 'get_student2' %}?subject_id="+subject_id, function(ret){
+
+        for(var i=0; i < ret.length; i++){
+             $("<option value=" + ret[i].user_id + ">" + ret[i].name + "</option>").appendTo($('#choosestudent'));
+        }
+        if(student!=''){
+             $('#choosestudent').val(student);
+        }else{
+           student=$('#choosestudent').val();
+        }
+        $('#choosestudent').selectpicker('refresh');
+    });
+    if(student!=''){
+             $('#choosestudent').val(student);
+    }else{
+        student=$('#choosestudent').val();
+    }
+    $('#choosestudent').selectpicker('refresh');
+
+}
+
+function active_select3(){
+ var select = $("#tb_info").bootstrapTable('getSelections');
+
+    if (select.length > 1) {
+          Alert('只能选择一个题目进行编辑');
+          return;
+    }
+    if (select.length <= 0) {
+          Alert('请选择一个题目');
+          return;
+    }
+
+
+    $('#txtName1').html(select[0].subject);
+    $('#stu_no').html(select[0].user_id);
+    $('#stu_class').html(select[0].stu_class);
+    $('#stu_sex').html(select[0].sex);
+    $('#stu_score').html(select[0].score);
+    $('#stu_introduction').html(select[0].stu_introduction);
+    $('#mdlStudent').html('');
+    $('#studentModal').modal({backdrop: 'static', keyboard: false});
+    submit=select[0].submit;
+    student=select[0].selected_stu_no;
+    subject_id=select[0].id;    //选中课题在topic表中的id
+
+    $.getJSON("{% url 'get_state' %}?subject_id="+subject_id, function(ret){
+         state_id=ret[0].id;        //选中课题在Appication_state表的id
+    });
+    $.getJSON("{% url 'get_student3' %}?subject_id="+subject_id, function(ret){
+
+        for(var i=0; i < ret.length; i++){
+             $("<option value=" + ret[i].user_id + ">" + ret[i].name + "</option>").appendTo($('#choosestudent'));
+        }
+        if(student!=''){
+             $('#choosestudent').val(student);
+        }else{
+           student=$('#choosestudent').val();
+        }
+        $('#choosestudent').selectpicker('refresh');
+    });
+    if(student!=''){
+             $('#choosestudent').val(student);
+    }else{
+        student=$('#choosestudent').val();
+    }
+    $('#choosestudent').selectpicker('refresh');
+
+}
+
+function active_select4(){
+
+    var select = $("#tb_info").bootstrapTable('getSelections');
+
+    if (select.length > 1) {
+          Alert('只能选择一个题目进行编辑');
+          return;
+    }
+    if (select.length <= 0) {
+          Alert('请选择一个题目');
+          return;
+    }
+
+
+    $('#txtName1').html(select[0].subject);
+    $('#stu_no').html(select[0].user_id);
+    $('#stu_class').html(select[0].stu_class);
+    $('#stu_sex').html(select[0].sex);
+    $('#stu_score').html(select[0].score);
+    $('#stu_introduction').html(select[0].stu_introduction);
+    $('#mdlStudent').html('');
+    $('#studentModal').modal({backdrop: 'static', keyboard: false});
+    submit=select[0].submit;
+    student=select[0].selected_stu_no;
+    subject_id=select[0].id;    //选中课题在topic表中的id
+
+    $.getJSON("{% url 'get_state' %}?subject_id="+subject_id, function(ret){
+         state_id=ret[0].id;        //选中课题在Appication_state表的id
+    });
+
+    $.getJSON("{% url 'get_student4' %}?subject_id="+subject_id, function(ret){
+
+        for(var i=0; i < ret.length; i++){
+             $("<option value=" + ret[i].user_id + ">" + ret[i].name + "</option>").appendTo($('#choosestudent'));
+        }
+        if(student!=''){
+             $('#choosestudent').val(student);
+        }else{
+           student=$('#choosestudent').val();
+        }
+        $('#choosestudent').selectpicker('refresh');
+    });
+
+    if(student!=''){
+             $('#choosestudent').val(student);
+    }else{
+        student=$('#choosestudent').val();
+    }
+    $('#choosestudent').selectpicker('refresh');
+
+}
+
+function active_select5(){
+
+    var select = $("#tb_info").bootstrapTable('getSelections');
+
+    if (select.length > 1) {
+          Alert('只能选择一个题目进行编辑');
+          return;
+    }
+    if (select.length <= 0) {
+          Alert('请选择一个题目');
+          return;
+    }
+
+
+    $('#txtName1').html(select[0].subject);
+    $('#stu_no').html(select[0].user_id);
+    $('#stu_class').html(select[0].stu_class);
+    $('#stu_sex').html(select[0].sex);
+    $('#stu_score').html(select[0].score);
+    $('#stu_introduction').html(select[0].stu_introduction);
+    $('#mdlStudent').html('');
+    $('#studentModal').modal({backdrop: 'static', keyboard: false});
+    submit=select[0].submit;
+    student=select[0].selected_stu_no;
+    subject_id=select[0].id;    //选中课题在topic表中的id
+
+    $.getJSON("{% url 'get_state' %}?subject_id="+subject_id, function(ret){
+         state_id=ret[0].id;        //选中课题在Appication_state表的id
+    });
+
+    $.getJSON("{% url 'get_student5' %}?subject_id="+subject_id, function(ret){
+
+        for(var i=0; i < ret.length; i++){
+             $("<option value=" + ret[i].user_id + ">" + ret[i].name + "</option>").appendTo($('#choosestudent'));
+        }
+        if(student!=''){
+             $('#choosestudent').val(student);
+        }else{
+           student=$('#choosestudent').val();
+        }
+        $('#choosestudent').selectpicker('refresh');
+    });
+
+    if(student!=''){
+             $('#choosestudent').val(student);
+    }else{
+        student=$('#choosestudent').val();
+    }
+    $('#choosestudent').selectpicker('refresh');
+
+}
+
+function active_select6(){
+
+    var select = $("#tb_info").bootstrapTable('getSelections');
+
+    if (select.length > 1) {
+          Alert('只能选择一个题目进行编辑');
+          return;
+    }
+    if (select.length <= 0) {
+          Alert('请选择一个题目');
+          return;
+    }
+
+
+    $('#txtName1').html(select[0].subject);
+    $('#stu_no').html(select[0].user_id);
+    $('#stu_class').html(select[0].stu_class);
+    $('#stu_sex').html(select[0].sex);
+    $('#stu_score').html(select[0].score);
+    $('#stu_introduction').html(select[0].stu_introduction);
+    $('#mdlStudent').html('');
+    $('#studentModal').modal({backdrop: 'static', keyboard: false});
+    submit=select[0].submit;
+    student=select[0].selected_stu_no;
+    subject_id=select[0].id;    //选中课题在topic表中的id
+
+    $.getJSON("{% url 'get_state' %}?subject_id="+subject_id, function(ret){
+         state_id=ret[0].id;        //选中课题在Appication_state表的id
+    });
+
+    $.getJSON("{% url 'get_student6' %}?subject_id="+subject_id, function(ret){
+
+        for(var i=0; i < ret.length; i++){
+             $("<option value=" + ret[i].user_id + ">" + ret[i].name + "</option>").appendTo($('#choosestudent'));
+        }
+        if(student!=''){
+             $('#choosestudent').val(student);
+        }else{
+           student=$('#choosestudent').val();
+        }
+        $('#choosestudent').selectpicker('refresh');
+    });
+
+    if(student!=''){
+             $('#choosestudent').val(student);
+    }else{
+        student=$('#choosestudent').val();
+    }
+    $('#choosestudent').selectpicker('refresh');
+
+}
+
+function stuchange(){
+    student=$('#choosestudent').val();
+    var stu_sex,stu_no,stu_class,stu_score,stu_introduction;
+    $.getJSON("{% url 'get_stuinfo' %}?student="+student, function(ret){
+        stu_sex=ret[0].sex;
+        stu_no=ret[0].user_id;
+        stu_class=ret[0].stu_class;
+        stu_score=ret[0].score;
+        stu_introduction=ret[0].stu_introduction;
+        $('#stu_sex').html(stu_sex);
+        $('#stu_score').html(stu_score);
+        $('#stu_introduction').html(stu_introduction);
+        $('#stu_no').html(stu_no);
+        $('#stu_class').html(stu_class);
+    });
+}
+
+
+
+
+ $("#btn_submit1").click(function () {
+
+    if($('#choosestudent').val()==''){
+    alert('请选择学生后再保存');}
+    else{
+
+       submitstu();
+    }
+ });
+
+
+function submitstu(){
+    if(window.confirm('提交后不可重新选择学生，确定提交?')){
+
+         $.getJSON("{% url 'get_state' %}?subject_id="+subject_id, function(ret){
+             state_id=ret[0].id;        //选中课题在Appication_state表的id
+
+        });
+          $('#studentModal').modal('hide');
+          selected_stu_no=$('#choosestudent').val();
+          var parameters1 = {
+                id:state_id,
+                topic: subject_id,
+                selected_stu_no: selected_stu_no
+
+          };
+
+          var url="{% url 'add_student' %}";
+          $.ajax({
+              type: "POST",
+              url: url,
+              data: parameters1,
+                    dataType: "json",
+                    success: function(data){
+                        //dat = JSON.parse(data);
+                        alert(data.message);
+                        //$('#editModal').modal('hide');
+                        refresh();
+                    },
+                    error:  function(XMLHttpRequest, textStatus, errorThrown) {
+                        //alert(XMLHttpRequest.status);
+                        //alert(XMLHttpRequest.readyState);
+                        //alert(textStatus);
+                        alert('请检查数据并重试！');
+                    }
+          });
+          $('#choosestudent').html('');
+          $('#stu_sex').html('');
+          $('#stu_no').html('');
+          $('#stu_class').html('');
+          $('#stu_score').html('');
+          $('#stu_introduction').html('');
+                        return true;
+
+    }else{
+
+                    return false;
+    }
+ }
+
+
+ $("#btn_giveup").click(function () {
+     var now_time=CurentTime();
+     test=now_time.split(' ');
+     now_day=test[0];
+
+     var a = DateDiff(now_day,day1);
+     var Day_num = a+1;
+
+
+
+         if(Day_num==1){
+             giveup1();
+         }
+         if(Day_num==2){
+             giveup2();
+         }
+         if(Day_num==3){
+             giveup3();
+         }
+         if(Day_num==4){
+             giveup4();
+         }
+         if(Day_num==5){
+             giveup5();
+         }
+         if(Day_num==6){
+             giveup6();
+         }
+
+
+
+
+ });
+
+function DateDiff(sDate1, sDate2) { //sDate1和sDate2是"2002-12-18"格式
+  var aDate, oDate1, oDate2, iDays;
+  aDate = sDate1.split("-");
+  oDate1 = new Date(aDate[0], aDate[1] - 1, aDate[2]);
+  aDate = sDate2.split("-");
+  oDate2 = new Date(aDate[0], aDate[1] - 1, aDate[2]);
+  iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24);
+  if ((oDate1 - oDate2) < 0) {
+    return -iDays;
+  }
+  return iDays;
+}
+
+function giveup1(){
+    if(window.confirm('弃权后不可重新选择学生，确定弃权?')){
+
+         $.getJSON("{% url 'giveup1' %}?subject_id="+subject_id, function(data){
+                   //选中课题在Appication_state表的id
+             $('#studentModal').modal('hide');
+              selected_stu_no=$('#choosestudent').val();
+
+              $('#choosestudent').html('');
+              $('#stu_sex').html('');
+              $('#stu_no').html('');
+              $('#stu_class').html('');
+              $('#stu_score').html('');
+              $('#stu_introduction').html('');
+              alert(data.message);
+
+        });
+                        refresh();
+                        return true;
+
+    }else{
+
+                    return false;
+    }
+}
+
+function giveup2(){
+    if(window.confirm('弃权后不可重新选择学生，确定弃权?')){
+
+         $.getJSON("{% url 'giveup2' %}?subject_id="+subject_id, function(data){
+                   //选中课题在Appication_state表的id
+             $('#studentModal').modal('hide');
+              selected_stu_no=$('#choosestudent').val();
+
+              $('#choosestudent').html('');
+              $('#stu_sex').html('');
+              $('#stu_no').html('');
+              $('#stu_class').html('');
+              $('#stu_score').html('');
+              $('#stu_introduction').html('');
+              alert(data.message);
+
+        });
+
+                        refresh();
+                        return true;
+
+    }else{
+
+                    return false;
+    }
+}
+
+function giveup3(){
+    if(window.confirm('弃权后不可重新选择学生，确定弃权?')){
+
+         $.getJSON("{% url 'giveup3' %}?subject_id="+subject_id, function(data){
+                   //选中课题在Appication_state表的id
+             $('#studentModal').modal('hide');
+              selected_stu_no=$('#choosestudent').val();
+
+              $('#choosestudent').html('');
+              $('#stu_sex').html('');
+              $('#stu_no').html('');
+              $('#stu_class').html('');
+              $('#stu_score').html('');
+              $('#stu_introduction').html('');
+              alert(data.message);
+
+        });
+                        refresh();
+                        return true;
+
+    }else{
+
+                    return false;
+    }
+}
+
+function giveup4(){
+    if(window.confirm('弃权后不可重新选择学生，确定弃权?')){
+
+         $.getJSON("{% url 'giveup4' %}?subject_id="+subject_id, function(data){
+                   //选中课题在Appication_state表的id
+             $('#studentModal').modal('hide');
+              selected_stu_no=$('#choosestudent').val();
+
+              $('#choosestudent').html('');
+              $('#stu_sex').html('');
+              $('#stu_no').html('');
+              $('#stu_class').html('');
+              $('#stu_score').html('');
+              $('#stu_introduction').html('');
+              alert(data.message);
+
+        });
+                        refresh();
+                        return true;
+
+    }else{
+
+                    return false;
+    }
+}
+
+function giveup5(){
+    if(window.confirm('弃权后不可重新选择学生，确定弃权?')){
+
+         $.getJSON("{% url 'giveup5' %}?subject_id="+subject_id, function(data){
+                   //选中课题在Appication_state表的id
+             $('#studentModal').modal('hide');
+              selected_stu_no=$('#choosestudent').val();
+
+              $('#choosestudent').html('');
+              $('#stu_sex').html('');
+              $('#stu_no').html('');
+              $('#stu_class').html('');
+              $('#stu_score').html('');
+              $('#stu_introduction').html('');
+              alert(data.message);
+
+        });
+                        refresh();
+                        return true;
+
+    }else{
+
+                    return false;
+    }
+}
+
+function giveup6(){
+    if(window.confirm('弃权后该题目今天将不分配给任何学生，确定弃权?')){
+
+         $.getJSON("{% url 'giveup6' %}?subject_id="+subject_id, function(data){
+                   //选中课题在Appication_state表的id
+             $('#studentModal').modal('hide');
+              selected_stu_no=$('#choosestudent').val();
+
+              $('#choosestudent').html('');
+              $('#stu_sex').html('');
+              $('#stu_no').html('');
+              $('#stu_class').html('');
+              $('#stu_score').html('');
+              $('#stu_introduction').html('');
+              alert(data.message);
+
+        });
+                        refresh();
+                        return true;
+
+    }else{
+
+                    return false;
+    }
+}
+
+
+
+
+</script>
+
+</body>
+</html>

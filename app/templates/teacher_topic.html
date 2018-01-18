@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <meta charset="utf-8">
+    <title>信息学院本科生毕业设计管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+
+    <!-- The styles -->
+    {% load static %}
+    <link id="bs-css" href="{% static 'css/bootstrap-cerulean.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/charisma-app.css' %}" rel="stylesheet">
+    <link href="{% static 'bower_components/fullcalendar/dist/fullcalendar.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/fullcalendar/dist/fullcalendar.print.css' %}" rel='stylesheet' media='print'>
+    <link href="{% static 'bower_components/chosen/chosen.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/colorbox/example3/colorbox.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/responsive-tables/responsive-tables.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/bootstrap-tour/build/css/bootstrap-tour.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/jquery.noty.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/noty_theme_default.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/elfinder.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/elfinder.theme.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/jquery.iphone.toggle.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/uploadify.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/animate.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-treeview.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-table.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-select.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/summernote.css' %}" rel='stylesheet'>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+    <script src="{% static 'bower_components/jquery/jquery.min.js' %}"></script>
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="{% static 'img/logo3.png' %}">
+<style type="text/css">
+.uploadtxt{ height:35px; border:1px solid #cdcdcd; width:212px;}
+.uploadfile{ position:absolute; top:0px; right:0px; height:35px; opacity:0; width:212px }
+</style>
+</head>
+
+<body>
+    <!-- topbar starts -->
+<div class="navbar navbar-default" role="navigation">
+
+    <div class="navbar-inner" >
+        <button type="button" class="navbar-toggle pull-left animated flip">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+         <img  src="{% static 'img/index.png' %}" />
+        <a class="navbar-brand" href="{% url 'teacher_index' %}" > 信息学院本科生毕业设计管理系统</a>
+
+        <!-- user dropdown starts -->
+        <div class="btn-group pull-right">
+            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <i class="glyphicon glyphicon-user"></i>
+                <span class="hidden-sm hidden-xs"> 用户名: </span>
+                <span id="userid"> 异常</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a  onclick="changepwd_onclick()">修改密码</a></li>
+                <li class="divider"></li>
+                <li><a href="/app/">退出</a></li>
+            </ul>
+        </div>
+        <!-- user dropdown ends -->
+
+    </div>
+</div>
+    <!-- topbar ends -->
+<div class="ch-container">
+
+    <!-- system modal start -->
+    <div id="ycf-alert" class="modal">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h3 class="modal-title"><i class="fa fa-exclamation-circle"></i> [Title]</h3>
+          </div>
+          <div class="modal-body">
+              <div class="input-group input-group-lg" >[Message]
+              </div>
+          </div>
+          <div class="modal-footer" >
+            <button type="button" class="btn btn-primary ok" data-dismiss="modal">[BtnOk]</button>
+            <button type="button" class="btn btn-default cancel" data-dismiss="modal">[BtnCancel]</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- system modal end -->
+
+    <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel"
+         aria-hidden="true">
+        <form class="form-horizontal" method="get" enctype="multipart/form-data" id="pwdform">
+        <div class="modal-dialog">
+            <div class="modal-content" role="document">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>修改密码</h3>
+                </div>
+
+                <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i>&nbsp;新密码</span>
+                        <input id="newpwd" type="password" class="form-control" placeholder="Password" required="required">
+                </div>
+                <br>
+                <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i>&nbsp;确认密码</span>
+                        <input id="conpwd" type="password" class="form-control" placeholder="Password" required="required">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;关闭</button>
+                    <button type="button" class="btn btn-default" onclick="pwd_onclick()" ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;确定修改</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <!-- left menu starts -->
+        <div class="col-sm-2 col-lg-2">
+            <div class="sidebar-nav">
+                <div class="nav-canvas">
+                    <div class="nav-sm nav nav-stacked">
+
+                    </div>
+                    <ul class="nav nav-pills nav-stacked main-menu">
+                        {% for menu1 in menus %}
+                        {% if menu1 %}
+                            <li class="nav-header"><i class="glyphicon glyphicon-star"></i>&nbsp;&nbsp;{{menu1.0.menu_classify}}</li>
+                            {% for menu in menu1 %}
+                                <li><a class="ajax-link" href="{{menu.menu_addr}}"><i class="glyphicon glyphicon-{{menu.menu_icon}}"></i><span>&nbsp;&nbsp;{{menu.menu_name}}</span></a>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                        {% endfor %}
+                        <div class="row">
+                                     <div class="box col-md-12">
+                                          <div class="box-inner">
+                                               <div class="box-header well" data-original-title="">
+                                                    <h2><i class="glyphicon glyphicon-user"></i>&nbsp;用户信息</h2>
+                                               </div>
+                                               <div class="box-content">
+                                                    <ul class="dashboard-list">
+                                                        <li>
+                                                        <div class="row">
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">姓&nbsp;&nbsp;名:</span>
+                                                               <label style="color: #999999;" id="teaname"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">工&nbsp;&nbsp;号:</span>
+                                                               <label style="color: #999999;" id="teaid"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">研究所:</span>
+                                                               <label style="color: #999999;" id="teainstitution"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">性&nbsp;&nbsp;别:</span>
+                                                               <label style="color: #999999;" id="teasex"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">电&nbsp;&nbsp;话:</span>
+                                                               <label style="color: #999999;" id="teatel"> sss</label>
+                                                             </div>
+                                                        </div>
+                                                        </li>
+                                                    </ul>
+                                               </div>
+                                          </div>
+                                     </div>
+                                </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--/span-->
+        <!-- left menu ends -->
+
+        <div id="content" class="col-lg-10 col-sm-10">
+                <!-- content starts -->
+            <div>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/app/teacher_index/" >毕业设计管理系统</a>
+                    </li>
+                    <li>
+                        <a href="#">毕业设计题目</a>
+                    </li>
+                </ul>
+                <div class="box-inner">
+                    <div class="box-header well" data-original-title="">
+                        <h2>毕业设计题目</h2>
+                    </div>
+                    <div class="box-content">
+                        <div class="form-group form-inline" id="tabletoolbar">
+
+                            <span></span>
+
+                            <div id="toolbar" class="btn-group">
+                                <button id="btn_upload" type="button" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 上传题目 </button>
+                                <button id="btn_edit" type="button" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 修改题目 </button>
+                                <button  id="btn_delete" type="button" class="btn btn-default" >
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除题目 </button>
+                                <button  type="button" class="btn btn-default" onclick="Submit()">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 提交 </button>
+                                <span class="blue" style="width:150px;font-size:16px;">（您至少需要上传</span>
+                                <label style="color: #999999;" id="labtopicNum">   </label>
+                                <span class="blue" style="width:150px;font-size:16px;">个题目）</span>
+                            </div>
+                        </div>
+                        <table id="tb_info"></table>
+
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="topicModal" tabindex="-1" role="dialog" aria-labelledby="topicModalLabel" aria-hidden="true">
+        <form class="form-horizontal" method="post" enctype="multipart/form-data" id="uploadform"  role="form" onsubmit="formSubmit()">
+        <div class="modal-dialog" style="width:900px;">
+            <div class="modal-content" role="document">
+                <div class="modal-header" style="height:50px;">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 id="mdlTitle">上传题目</h4>
+                    <h4 hidden="true" id="mdlPara"></h4>
+                </div>
+                <div class="modsal-body" >
+                    <div class="modsal-body" >
+                    <div class="input-group input-group" style="margin:10px 0px 0px 30px;">
+                        <!-- modal content begin -->
+
+                        <div class="form-group has-warning" hidden="true">
+                            <label class="col-sm-4 control-label">Id: </label>
+                            <div class="col-sm-8 ">
+                                <input type="text" name="Id" id="txtId" class="form-control" placeholder="Id">
+                            </div>
+                        </div>
+
+                        <div class="form-group has-warning">
+                            <label class="col-sm-4 control-label"style="width:200px;">毕业设计题目名称：</label>
+                            <div class=" col-sm-8" style="width:600px;">
+                                <input type="text" name="UserCode" id="txtSubject" class="form-control" placeholder="毕业设计题目名称" required="true">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"style="width:200px;">题目性质：</label>
+                            <div class="col-sm-8"style="width:600px;" >
+                                <label class="radio-inline"><input type="radio" name="subjectProperty" id="irdResearch_papers" value="研究论文" checked="true">研究论文</label>
+                                <label class="radio-inline"><input type="radio" name="subjectProperty" id="irdEngineering_design" value="工程设计">工程设计</label>
+                                <label class="radio-inline"><input type="radio" name="subjectProperty" id="irdProject_report" value="项目报告">项目报告</label>
+                                <label class="radio-inline"><input type="radio" name="subjectProperty" id="irdSummary_report" value="综述报告">综述报告</label>
+                                <label class="radio-inline"><input type="radio" name="subjectProperty" id="irdOther" value="其他">其他</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"style="width:200px;">选择其他时简要说明：</label>
+                            <div class="col-sm-8" style="width:600px;">
+                                <input type="text" name="name" id="txtBrief_description" class="form-control" placeholder="题目性质选择其他时简要说明" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"style="width:200px;">是否结合生产实际：</label>
+                            <div class="col-sm-8" style="width:600px;">
+                                <label class="radio-inline"><input type="radio" name="Actual_production" id="irdYes" value="是" checked="true"> 是</label>
+                                <label class="radio-inline"><input type="radio" name="Actual_production" id="irdNo" value="否"> 否</label>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label"style="width:200px;">企业名称：</label>
+                            <div class="col-sm-8" style="width:600px;">
+                                <input type="text" name="name" id="txtCompanyName" class="form-control" placeholder="企业名称（结合生产实际论文填写）" >
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label"style="width:200px;">实施情况简介：</label>
+                            <div class="col-sm-8" style="width:600px;">
+                                <input type="text" name="name" id="txtProgress" class="form-control" placeholder="实施情况简述（结合生产实际论文填写）" >
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label"style="width:200px;">英文题目：</label>
+                            <div class="col-sm-8" style="width:600px;">
+                                <input type="text" name="name" id="txtEnglish_topic" class="form-control" placeholder="英文题目" >
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label"style="width:200px;">题目简介：</label>
+                            <div class="col-sm-8" style="width:600px;">
+                                <input type="text" name="name" id="txtIntroduction" class="form-control" placeholder="题目简介" >
+                            </div>
+                        </div>
+
+
+                        <!-- modal content end -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn_submit" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> 保存 </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 关闭 </button>
+                </div>
+            </div>
+        </div>
+        </div>
+            </form>
+    </div>
+                <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="submitModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" role="document">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>提交题目</h3>
+                </div>
+                <center>
+                   <h4>题目提交后不能更改，请三思！</h4>
+                </center>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;关闭</button>
+                    <button type="button" class="btn btn-default" onclick="submit_topic()" ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;提交</button>
+                </div>
+            </div>
+        </div>
+
+            </div><!--/#content.col-md-0-->
+        </div><!--/fluid-row-->
+    </div><!--/.fluid-container-->
+</div></div>
+<!-- external javascript -->
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+<script src="{% static 'js/bootstrap-table-zh-CN.js' %}"></script>
+<script src="{% static 'js/jquery.cookie.js' %}"></script>
+<script src="{% static 'bower_components/moment/min/moment.min.js' %}"></script>
+<script src="{% static 'bower_components/fullcalendar/dist/fullcalendar.min.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'bower_components/chosen/chosen.jquery.min.js' %}"></script>
+<script src="{% static 'bower_components/colorbox/jquery.colorbox-min.js' %}"></script>
+<script src="{% static 'js/jquery.noty.js' %}"></script>
+<script src="{% static 'bower_components/responsive-tables/responsive-tables.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap-tour/build/js/bootstrap-tour.min.js' %}"></script>
+<script src="{% static 'js/jquery.raty.min.js' %}"></script>
+<script src="{% static 'js/jquery.iphone.toggle.js' %}"></script>
+<script src="{% static 'js/jquery.autogrow-textarea.js' %}"></script>
+<script src="{% static 'js/jquery.uploadify-3.1.min.js' %}"></script>
+<script src="{% static 'js/jquery.history.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/dialog.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-treeview.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-select.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.validate.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/message_cn.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/icheck.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/summernote.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'css/lang/summernote-zh-CN.js' %}"></script>
+
+
+<script>
+    $(function(){
+        $('#userid').html(getCookie('userid'));
+        $.getJSON("{% url 'getteainfo' %}", function(ret){
+            $('#teaname').html(ret.data[0].name);
+            $('#teasex').html(ret.data[0].sex);
+            $('#teaid').html(ret.data[0].user_id);
+            $('#teainstitution').html(ret.data[0].institution_name);
+            $('#teatel').html(ret.data[0].tel);
+
+        });
+
+
+    });
+
+    var submit=0;
+    //判断是否提交过
+
+function changepwd_onclick(){
+          $('#newpwd').val('');
+          $('#conpwd').val('');
+        $('#passwordModal').modal();
+    }
+
+    function pwd_onclick(){
+        if(checkPwd()){
+            if($('#newpwd').val()!=$('#conpwd').val()){
+                Alert(
+                {
+                    msg: '两次密码输入不一致，请重新输入',
+                });
+            }
+            else{
+                $('#passwordModal').modal('hide');
+                //$('#passwordModal').removeData("bs.modal");
+                //$('#pwdform').submit();
+                var new_pwd = $('#newpwd').val();
+                $.get("{% url 'changepassword' %}?new_pwd="+new_pwd, function(ret){
+
+
+                    Alert('密码修改成功！');
+                });
+            }
+        }
+    }
+
+    function checkPwd(){
+        if($('#newpwd').val() == ""){
+            Alert("新密码不能为空");
+            return false;
+        }
+        else if($('#conpwd').val() == ""){
+            Alert("确认密码不能为空");
+            return false;
+        }
+        return true;
+    }
+    function chineseSort(a, b){
+        return a.localeCompare(b);
+    }
+
+
+</script>
+
+<script>
+    function change(){
+        $('#choosestudent').html('');
+        $('#stu_sex').html('');
+        $('#stu_no').html('');
+        $('#stu_class').html('');
+    }
+
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg))
+            return decodeURI(arr[2]);
+        else
+            return null;
+    }
+
+
+    $(function(){
+        $('#userid').html(getCookie('userid'));
+        $.getJSON("{% url 'getteainfo' %}", function(ret){
+            $('#teaname').html(ret.data[0].name);
+            $('#teasex').html(ret.data[0].sex);
+            $('#teaid').html(ret.data[0].user_id);
+            $('#teainstitution').html(ret.data[0].institution_name);
+            $('#teatel').html(ret.data[0].tel);
+
+        });
+
+        
+        var oTable = new TableInit();
+        oTable.Init();
+        var oButtonInit = new ButtonInit();
+        oButtonInit.Init();
+
+
+    });
+
+
+    var TableInit = function () {
+        var oTableInit = new Object();
+        oTableInit.Init = function () {
+            $('#tb_info').bootstrapTable({
+                url: '/app/get_teatopic1',            //请求后台的URL（*）
+                method: 'get',                      //请求方式（*）
+                toolbar: '#tabletoolbar',           //工具按钮用哪个容器
+                striped: true,                      //是否显示行间隔色
+                locale:'zh-CN',
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                sortable: true,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                queryParams: oTableInit.queryParams,//传递参数（*）
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber:1,                       //初始化加载第一页，默认第一页
+                pageSize: 10,                       //每页的记录行数（*）
+                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                strictSearch: true,
+                showColumns: false,                 //是否显示所有的列
+                showRefresh: true,                  //是否显示刷新按钮
+                minimumCountColumns: 2,             //最少允许的列数
+                clickToSelect: true,                //是否启用点击选中行
+                //height: 541,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+                showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
+                cardView: false,                    //是否显示详细视图
+                detailView: false,                  //是否显示父子表
+                rowStyle: function (row, index) {
+                    //这里有5个取值代表5中颜色['active', 'success', 'info', 'warning', 'danger'];
+                    var strclass = "";
+                    if (row.work_status == '未启用') {
+                        strclass = 'danger'; //还有一个active
+                    }
+                    else {
+                        return {};
+                    }
+                    return { classes: strclass }
+                },
+
+                columns:[ {
+                    checkbox: true
+                    }, {
+                        title: "题目名称",
+                        field: 'subject',
+                        sortable : true,
+                        valign: "middle"//垂直
+                    },{
+                        title: "题目简介",
+                        field: 'introduction',
+                        sortable : true,
+                        valign: "middle"//垂直
+                    },{
+                        title: "专业",
+                        field: 'major',
+                        sortable : true,
+                        valign: "middle"//垂直
+                    },
+                        ]
+
+            });
+
+           $('#tb_info').bootstrapTable('hideColumn', 'id');
+
+        };
+
+
+
+        oTableInit.queryParams = function (params) {
+            var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                limit: params.limit,   //页面大小
+                offset: params.offset, //页码
+                sort: params.sort,
+                order: params.order,
+                search:params.search
+
+            };
+            return temp;
+        };
+        return oTableInit;
+    };
+
+
+    function refresh() {
+        setTimeout(function() {
+            $('#tb_info').bootstrapTable('refresh');
+        }, 500);
+    }
+
+
+    var topic_num;
+    $.getJSON("{% url 'teacher_get_topicnumbyid' %}", function(ret){
+
+            topic_num=ret[0].topic_num;
+            $('#labtopicNum').html(ret[0].topic_num);
+
+    });
+
+
+
+    $("#btn_upload").click(function () {
+        if(topic_num==null){
+        alert('教学所长还未设定您的题目个数');
+        }
+        else{
+        resetform();
+        $('#userid').html(getCookie('userid'));
+        $.getJSON("{% url 'teacher_getdate' %}", function(ret){
+             var write_sub_s=ret.date[0].write_sub_s;
+             var write_sub_e=ret.date[0].write_sub_e;
+             var today=new Date().toJSON().slice(0,10);
+             if(today<write_sub_s){
+                 alert('该功能尚未开启!');
+             }else{
+                   if(today<=write_sub_e){
+                       $.getJSON("{% url 'teacher_whether_submit' %}", function(ret){
+                                if (ret.message=='提交过了'){
+                                    alert('题目提交后不能再上传，请联系教学所长！');
+                                }else {
+                                    active_add();
+                                }
+                       });
+
+                   }else{
+                         alert('该功能已关闭!');
+                   }
+             }
+        });
+        }
+    });
+
+    function delete_info(id) {
+
+        $.getJSON("{% url 'teacher_del_topic' %}?id="+id);
+    }
+
+    function active_add(){
+
+
+        $('#txtName').val('');
+        $('#txtIntroduction').val('');
+        //num=document.getElementById("tb_info").rows.length-1;
+        //alert(num);
+        $.getJSON("{% url 'teacher_gettopicnum' %}", function(ret){
+            var num=ret.length;
+
+            if(num>=6){
+                alert('不能再上传，最多上传6个题目！')
+            }else {
+                $('#mdlPara').html('');
+                $('#topicModal').modal({backdrop: 'static', keyboard: false});
+            }
+        });
+    }
+
+
+    $("#btn_submit").click(function () {
+        submit_info();
+    });
+
+
+function submit_info() {
+
+        var parameters = {
+            id: $('#txtId').val(),
+            subject: $('#txtSubject').val(),
+            subject_property_id :$("input[name='subjectProperty']:checked").val(),
+            other_introduction: $('#txtBrief_description').val(),
+            combine_actual: $("input[name='Actual_production']:checked").val(),
+            company_name: $('#txtCompanyName').val(),
+            implementation_state: $('#txtProgress').val(),
+            english_title: $('#txtEnglish_topic').val(),
+            introduction: $('#txtIntroduction').val(),
+
+
+        };
+
+        if(validform().form()){
+            var url = '';
+            if($('#mdlPara').html() == ''){
+                url = "{% url 'add_topic' %}";
+                $.ajax({
+                type: "POST",
+                url: url,
+                data: parameters,
+                dataType: "json",
+                success: function(data){
+                    //dat = JSON.parse(data);
+                    alert(data.message);
+                    $('#topicModal').modal('hide');
+                    refresh();
+                },
+                error:  function(XMLHttpRequest, textStatus, errorThrown) {
+                    //alert(XMLHttpRequest.status);
+                    //alert(XMLHttpRequest.readyState);
+                    //alert(textStatus);
+                    alert('请检查数据并重试！');
+                }
+            });
+            } else {
+                url = "{% url 'update_topic' %}";
+                $.ajax({
+                type: "POST",
+                url: url,
+                data: parameters,
+                dataType: "json",
+                success: function(data){
+                    //dat = JSON.parse(data);
+                    Alert(data.message);
+                    $('#topicModal').modal('hide');
+                    refresh();
+                },
+                error:  function(XMLHttpRequest, textStatus, errorThrown) {
+                    //alert(XMLHttpRequest.status);
+                    //alert(XMLHttpRequest.readyState);
+                    //alert(textStatus);
+                    alert('请检查数据并重试！');
+                }
+            });
+            }
+
+
+        }
+}
+
+
+function validform(){
+
+        if ($('#txtSubject').val() == '') {
+            alert('毕业设计题目名称不能为空，请重新填写！');
+	        return false;
+        }
+        if ($("input[name='subjectProperty']:checked").val()!='其他'&&$('#txtBrief_description').val()!=''){
+            alert('题目性质选择其他时，才能填写“选择其他时简要说明！”');
+            return false;
+        }
+        if ($("input[name='subjectProperty']:checked").val()=='其他'&&$('#txtBrief_description').val()==''){
+            alert('请填写“选择其他时简要说明！”');
+            return false;
+        }
+        if ($('#txtEnglish_topic').val() == '') {
+            alert('英文题目不能为空，请重新填写！');
+	        return false;
+        }
+        if ($('#txtIntroduction').val() == '') {
+            alert('题目简介不能为空，请重新填写！');
+	        return false;
+        }
+
+        return $("#uploadform").validate({
+            rules : {
+                txtCmpName : {
+                    required : true
+                },txtShortName : {
+                    required : true
+                },txtCmpContact : {
+                    required : true
+                },txtCmpTel : {
+                    required : true
+                }
+            }
+        });
+    }
+
+
+function resetform(){
+        $('#uploadform')[0].reset();
+    }
+
+
+$("#btn_edit").click(function () {
+    var select = $("#tb_info").bootstrapTable('getSelections');
+    if (select.length > 1) {
+          Alert('只能选择一行进行编辑');
+          return;
+    }
+    if (select.length <= 0) {
+          Alert('请选择一个题目');
+          return;
+    }
+    id=select[0].id;
+    resetform();
+    $.getJSON("{% url 'teacher_getdate' %}", function(ret){
+             var write_sub_s=ret.date[0].write_sub_s;
+             var write_sub_e=ret.date[0].write_sub_e;
+             var today=new Date().toJSON().slice(0,10);
+
+            if(today<=write_sub_e){
+                        $.getJSON("{% url 'teacher_whether_submit' %}", function(ret){
+                                if (ret.message=='提交过了'){
+                                    alert('题目提交后不能再修改！');
+                                }else {
+                                    $.getJSON("{% url 'teacher_get_topicbyid' %}?id="+id, function(ret){
+                                $('#txtId').val(id);
+                                $('#txtId').attr("disabled",true);
+                                $('#txtSubject').val(ret[0].subject);
+                                $("input[name=\"subjectProperty\"][value="+ ret[0].subject_property +"]").attr("checked", true);
+                                $("input[name=\"subjectProperty\"][value="+ ret[0].subject_property+"]").click();
+                                $('#txtBrief_description').val(ret[0].other_introduction);
+                                $("input[name=\"Actual_production\"][value="+ ret[0].combine_actual +"]").attr("checked", true);
+                                $("input[name=\"Actual_production\"][value="+ ret[0].combine_actual +"]").click();
+                                $('#txtCompanyName').val(ret[0].company_name);
+                                $('#txtProgress').val(ret[0].implementation_state);
+                                $('#txtEnglish_topic').val(ret[0].english_title);
+                                $('#txtIntroduction').val(ret[0].introduction);
+
+                       });
+                        $('#mdlPara').html(id);
+                        $('#mdlTitle').html('修改题目');
+                        $('#topicModal').modal({backdrop: 'static', keyboard: false});
+                                }
+                        });
+
+            }else{
+                         alert('该功能已关闭!');
+                   }
+
+    });
+
+
+});
+
+$("#btn_delete").click(function () {
+
+    var select = $("#tb_info").bootstrapTable('getSelections');
+    if (select.length <= 0) {
+        Alert('请选择有效数据');
+        return;
+    }
+
+    $.getJSON("{% url 'teacher_getdate' %}", function(ret){
+
+            var write_sub_s=ret.date[0].write_sub_s;
+             var write_sub_e=ret.date[0].write_sub_e;
+             var today=new Date().toJSON().slice(0,10);
+             if(today<=write_sub_e){
+                $.getJSON("{% url 'teacher_whether_submit' %}", function(ret){
+
+                                if (ret.message=='提交过了'){
+                                    alert('题目提交后不能删除，请联系教学所长！');
+                                }else {
+                                                if(window.confirm('确定删除?')){          //后台删除数据方法
+                                                for (var k = 0, length = select.length; k < length; k++) {
+                                                    delete_info(select[k].id);
+                                                }
+                                                refresh();
+                                                Alert('删除成功');
+                                                return true;
+                                                }else{
+                                                    return false;
+                                                }
+                                }
+
+});
+            }else{alert('学生选题已经开始，不能删除题目！');}
+                       });
+                            });
+function Submit(){
+        $.getJSON("{% url 'teacher_getdate' %}", function(ret){
+            var write_sub_s=ret.date[0].write_sub_s;
+             var write_sub_e=ret.date[0].write_sub_e;
+             var today=new Date().toJSON().slice(0,10);
+             if(today<=write_sub_e){
+                        $.getJSON("{% url 'teacher_whether_submit' %}", function(ret){
+
+            if (ret.message=='提交过了'){
+                alert('题目提交后不能再操作！');
+            }else if (ret.message=='没提交过'){
+                $('#submitModal').modal();
+            }else{alert(ret.message);}
+        });
+
+            }else{
+                         alert('该功能已关闭!');
+                   }
+
+        });
+
+
+
+
+}
+function submit_topic(){
+
+    $('#submitModal').modal('hide');
+    $.getJSON("{% url 'teacher_submit_topic' %}", function(ret){
+            Alert(ret.message);
+    });
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <meta charset="utf-8">
+    <title>信息学院本科生毕业设计管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+
+    <!-- The styles -->
+    {% load static %}
+    <link id="bs-css" href="{% static 'css/bootstrap-cerulean.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/charisma-app.css' %}" rel="stylesheet">
+    <link href="{% static 'bower_components/fullcalendar/dist/fullcalendar.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/fullcalendar/dist/fullcalendar.print.css' %}" rel='stylesheet' media='print'>
+    <link href="{% static 'bower_components/chosen/chosen.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/colorbox/example3/colorbox.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/responsive-tables/responsive-tables.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/bootstrap-tour/build/css/bootstrap-tour.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/jquery.noty.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/noty_theme_default.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/elfinder.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/elfinder.theme.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/jquery.iphone.toggle.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/uploadify.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/animate.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-treeview.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-table.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-select.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/summernote.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/plugin/font-awesome.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-datepicker.css' %}" rel='stylesheet'>
+
+    <!-- jQuery -->
+    <script src="{% static 'bower_components/jquery/jquery.min.js' %}"></script>
+
+    <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- The fav icon -->
+    <link rel="shortcut icon" href="{% static 'img/logo3.png' %}">
+
+</head>
+
+<body>
+    <!-- topbar starts -->
+<div class="navbar navbar-default" role="navigation">
+
+    <div class="navbar-inner" >
+        <button type="button" class="navbar-toggle pull-left animated flip">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+         <img  src="{% static 'img/index.png' %}" />
+        <a class="navbar-brand" href="{% url 'student_index' %}" > 信息学院本科生毕业设计管理系统</a>
+
+        <!-- user dropdown starts -->
+        <div class="btn-group pull-right">
+            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <i class="glyphicon glyphicon-user"></i>
+                <span class="hidden-sm hidden-xs"> 用户名: </span>
+                <span id="userid"> 异常</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a  onclick="changepwd_onclick()">修改密码</a></li>
+                <li class="divider"></li>
+                <li><a href="/app/">退出</a></li>
+            </ul>
+        </div>
+        <!-- user dropdown ends -->
+
+    </div>
+</div>
+    <!-- topbar ends -->
+<div class="ch-container">
+
+    <!-- system modal start -->
+    <div id="ycf-alert" class="modal">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h3 class="modal-title"><i class="fa fa-exclamation-circle"></i> [Title]</h3>
+          </div>
+          <div class="modal-body">
+              <div class="input-group input-group-lg" >[Message]
+              </div>
+          </div>
+          <div class="modal-footer" >
+            <button type="button" class="btn btn-primary ok" data-dismiss="modal">[BtnOk]</button>
+            <button type="button" class="btn btn-default cancel" data-dismiss="modal">[BtnCancel]</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- system modal end -->
+
+    <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel"
+         aria-hidden="true">
+        <form class="form-horizontal" method="get" enctype="multipart/form-data" id="pwdform">
+        <div class="modal-dialog">
+            <div class="modal-content" role="document">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>修改密码</h3>
+                </div>
+
+                <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i>&nbsp;新密码</span>
+                        <input id="newpwd" type="password" class="form-control" placeholder="Password" required="true">
+                </div>
+                <br>
+                <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i>&nbsp;确认密码</span>
+                        <input id="conpwd" type="password" class="form-control" placeholder="Password" required="true">
+                </div>
+                <div class="modal-footer">
+                    <!-- style="display:none;"
+                    <button type="button" id="disbutton" onclick="pwd_onclick()"  ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;确定修改</button>
+                    -->
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;关闭</button>
+                    <button type="button" class="btn btn-default" onclick="pwd_onclick()" ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;确定修改</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+
+    <div class="row">
+
+        <!-- left menu starts -->
+        <div class="col-sm-2 col-lg-2">
+            <div class="sidebar-nav">
+                <div class="nav-canvas">
+                    <div class="nav-sm nav nav-stacked">
+
+                    </div>
+                    <ul class="nav nav-pills nav-stacked main-menu">
+                        {% for menu1 in menus %}
+                        {% if menu1 %}
+                            <li class="nav-header"><i class="glyphicon glyphicon-star"></i>&nbsp;&nbsp;{{menu1.0.menu_classify}}</li>
+                            {% for menu in menu1 %}
+                                <li><a class="ajax-link" href="{{menu.menu_addr}}"><i class="glyphicon glyphicon-{{menu.menu_icon}}"></i><span>&nbsp;&nbsp;{{menu.menu_name}}</span></a>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--/span-->
+        <!-- left menu ends -->
+
+
+        <div id="content" class="col-lg-10 col-sm-10">
+                    <!-- content starts -->
+            <div>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/app/student_index/" >毕设双选系统</a>
+                    </li>
+
+                    <li>
+                        <a href="/app/student_index/" >学生信息</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="row">
+
+
+                <div class="box col-md-12">
+                    <div class="box-inner">
+                        <div class="box-header well" data-original-title="">
+                            <h2><i class="glyphicon glyphicon-asterisk"></i>&nbsp;学生个人信息</h2>
+                        </div>
+                        <div class="box-content">
+                            <ul class="dashboard-list">
+                                <li>
+                                    <div class="row">
+                                        <div class="box col-md-5">
+                                            <a>
+                                                <span class="blue" style="width:150px;">姓&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp名:</span>
+                                                <label style="color: #999999;" id="stuname"> </label>
+                                            </a>
+                                        </div>
+                                        <div class="box col-md-6">
+                                            <a>
+                                                <span class="blue" style="width:150px;">性&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp别:</span>
+                                                <label style="color: #999999;" id="stusex"> </label>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="row">
+                                        <div class="box col-md-5">
+                                            <a>
+                                                <span class="blue" style="width:150px;">专&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp业:</span>
+                                                <label style="color: #999999;" id="stumajor"> </label>
+                                            </a>
+                                        </div>
+                                        <div class="box col-md-6">
+                                            <a>
+                                                <span class="blue" style="width:150px;">学&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp号:</span>
+                                                <label style="color: #999999;" id="stuid"> </label>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="row">
+                                        <div class="box col-md-5">
+                                            <a>
+                                                <span class="blue" style="width:150px;">班&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp级:</span>
+                                                <label style="color: #999999;" id="stuclass"> </label>
+                                            </a>
+                                        </div>
+                                        <div class="box col-md-6">
+                                            <a>
+                                                <span class="blue" style="width:150px;">联系电话:</span>
+                                                <label style="color: #999999;" id="stutel"> </label>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!--/row-->
+
+        </div><!--/#content.col-md-0-->
+    </div><!--/fluid-row-->
+
+
+</div><!--/.fluid-container-->
+
+<!-- external javascript -->
+
+
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+<script src="{% static 'js/bootstrap-table-zh-CN.js' %}"></script>
+
+<!-- library for cookie management
+<script src="{% static 'js/jquery.cookie.js' %}"></script>-->
+<!-- calender plugin -->
+<script src="{% static 'bower_components/moment/min/moment.min.js' %}"></script>
+<script src="{% static 'bower_components/fullcalendar/dist/fullcalendar.min.js' %}"></script>
+<!-- data table plugin -->
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+
+<!-- select or dropdown enhancer -->
+<script src="{% static 'bower_components/chosen/chosen.jquery.min.js' %}"></script>
+<!-- plugin for gallery image view -->
+<script src="{% static 'bower_components/colorbox/jquery.colorbox-min.js' %}"></script>
+<!-- notification plugin -->
+<script src="{% static 'js/jquery.noty.js' %}"></script>
+<!-- library for making tables responsive -->
+<script src="{% static 'bower_components/responsive-tables/responsive-tables.js' %}"></script>
+<!-- tour plugin -->
+<script src="{% static 'bower_components/bootstrap-tour/build/js/bootstrap-tour.min.js' %}"></script>
+<!-- star rating plugin -->
+<script src="{% static 'js/jquery.raty.min.js' %}"></script>
+<!-- for iOS style toggle switch -->
+<script src="{% static 'js/jquery.iphone.toggle.js' %}"></script>
+<!-- autogrowing textarea plugin -->
+<script src="{% static 'js/jquery.autogrow-textarea.js' %}"></script>
+<!-- multiple file upload plugin -->
+<script src="{% static 'js/jquery.uploadify-3.1.min.js' %}"></script>
+<!-- history.js for cross-browser state change on ajax -->
+<script src="{% static 'js/jquery.history.js' %}"></script>
+<!-- application script for Charisma demo
+<script src="{% static 'js/charisma.js' %}"></script>-->
+<script type="text/javascript" src="{% static 'js/dialog.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-treeview.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-select.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.validate.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/message_cn.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/icheck.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/summernote.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'css/lang/summernote-zh-CN.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.zh-CN.min.js' %}"></script>
+
+<script>
+
+    function changepwd_onclick(){
+          $('#newpwd').val('');
+          $('#conpwd').val('');
+        $('#passwordModal').modal();
+    }
+
+    function pwd_onclick(){
+        if(checkPwd()){
+            if($('#newpwd').val()!=$('#conpwd').val()){
+                Alert(
+                {
+                    msg: '两次密码输入不一致，请重新输入',
+                });
+            }
+            else{
+                $('#passwordModal').modal('hide');
+                //$('#passwordModal').removeData("bs.modal");
+                //$('#pwdform').submit();
+                var new_pwd = $('#newpwd').val();
+                $.get("{% url 'changepassword' %}?new_pwd="+new_pwd, function(ret){
+
+
+                    Alert('密码修改成功！');
+                });
+            }
+        }
+    }
+
+    function checkPwd(){
+        if($('#newpwd').val() == ""){
+            Alert("新密码不能为空");
+            return false;
+        }
+        else if($('#conpwd').val() == ""){
+            Alert("确认密码不能为空");
+            return false;
+        }
+        return true;
+    }
+    function chineseSort(a, b){
+        return a.localeCompare(b);
+    }
+</script>
+
+<script>
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg)) {
+            return decodeURI(arr[2]);
+        }
+        else
+            return null;
+    }
+
+    $(function(){
+
+        $('#userid').html(getCookie('userid'));
+        var user_id=getCookie('userid');
+        $.getJSON("{% url 'student_getstuinfo' %}", function(ret){
+            $('#stuname').html(ret.data[0].name);
+            $('#stusex').html(ret.data[0].sex);
+            $('#stuclass').html(ret.data[0].stu_class);
+            $('#stumajor').html(ret.major[0].major);
+            $('#stuid').html(ret.data[0].user_id);
+            $('#stutel').html(ret.data[0].tel);
+        });
+
+
+    });
+
+</script>
+
+
+
+
+
+
+</body>
+</html>

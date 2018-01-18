@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <meta charset="utf-8">
+    <title>信息学院本科生毕业设计管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+
+    <!-- The styles -->
+    {% load static %}
+    <link id="bs-css" href="{% static 'css/bootstrap-cerulean.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/charisma-app.css' %}" rel="stylesheet">
+    <link href="{% static 'bower_components/fullcalendar/dist/fullcalendar.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/fullcalendar/dist/fullcalendar.print.css' %}" rel='stylesheet' media='print'>
+    <link href="{% static 'bower_components/chosen/chosen.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/colorbox/example3/colorbox.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/responsive-tables/responsive-tables.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/bootstrap-tour/build/css/bootstrap-tour.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/jquery.noty.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/noty_theme_default.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/elfinder.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/elfinder.theme.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/jquery.iphone.toggle.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/uploadify.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/animate.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-treeview.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-table.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-select.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/summernote.css' %}" rel='stylesheet'>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link href="{% static 'css/bootstrap-datepicker.css' %}" rel='stylesheet'>
+    <script src="{% static 'bower_components/jquery/jquery.min.js' %}"></script>
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="{% static 'img/logo3.png' %}">
+
+<style type="text/css">
+.uploadtxt{ height:35px; border:1px solid #cdcdcd; width:212px;}
+.uploadfile{ position:absolute; top:0px; right:0px; height:35px; opacity:0; width:212px }
+</style>
+
+
+</head>
+
+<body>
+    <!-- topbar starts -->
+<div class="navbar navbar-default" role="navigation">
+
+    <div class="navbar-inner" >
+        <button type="button" class="navbar-toggle pull-left animated flip">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+         <img  src="{% static 'img/index.png' %}" />
+        <a class="navbar-brand" href="{% url 'supervisor_index' %}" > 信息学院本科生毕业设计管理系统</a>
+
+        <!-- user dropdown starts -->
+        <div class="btn-group pull-right">
+            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <i class="glyphicon glyphicon-user"></i>
+                <span class="hidden-sm hidden-xs"> 用户名: </span>
+                <span id="userid"> 异常</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a  onclick="changepwd_onclick()">修改密码</a></li>
+                <li class="divider"></li>
+                <li><a href="/app/">退出</a></li>
+            </ul>
+        </div>
+        <!-- user dropdown ends -->
+
+    </div>
+</div>
+    <!-- topbar ends -->
+<div class="ch-container">
+
+    <!-- system modal start -->
+    <div id="ycf-alert" class="modal">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h3 class="modal-title"><i class="fa fa-exclamation-circle"></i> [Title]</h3>
+          </div>
+          <div class="modal-body">
+              <div class="input-group input-group-lg" >[Message]
+              </div>
+          </div>
+          <div class="modal-footer" >
+            <button type="button" class="btn btn-primary ok" data-dismiss="modal">[BtnOk]</button>
+            <button type="button" class="btn btn-default cancel" data-dismiss="modal">[BtnCancel]</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- system modal end -->
+
+    <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel"
+         aria-hidden="true">
+        <form class="form-horizontal" method="get" enctype="multipart/form-data" id="pwdform">
+        <div class="modal-dialog">
+            <div class="modal-content" role="document">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>修改密码</h3>
+                </div>
+
+                <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i>&nbsp;新密码</span>
+                        <input id="newpwd" type="password" class="form-control" placeholder="Password" required="required">
+                </div>
+                <br>
+                <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i>&nbsp;确认密码</span>
+                        <input id="conpwd" type="password" class="form-control" placeholder="Password" required="required">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;关闭</button>
+                    <button type="button" class="btn btn-default" onclick="pwd_onclick()" ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;确定修改</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2 col-lg-2">
+            <div class="sidebar-nav">
+                <div class="nav-canvas">
+                    <div class="nav-sm nav nav-stacked">
+                    </div>
+                    <ul class="nav nav-pills nav-stacked main-menu">
+
+
+                                <li><a class="ajax-link" href="/app/supervisor_Maintain/"><i class="glyphicon glyphicon-cog"></i><span>&nbsp;&nbsp;维护毕业设计活动</span></a>
+                                </li>
+
+                                <li><a class="ajax-link" href="/app/supervisor_teacherMessage/"><i class="glyphicon glyphicon-user"></i><span>&nbsp;&nbsp;教师信息管理</span></a>
+                                </li>
+
+                                <li><a class="ajax-link" href="/app/supervisor_studentMessage/"><i class="glyphicon glyphicon-user"></i><span>&nbsp;&nbsp;学生信息管理</span></a>
+                                </li>
+<!--
+                                <li><a class="ajax-link"><i class="glyphicon glyphicon-fullscreen"></i><span>&nbsp;&nbsp;查看双选结果</span></a>
+                                    <ul>
+                                        <li><a class="ajax-link" href="/app/supervisor_checkByTeacher/"><span>&nbsp;&nbsp;按教师查看</span></a></li>
+                                        <li><a class="ajax-link" href="/app/supervisor_checkByStudent/"><span>&nbsp;&nbsp;按学生查看</span></a></li>
+                                        <li><a class="ajax-link" href="/app/supervisor_checkByTopic/"><span>&nbsp;&nbsp;按未选题目查看</span></a></li>
+
+                                    </ul>
+                                </li>
+-->
+                                <li><a class="ajax-link" href="/app/supervisor_download/"><i class="glyphicon glyphicon-circle-arrow-down"></i><span>&nbsp;&nbsp;下载汇总文件</span></a>
+                                </li>
+
+                                <div class="row">
+                                     <div class="box col-md-12">
+                                          <div class="box-inner">
+                                               <div class="box-header well" data-original-title="">
+                                                    <h2><i class="glyphicon glyphicon-user"></i>&nbsp;用户信息</h2>
+                                               </div>
+                                               <div class="box-content">
+                                                    <ul class="dashboard-list">
+                                                        <li>
+                                                        <div class="row">
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">姓&nbsp;&nbsp;名:</span>
+                                                               <label style="color: #999999;" id="labname"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">角&nbsp;&nbsp;色:</span>
+                                                               <label style="color: #999999;" id="labrole"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">工&nbsp;&nbsp;号:</span>
+                                                               <label style="color: #999999;" id="labid"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">部&nbsp&nbsp门:</span>
+                                                               <label style="color: #999999;" id="labinstitution1">教学办公室</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">性&nbsp;&nbsp;别:</span>
+                                                               <label style="color: #999999;" id="labsex"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">电&nbsp;&nbsp;话:</span>
+                                                               <label style="color: #999999;" id="labtel"> sss</label>
+                                                             </div>
+                                                        </div>
+                                                        </li>
+                                                    </ul>
+                                               </div>
+                                          </div>
+                                     </div>
+                                </div><!--/row-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- left menu starts
+        <div class="col-sm-2 col-lg-2">
+            <div class="sidebar-nav">
+                <div class="nav-canvas">
+                    <div class="nav-sm nav nav-stacked">
+
+                    </div>
+                    <ul class="nav nav-pills nav-stacked main-menu">
+                        {% for menu1 in menus %}
+                        {% if menu1 %}
+                            <li class="nav-header"><i class="glyphicon glyphicon-star"></i>&nbsp;&nbsp;{{menu1.0.menu_classify}}</li>
+                            {% for menu in menu1 %}
+                                <li><a class="ajax-link" href="{{menu.menu_addr}}"><i class="glyphicon glyphicon-{{menu.menu_icon}}"></i><span>&nbsp;&nbsp;{{menu.menu_name}}</span></a>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--/span-->
+        <!-- left menu ends -->
+
+        <div id="content" class="col-lg-10 col-sm-10">
+                <!-- content starts -->
+            <div>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/app/supervisor_index/" id="company_name">主页</a>
+                    </li>
+                    <li>
+                        <a href="#">教师信息管理</a>
+                    </li>
+                </ul>
+                <div class="box-inner">
+                    <div class="box-header well" data-original-title="">
+                        <h2>教师信息管理</h2>
+                    </div>
+                    <div class="box-content">
+                        <div class="form-group form-inline" id="tabletoolbar">
+                            <span>&nbsp;&nbsp;&nbsp;</span>
+                            <div id="toolbar" class="btn-group">
+                                <button id="btn_add" type="button" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新增 </button>
+                                <button id="btn_edit" type="button" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 修改 </button>
+                                <button id="btn_delete" type="button" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除 </button>
+                                <button id="btn_upload" type="button" class="btn btn-default" onclick="btnAddFile()">
+                                    <span class="glyphicon glyphicon-upload" aria-hidden="true" ></span> 上传名单 </button>
+                            </div>
+                        </div>
+                        <table id="tb_info"></table>
+
+                    </div>
+                </div>
+
+                <div class="modal fade" id="mdlInformation" tabindex="-1" role="dialog" aria-labelledby="mdlInformationLabel" aria-hidden="true">
+        <form class="form-horizontal" method="post" enctype="multipart/form-data" id="companyform"  role="form" onsubmit="formSubmit()">
+        <div class="modal-dialog" style="width:400px;">
+            <div class="modal-content" role="document">
+                <div class="modal-header" style="height:50px;">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 id="mdlTitle">教师信息</h4>
+                    <h4 hidden="true" id="mdlPara"></h4>
+                </div>
+                <div class="modsal-body" >
+                    <div class="input-group input-group" style="margin:10px 0px 0px 30px;">
+                        <!-- modal content begin -->
+
+                        <div class="form-group has-warning" hidden="true">
+                            <label class="col-sm-4 control-label">Id: </label>
+                            <div class="col-sm-8 ">
+                                <input type="text" name="Id" id="txtId" class="form-control" placeholder="Id">
+                            </div>
+                        </div>
+
+                        <div class="form-group has-warning">
+                            <label class="col-sm-4 control-label">指导教师：</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="name" id="txtTeachername" class="form-control" placeholder="指导教师">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">性别：</label>
+                            <div class="col-sm-8">
+                                <label class="radio-inline"><input type="radio" name="Sex" id="irdMale" value="1" checked="true"> 男</label>
+                                <label class="radio-inline"><input type="radio" name="Sex" id="irdFemale" value="2"> 女</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">教师工号：</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="name" id="txtTeacherid" class="form-control" placeholder="教师工号">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">联系电话：</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="name" id="txtTelephone" class="form-control" placeholder="联系电话">
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">研究所：</label>
+                            <div class="col-sm-8">
+                                <select class="selectpicker" data-width="150" title="研究所" id="selectInstitution" onchange="InstitutionChange()" selected="selected" >
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label class="col-sm-4 control-label">专业：</label>
+                            <div class="col-sm-8">
+                                <select class="selectpicker" data-width="150" title="专业" id="selectMajor" selected="selected" >
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- modal content end -->
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn_submit" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> 保存 </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 关闭 </button>
+                </div>
+            </div>
+        </div>
+            </form>
+    </div>
+
+        <div class="modal fade" id="mdAddFile" tabindex="-1" role="dialog" aria-labelledby="mdlInformationLabel" aria-hidden="true">
+            <form class="form-horizontal" method="post" enctype="multipart/form-data" id="formAddFile">
+
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header" style="height:50px;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="mdlAddFileTitle">上传文件</h4>
+                    <h4 hidden="true" id="mdlAddFilePara"></h4>
+                </div>
+                <div class="modal-body">
+                <div class="container col-md-16">
+                    <div class="row">
+                        <div class="col-md-4">
+
+                            <div class="input-group input-group" style="margin:10px 0px 0px 30px;">     <!-- modal content begin -->
+
+                                    <div class="col-sm-8">
+
+                                        {% csrf_token %}
+                                        {{ form }}
+                                        {{ uf.as_p }}
+                                    </div>
+
+                            <!-- modal content end -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                </div>
+
+                <div class="modal-footer" id="myAddFileFooter">
+                    <button class="btn btn-primary" onclick="btnAddFileSubmit()">
+                        <span class="glyphicon glyphicon-floppy-disk"></span> 保存 </button>
+                    <button class="btn btn-default" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove"></span> 关闭 </button>
+                </div>
+              </div>
+            </div>
+            </form>>
+        </div><!-- /.modal -->
+
+
+                <div class="row">
+
+                </div><!--/row-->
+            </div><!--/#content.col-md-0-->
+        </div><!--/fluid-row-->
+    </div><!--/.fluid-container-->
+</div>
+<!-- external javascript -->
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+<script src="{% static 'js/bootstrap-table-zh-CN.js' %}"></script>
+<script src="{% static 'js/jquery.cookie.js' %}"></script>
+<script src="{% static 'bower_components/moment/min/moment.min.js' %}"></script>
+<script src="{% static 'bower_components/fullcalendar/dist/fullcalendar.min.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'bower_components/chosen/chosen.jquery.min.js' %}"></script>
+<script src="{% static 'bower_components/colorbox/jquery.colorbox-min.js' %}"></script>
+<script src="{% static 'js/jquery.noty.js' %}"></script>
+<script src="{% static 'bower_components/responsive-tables/responsive-tables.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap-tour/build/js/bootstrap-tour.min.js' %}"></script>
+<script src="{% static 'js/jquery.raty.min.js' %}"></script>
+<script src="{% static 'js/jquery.iphone.toggle.js' %}"></script>
+<script src="{% static 'js/jquery.autogrow-textarea.js' %}"></script>
+<script src="{% static 'js/jquery.uploadify-3.1.min.js' %}"></script>
+<script src="{% static 'js/jquery.history.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/dialog.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-treeview.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-select.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.validate.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/message_cn.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/icheck.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/summernote.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'css/lang/summernote-zh-CN.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.zh-CN.min.js' %}"></script>
+
+<script>
+
+    function changepwd_onclick(){
+          $('#newpwd').val('');
+          $('#conpwd').val('');
+        $('#passwordModal').modal();
+    }
+
+    function pwd_onclick(){
+        if(checkPwd()){
+            if($('#newpwd').val()!=$('#conpwd').val()){
+                Alert(
+                {
+                    msg: '两次密码输入不一致，请重新输入',
+                });
+            }
+            else{
+                $('#passwordModal').modal('hide');
+                //$('#passwordModal').removeData("bs.modal");
+                //$('#pwdform').submit();
+                var new_pwd = $('#newpwd').val();
+                $.get("{% url 'changepassword' %}?new_pwd="+new_pwd, function(ret){
+
+
+                    Alert('密码修改成功！');
+                });
+            }
+        }
+    }
+
+    function checkPwd(){
+        if($('#newpwd').val() == ""){
+            Alert("新密码不能为空");
+            return false;
+        }
+        else if($('#conpwd').val() == ""){
+            Alert("确认密码不能为空");
+            return false;
+        }
+        return true;
+    }
+    function chineseSort(a, b){
+        return a.localeCompare(b);
+    }
+
+
+
+</script>
+
+<script>
+
+
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg))
+            return decodeURI(arr[2]);
+        else
+            return null;
+    }
+
+
+    function btnAddFileSubmit() {
+        $('#mdAddFile').modal('hide');
+    }
+
+
+    function checkTel(tel) {
+        var mobile = /^1[3|5|7|8]\d{9}$/ , phone = /^0\d{2,3}-?\d{7,8}$/;
+        return mobile.test(tel) || phone.test(tel);
+    }
+
+    function btnAddFile() {
+        $('#mdAddFile').modal({backdrop: 'static', keyboard: false});
+    }
+
+    $(function(){
+        $('#userid').html(getCookie('userid'));
+
+        $.getJSON("{% url 'supervisor_getuserinfo' %}", function(ret){
+
+            $('#labname').html(ret.data[0].name);
+            $('#labrole').html(ret.data[0].role_name);
+            $('#labid').html(ret.data[0].user_id);
+            $('#labinstitution').html(ret.data[0].institution_name);
+            $('#labsex').html(ret.data[0].sex);
+            $('#labtel').html(ret.data[0].tel);
+
+        });
+
+
+        $.getJSON("{% url 'supervisor_getinstitution' %}", function(ret){
+            for(var i=1; i < ret.length; i++){
+                $("<option value="+ret[i]['id']+">  "+ret[i]['institution_name']+" </option>").appendTo($('#selectInstitution'));
+            }
+            $('#selectInstitution').selectpicker('refresh');
+        });
+
+        major_select();
+
+        var usercode = getCookie("usercode");
+
+        var oTable = new TableInit();
+        oTable.Init();
+
+        var oButtonInit = new ButtonInit();
+        oButtonInit.Init();
+
+
+    });
+
+    function major_select(){
+        $('#selectMajor').html('');
+        $.getJSON("{% url 'supervisor_getmajor' %}", function(ret){
+            for(var i=0; i < ret.length; i++){
+                $("<option value="+ret[i]['id']+">  "+ret[i]['major']+" </option>").appendTo($('#selectMajor'));
+            }
+            $('#selectMajor').selectpicker('refresh');
+        });
+    }
+
+    function InstitutionChange(){
+        var objS = document.getElementById("selectInstitution");
+        var institution_id = objS.options[objS.selectedIndex].value;
+
+        $.getJSON("{% url 'supervisor_getthismajor' %}?institution_id="+institution_id, function(ret){
+            $('#selectMajor').html('');
+            for(var i=0; i < ret.length; i++){
+                $("<option value="+ret[i]['major_id']+">  "+ret[i]['major']+" </option>").appendTo($('#selectMajor'));
+            }
+            $('#selectMajor').selectpicker('refresh');
+        });
+    }
+
+    function resetform(){
+        $('#companyform')[0].reset();
+        $('#selectInstitution').selectpicker('refresh');
+        $('#selectMajor').selectpicker('refresh');
+    }
+
+    function add_info(){
+        resetform();
+        major_select();
+        $('#selectInstitution').selectpicker('val');
+        $('#selectMajor').selectpicker('val');
+        $("input[name=\"Sex\"][value=\"1\"]").attr("checked", true);
+
+        $('#mdlPara').html('');
+        $('#mdlTitle').html('教师信息');
+        $('#mdlInformation').modal({backdrop: 'static', keyboard: false});
+    }
+
+    function edit_info(id){
+        resetform();
+        major_select();
+        $.getJSON("{% url 'supervisor_get_teacherbyid' %}?id="+id, function(ret){
+            //alert(ret[0]['major_id'])
+            $('#txtId').val(id);
+            $('#txtId').attr("disabled",true);
+            $('#txtTeachername').val(ret[0].name);
+            $('#txtTeacherid').val(ret[0].user_id);
+            $('#txtTelephone').val(ret[0].tel);
+            $('#selectInstitution').selectpicker('val', ret[0].institution_id);
+            $('#selectMajor').selectpicker('val', ret[0].major_id);
+
+            $("input[name=\"Sex\"][value="+ ret[0].sex_id +"]").attr("checked", true);
+            $("input[name=\"Sex\"][value="+ ret[0].sex_id +"]").click();
+        });
+
+        $('#mdlPara').html(id);
+        $('#mdlTitle').html('教师信息');
+        $('#mdlInformation').modal({backdrop: 'static', keyboard: false});
+    }
+
+    function delete_info(id) {
+        $.getJSON("{% url 'supervisor_del_teacherbyid' %}?id="+id);
+    }
+
+    function submit_info() {
+        var parameters = {
+            id: $('#txtId').val(),
+            teacher_name: $('#txtTeachername').val(),
+            teacher_id: $('#txtTeacherid').val(),
+            sex_id: $("input[name='Sex']:checked").val(),
+            telephone: $('#txtTelephone').val(),
+            institution_id: $('#selectInstitution').val(),
+            major_id: $('#selectMajor').val()
+        };
+
+        if(validform().form()){
+            var url = '';
+            if($('#mdlPara').html() == ''){
+                url = "{% url 'supervisor_add_teachermessage' %}";
+            } else {
+                url = "{% url 'supervisor_update_teachermessage' %}";
+            }
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: parameters,
+                dataType: "json",
+                success: function(data){
+                    //dat = JSON.parse(data);
+                    alert(data.message);
+                    $('#mdlInformation').modal('hide');
+                    refresh();
+                },
+                error:  function(XMLHttpRequest, textStatus, errorThrown) {
+                    //alert(XMLHttpRequest.status);
+                    //alert(XMLHttpRequest.readyState);
+                    //alert(textStatus);
+                    alert('请检查数据并重试！');
+                }
+            });
+        }
+    }
+
+    function validform(){
+        if ($('#txtTeachername').val() == '') {
+            alert('指导教师不能为空，请重新填写！');
+	        return false;
+        }
+
+        if ($('#txtTeacherid').val() == '') {
+            alert('教师工号不能为空，请重新填写！');
+	        return false;
+        }
+        if ($('#txtTelephone').val() != ''){
+
+            if (checkTel($('#txtTelephone').val()) == false) {
+                alert('电话号码格式为：11位手机号 或者 区号-7/8位固定电话 (例如，024-23890000)');
+                return false;
+            }
+        }
+
+        if ($('#selectInstitution').val() == '') {
+            alert('请选择所在研究所！');
+	        return false;
+        }
+
+        if ($('#selectMajor').val() == '') {
+            alert('请选择所属专业！');
+	        return false;
+        }
+
+
+
+        return $("#companyform").validate({
+            rules : {
+                txtTeachername : {
+                    required : true
+                },txtTeacherid : {
+                    required : true
+                },txtTelephone : {
+                    required : true
+                }
+            }
+        });
+    }
+
+    var TableInit = function () {
+        var oTableInit = new Object();
+        oTableInit.Init = function () {
+            $('#tb_info').bootstrapTable({
+                url: '/app/supervisor_get_selectteacher',      //请求后台的URL（*）
+                method: 'get',                      //请求方式（*）
+                toolbar: '#tabletoolbar',           //工具按钮用哪个容器
+                striped: true,                      //是否显示行间隔色
+                locale:'zh-CN',
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                sortable: true,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                queryParams: oTableInit.queryParams,//传递参数（*）
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber:1,                       //初始化加载第一页，默认第一页
+                pageSize: 10,                       //每页的记录行数（*）
+                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                strictSearch: true,
+                showColumns: false,                 //是否显示所有的列
+                showRefresh: true,                  //是否显示刷新按钮
+                minimumCountColumns: 2,             //最少允许的列数
+                clickToSelect: true,                //是否启用点击选中行
+                //height: 541,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+                showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
+                cardView: false,                    //是否显示详细视图
+                detailView: false,                  //是否显示父子表
+                rowStyle: function (row, index) {
+                    //这里有5个取值代表5中颜色['active', 'success', 'info', 'warning', 'danger'];
+                    var strclass = "";
+                    if (row.work_status == '未启用') {
+                        strclass = 'danger'; //还有一个active
+                    }
+                    else {
+                        return {};
+                    }
+                    return { classes: strclass }
+                },
+
+                columns:[ {
+                    checkbox: true
+                    },{
+                        title: "Id",
+                        field: 'id',
+                        //sortable : true,
+                        valign: "middle"//垂直
+                    },                    {
+                        title: "指导教师",
+                        field: 'name',
+                        sortable : true,
+                        valign: "middle"//垂直
+                    },{
+                        title: "性别",
+                        field: 'sex',
+                        sortable : true,
+                        valign: "middle"//垂直
+                    },{
+                        title: "工号",
+                        field: 'user_id',
+                        sortable : true,
+                        valign: "middle"//垂直
+                    },{
+                        title: "联系电话",
+                        field: 'tel',
+                        //sortable : true,
+                        valign: "middle"//垂直
+                    },{
+                        title: "研究所",
+                        field: 'institution_name',
+                        sortable : true,
+                        valign: "middle"//垂直
+                    }
+                    ,{
+                        title: "专业",
+                        field: 'major',
+                        sortable : true,
+                        valign: "middle"//垂直
+                    }
+                ]
+
+            });
+
+            $('#tb_info').bootstrapTable('hideColumn', 'id');
+
+        };
+
+
+        oTableInit.queryParams = function (params) {
+            var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                limit: params.limit,   //页面大小
+                offset: params.offset, //页码
+                sort: params.sort,
+                order: params.order,
+                search: params.search
+            };
+            return temp;
+        };
+        return oTableInit;
+    };
+
+    function refresh() {
+        setTimeout(function() {
+            $('#tb_info').bootstrapTable('refresh');
+        }, 500);
+    }
+
+    var ButtonInit = function () {
+        var oInit = new Object();
+
+        oInit.Init = function () {
+            $("#btn_add").click(function () {
+                add_info();
+            });
+
+            $("#btn_edit").click(function () {
+                var select = $("#tb_info").bootstrapTable('getSelections');
+                if (select.length > 1) {
+                    Alert('只能选择一行进行编辑');
+                    return;
+                }
+                if (select.length <= 0) {
+                    Alert('请选择有效数据');
+                    return;
+                }
+                edit_info(select[0].id);
+                refresh();
+            });
+
+            $("#btn_delete").click(function () {
+                var select = $("#tb_info").bootstrapTable('getSelections');
+                if (select.length <= 0) {
+                    Alert('请选择有效数据');
+                    return;
+                }
+                if(window.confirm('确定删除?')){          //后台删除数据方法
+                    for (var k = 0, length = select.length; k < length; k++) {
+                        delete_info(select[k].id);
+                    }
+                    refresh();
+                    Alert('删除成功');
+                    return true;
+
+                }else{
+
+                    return false;
+                }
+
+            });
+
+            $("#btn_submit").click(function () {
+                submit_info();
+            });
+
+        };
+
+        return oInit;
+    };
+
+
+</script>
+
+</body>
+</html>

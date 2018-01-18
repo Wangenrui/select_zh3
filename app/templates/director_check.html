@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <meta charset="utf-8">
+    <title>信息学院本科生毕业设计管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+
+    <!-- The styles -->
+    {% load static %}
+    <link id="bs-css" href="{% static 'css/bootstrap-cerulean.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/charisma-app.css' %}" rel="stylesheet">
+    <link href="{% static 'bower_components/fullcalendar/dist/fullcalendar.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/fullcalendar/dist/fullcalendar.print.css' %}" rel='stylesheet' media='print'>
+    <link href="{% static 'bower_components/chosen/chosen.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/colorbox/example3/colorbox.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/responsive-tables/responsive-tables.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/bootstrap-tour/build/css/bootstrap-tour.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/jquery.noty.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/noty_theme_default.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/elfinder.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/elfinder.theme.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/jquery.iphone.toggle.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/uploadify.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/animate.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-treeview.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-table.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-select.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/summernote.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/plugin/font-awesome.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-datepicker.css' %}" rel='stylesheet'>
+
+    <!-- jQuery -->
+    <script src="{% static 'bower_components/jquery/jquery.min.js' %}"></script>
+
+    <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- The fav icon -->
+    <link rel="shortcut icon" href="{% static 'img/logo3.png' %}">
+    <style type="text/css">
+    .uploadtxt{ height:35px; border:1px solid #cdcdcd; width:212px;}
+    .uploadfile{ position:absolute; top:0px; right:0px; height:35px; opacity:0; width:212px }
+    </style>
+
+</head>
+
+<body>
+    <!-- topbar starts -->
+<div class="navbar navbar-default" role="navigation">
+
+    <div class="navbar-inner" >
+        <button type="button" class="navbar-toggle pull-left animated flip">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+         <img  src="{% static 'img/index.png' %}" />
+        <a class="navbar-brand" href="{% url 'director_index' %}" > 信息学院本科生毕业设计管理系统</a>
+
+        <!-- user dropdown starts -->
+        <div class="btn-group pull-right">
+            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <i class="glyphicon glyphicon-user"></i>
+                <span class="hidden-sm hidden-xs"> 用户名: </span>
+                <span id="userid"> 异常</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a  onclick="changepwd_onclick()">修改密码</a></li>
+                <li class="divider"></li>
+                <li><a href="/app/">退出</a></li>
+            </ul>
+        </div>
+        <!-- user dropdown ends -->
+
+    </div>
+</div>
+    <!-- topbar ends -->
+<div class="ch-container">
+
+    <!-- system modal start -->
+    <div id="ycf-alert" class="modal">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h3 class="modal-title"><i class="fa fa-exclamation-circle"></i> [Title]</h3>
+          </div>
+          <div class="modal-body">
+              <div class="input-group input-group-lg" >[Message]
+              </div>
+          </div>
+          <div class="modal-footer" >
+            <button type="button" class="btn btn-primary ok" data-dismiss="modal">[BtnOk]</button>
+            <button type="button" class="btn btn-default cancel" data-dismiss="modal">[BtnCancel]</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- system modal end -->
+
+    <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel"
+         aria-hidden="true">
+        <form class="form-horizontal" method="get" enctype="multipart/form-data" id="pwdform">
+        <div class="modal-dialog">
+            <div class="modal-content" role="document">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>修改密码</h3>
+                </div>
+
+                <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i>&nbsp;新密码</span>
+                        <input id="newpwd" type="password" class="form-control" placeholder="Password" required="true">
+                </div>
+                <br>
+                <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i>&nbsp;确认密码</span>
+                        <input id="conpwd" type="password" class="form-control" placeholder="Password" required="true">
+                </div>
+                <div class="modal-footer">
+                    <!-- style="display:none;"
+                    <button type="button" id="disbutton" onclick="pwd_onclick()"  ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;确定修改</button>
+                    -->
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;关闭</button>
+                    <button type="button" class="btn btn-default" onclick="pwd_onclick()" ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;确定修改</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+
+
+    <div class="row">
+         <!-- left menu starts -->
+        <div class="col-sm-2 col-lg-2">
+            <div class="sidebar-nav">
+                <div class="nav-canvas">
+                    <div class="nav-sm nav nav-stacked">
+
+                    </div>
+                    <ul class="nav nav-pills nav-stacked main-menu">
+                        {% for menu1 in menus %}
+                        {% if menu1 %}
+                            <li class="nav-header"><i class="glyphicon glyphicon-star"></i>&nbsp;&nbsp;{{menu1.0.menu_classify}}</li>
+                            {% for menu in menu1 %}
+                                <li><a class="ajax-link" href="{{menu.menu_addr}}"><i class="glyphicon glyphicon-{{menu.menu_icon}}"></i><span>&nbsp;&nbsp;{{menu.menu_name}}</span></a>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                        {% endfor %}
+                        <div class="row">
+                                     <div class="box col-md-12">
+                                          <div class="box-inner">
+                                               <div class="box-header well" data-original-title="">
+                                                    <h2><i class="glyphicon glyphicon-user"></i>&nbsp;用户信息</h2>
+                                               </div>
+                                               <div class="box-content">
+                                                    <ul class="dashboard-list">
+                                                        <li>
+                                                        <div class="row">
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">姓&nbsp;&nbsp;名:</span>
+                                                               <label style="color: #999999;" id="name"> sss</label>
+                                                             </div>
+
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">工&nbsp;&nbsp;号:</span>
+                                                               <label style="color: #999999;" id="id"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">研究所:</span>
+                                                               <label style="color: #999999;" id="institution"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">性&nbsp;&nbsp;别:</span>
+                                                               <label style="color: #999999;" id="sex"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">电&nbsp;&nbsp;话:</span>
+                                                               <label style="color: #999999;" id="tel"> sss</label>
+                                                             </div>
+                                                        </div>
+                                                        </li>
+                                                    </ul>
+                                               </div>
+                                          </div>
+                                     </div>
+                                </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--/span-->
+        <!-- left menu ends -->
+
+        <div id="content" class="col-lg-10 col-sm-10">
+                <!-- content starts -->
+            <div>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/app/director_index/" >毕业设计管理系统</a>
+                    </li>
+                    <li>
+                        <a href="/app/director_check/">查看双选结果</a>
+                    </li>
+                </ul>
+                <div class="box-inner">
+                    <div class="box-header well" data-original-title="">
+                        <h2>查看双选结果</h2>
+                    </div>
+                    <div class="box-content">
+                        <div class="form-group form-inline" id="tabletoolbar">
+
+<select class="selectpicker" data-width="100"  title="所在班级" id="stu_class" onchange="refresh()"></select>
+                        <span>&nbsp;</span>
+                        <select class="selectpicker" data-width="100"  title="指导老师" id="teacc" onchange="refresh()"></select>
+                            <span>&nbsp;&nbsp;</span>
+                            <div id="toolbar" class="btn-group">
+
+                                <button id="btn_edit" type="button" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 指派学生 </button>
+
+                            </div>
+                        </div>
+                        <table id="tb_company"></table>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="mdlInformation" tabindex="-1" role="dialog" aria-labelledby="mdlCompanyInfoLabel" aria-hidden="true">
+        <form class="form-horizontal" method="post" enctype="multipart/form-data" id="companyform"  role="form" onsubmit="formSubmit()">
+        <div class="modal-dialog" style="width:600px;">
+            <div class="modal-content" role="document">
+                <div class="modal-header" style="height:50px;">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 id="mdlTitle">指派学生</h4>
+                    <h4 hidden="true" id="mdlPara"></h4>
+                </div>
+                <div class="modsal-body" >
+                    <div class="input-group input-group" style="margin:10px 0px 0px 30px;">
+                        <div class="form-group has-warning" hidden="true">
+                            <label class="col-sm-4 control-label">Id: </label>
+                            <div class="col-sm-8 ">
+                                <input type="text" name="Id" id="txtId" class="form-control" placeholder="Id">
+                            </div>
+                        </div>
+                        <div class="form-group" hidden="true">
+                            <label class="col-sm-4 control-label" >学生学号：</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="name" id="txtStudentid" class="form-control" placeholder="学生学号">
+                            </div>
+                        </div>
+                        <div class="form-group has-warning">
+                            <label class="col-sm-4 control-label">指导老师: </label>
+                            <div class="col-sm-4">
+                                <select class="selectpicker" data-width="150" title="选择老师" id="slcteacher" selected="selected" onchange="changeteacher()"></select>
+                            </div>
+                        </div>
+                        <div class="form-group has-warning">
+                            <label class="col-sm-4 control-label">毕业设计题目: </label>
+                            <div class="col-sm-8">
+                                <select class="selectpicker" data-width="300"  title="选择题目" id="slctopic" selected="selected"onchange="changetopic()"></select>
+
+                            </div>
+                        </div>
+                        <div class="form-group has-warning">
+                            <label class="col-sm-4 control-label">课题简介: </label>
+                            <div class="col-sm-8">
+                                <textarea type="text" name="name" id="txtjianjie" class="form-control" onfocus=this.blur()> </textarea>
+
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn_submit" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> 保存 </button>
+                    <button  type="button" class="btn btn-default"onclick="change()" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true" ></span> 关闭 </button>
+                </div>
+            </div>
+        </div></div>
+            </form>
+    </div>
+
+
+                <div class="row">
+
+                </div><!--/row-->
+            </div><!--/#content.col-md-0-->
+        </div><!--/fluid-row-->
+    </div><!--/.fluid-container-->
+</div>
+<!-- external javascript -->
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+<script src="{% static 'js/bootstrap-table-zh-CN.js' %}"></script>
+<script src="{% static 'js/jquery.cookie.js' %}"></script>
+<script src="{% static 'bower_components/moment/min/moment.min.js' %}"></script>
+<script src="{% static 'bower_components/fullcalendar/dist/fullcalendar.min.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'bower_components/chosen/chosen.jquery.min.js' %}"></script>
+<script src="{% static 'bower_components/colorbox/jquery.colorbox-min.js' %}"></script>
+<script src="{% static 'js/jquery.noty.js' %}"></script>
+<script src="{% static 'bower_components/responsive-tables/responsive-tables.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap-tour/build/js/bootstrap-tour.min.js' %}"></script>
+<script src="{% static 'js/jquery.raty.min.js' %}"></script>
+<script src="{% static 'js/jquery.iphone.toggle.js' %}"></script>
+<script src="{% static 'js/jquery.autogrow-textarea.js' %}"></script>
+<script src="{% static 'js/jquery.uploadify-3.1.min.js' %}"></script>
+<script src="{% static 'js/jquery.history.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/dialog.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-treeview.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-select.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.validate.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/message_cn.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/icheck.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/summernote.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'css/lang/summernote-zh-CN.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.zh-CN.min.js' %}"></script>
+
+
+<script>
+    $(function(){
+        $('#btn_edit').hide();
+        $('#userid').html(getCookie('userid'));
+        $.getJSON("{% url 'director_getstuinfo' %}", function(ret){
+            $('#name').html(ret.data[0].name);
+            $('#sex').html(ret.data[0].sex);
+
+            $('#id').html(ret.data[0].user_id);
+            $('#tel').html(ret.data[0].tel);
+            $('#institution').html(ret.institution[0].institution_name);
+        });
+
+
+    });
+
+
+
+
+    function changepwd_onclick(){
+          $('#newpwd').val('');
+          $('#conpwd').val('');
+        $('#passwordModal').modal();
+    }
+
+    function pwd_onclick(){
+        if(checkPwd()){
+            if($('#newpwd').val()!=$('#conpwd').val()){
+                Alert(
+                {
+                    msg: '两次密码输入不一致，请重新输入',
+                });
+            }
+            else{
+                $('#passwordModal').modal('hide');
+                //$('#passwordModal').removeData("bs.modal");
+                //$('#pwdform').submit();
+                var new_pwd = $('#newpwd').val();
+                $.get("{% url 'changepassword' %}?new_pwd="+new_pwd, function(ret){
+
+
+                    Alert('密码修改成功！');
+                });
+            }
+        }
+    }
+
+    function checkPwd(){
+        if($('#newpwd').val() == ""){
+            Alert("新密码不能为空");
+            return false;
+        }
+        else if($('#conpwd').val() == ""){
+            Alert("确认密码不能为空");
+            return false;
+        }
+        return true;
+    }
+    function chineseSort(a, b){
+        return a.localeCompare(b);
+    }
+
+
+</script>
+
+<script>
+var submit=1;
+
+
+    function refresh() {
+       setTimeout(function() {
+            $('#tb_company').bootstrapTable('refresh');
+        }, 500);
+    }
+
+
+function changeteacher(){
+        var objS = document.getElementById("slcteacher");
+        var province = objS.options[objS.selectedIndex].value;
+
+        $.getJSON("{% url 'director_gettopic' %}?province_id="+province, function(ret){
+            $('#slctopic').html('');
+            for(var i=0; i < ret.length; i++){
+                $("<option value="+ret[i].id+">"+ret[i].subject+"</option>").appendTo($('#slctopic'));
+            }
+            $('#slctopic').selectpicker('refresh');
+
+        });
+
+    }
+
+function changetopic(){
+       var topic_id=$('#slctopic').val();
+
+        $.getJSON("{% url 'director_getjianjie' %}?topic="+topic_id, function(ret){
+                      $('#txtjianjie').val(ret[0].introduction);
+
+        });
+
+    }
+
+function change(){
+
+      $('#slctopic').html('');
+    }
+function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg)) {
+            return decodeURI(arr[2]);
+        }
+        else
+            return null;
+    }
+
+    $(function(){
+        $('#userid').html(getCookie('userid'));
+        $('#company_name').html(('company_name'));
+
+        var oTable = new TableInit();
+        oTable.Init();
+
+        var oButtonInit = new ButtonInit();
+        oButtonInit.Init();
+
+        $.get("{% url 'getprovince_id' %}", function(ret1){
+            province_id = ret1;
+            getcityddl(province_id);
+        });
+
+
+$.getJSON("{% url 'director_getclass' %}", function(ret){
+$("<option  value=\"-1\">全部班级</option>").appendTo($('#stu_class'));
+            for(var i=0; i < ret.length; i++){
+                $("<option value="+ret[i]['id']+">  "+ret[i]['class_name']+" </option>").appendTo($('#stu_class'));
+            }
+            $('#stu_class').selectpicker('refresh');
+
+
+        });
+$.getJSON("{% url 'director_getteacc' %}", function(ret){
+        $("<option  value=\"-1\">全部老师</option>").appendTo($('#teacc'))
+            for(var i=0; i < ret.length; i++){
+                $("<option value="+ret[i]['id']+">  "+ret[i]['name']+" </option>").appendTo($('#teacc'));
+            }
+            $('#teacc').selectpicker('refresh');
+
+
+        });
+    });
+$.getJSON("{% url 'director_getteacher' %}?", function (ret) {
+                var sel = $('#slcteacher');
+                for (var i = 0; i < ret.length; i++) {
+                    $("<option value=" + ret[i].id + ">" + ret[i].name + "</option>").appendTo(sel);
+                }
+                sel.selectpicker('refresh');
+            });
+
+function Changeclass(){
+        $('#tb_company').bootstrapTable('refresh');
+    }
+    function resetform(){
+        $('#companyform')[0].reset();
+         $('#slcteacher').selectpicker('refresh');
+         $('#slctopic').selectpicker('refresh');
+    }
+
+    function uuid() {
+        var s = [];
+        var hexDigits = "0123456789abcdef";
+        for (var i = 0; i < 32; i++) {
+            s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+        }
+        s[12] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+        s[16] = hexDigits.substr((s[16] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+        // s[8] = s[13] = s[18] = s[23] = "-";
+
+        var uuid = s.join("");
+        return uuid;
+    }
+
+   function edit_info(id){
+        resetform();
+       // $('#slctopic').selectpicker('val');
+
+        $.getJSON("{% url 'director_get_studentnobyid' %}?id="+id, function(ret){
+            $('#txtId').val(id);
+            $('#txtId').attr("disabled",true);
+            $('#txtStudentid').val(ret[0].user_id);
+
+        });
+
+        $('#mdlPara').html('');
+        $('#mdlTitle').html('指派学生');
+        $('#mdlInformation').modal({backdrop: 'static', keyboard: false});
+    }
+
+function submit_info() {
+
+        var parameters = {
+            id: $('#txtId').val(),
+            stu_id:$('#txtStudentid').val(),
+            topic_id: $('#slctopic').val(),
+            submit:1
+        };
+
+        if(validform().form()){
+            var url = '';
+            if($('#mdlPara').html()== ''){
+
+                url = "{% url 'director_update_topic' %}";
+            }
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: parameters,
+                dataType: "json",
+                success: function(data){
+                    //dat = JSON.parse(data);
+                    alert(data.message);
+                    $('#mdlInformation').modal('hide');
+                    refresh();
+                },
+                error:  function(XMLHttpRequest, textStatus, errorThrown) {
+                    //alert(XMLHttpRequest.status);
+                    //alert(XMLHttpRequest.readyState);
+                    //alert(textStatus);
+                    alert('请检查数据并重试！');
+                }
+            });
+
+        }$('#slctopic').html('');
+    }
+
+    function validform(){
+
+
+        return $("#companyform").validate({
+
+        });
+    }
+
+
+
+
+var TableInit = function () {
+    var oTableInit = new Object();
+    oTableInit.Init = function () {
+        $('#tb_company').bootstrapTable({
+            //url: '/app/get_user',            //请求后台的URL（*）
+            url: '/app/director_get_selectstudent',
+
+            method: 'get',                      //请求方式（*）
+            toolbar: '#tabletoolbar',           //工具按钮用哪个容器
+            striped: true,                      //是否显示行间隔色
+            locale:'zh-CN',
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            sortable: true,                     //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            queryParams: oTableInit.queryParams,//传递参数（*）
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber:1,                       //初始化加载第一页，默认第一页
+            pageSize: 10,                       //每页的记录行数（*）
+            pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+            search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            strictSearch: true,
+            showColumns: false,                 //是否显示所有的列
+            showRefresh: false,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            height: 541,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+            showToggle:false,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                  //是否显示父子表
+            columns:[ {
+                checkbox: true
+                },{
+                    field:'Bname',
+                    title: '教师姓名',
+                    sortable : true,
+                    valign: "middle"
+                },{
+                    field:'subject',
+                    title: '毕业设计题目',
+                    sortable : true,
+                    valign: "middle"
+                },{
+                    title: "学生姓名",
+                    field: 'name',
+                    sortable : true,
+                    valign: "middle"//垂直
+                },{
+                    title: "性别",
+                    field: 'sex',
+                    sortable : true,
+                    valign: "middle"//垂直
+                },{
+                    title: "学号",
+                    field: 'user_id',
+                    sortable : true,
+                    valign: "middle"//垂直
+                },{
+                    field: 'stu_class',
+                    title: '专业班级',
+                    sortable : true,
+                    valign: "middle"
+                },
+            ]
+
+        });
+
+        //隐藏的选项
+
+        //$('#tb_info').bootstrapTable('hideColumn', 'register_status');
+    };
+
+    oTableInit.queryParams = function (params) {
+        var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+            limit: params.limit,   //页面大小
+            offset: params.offset, //页码
+            sort: params.sort,  //排序字段
+            order: params.order,  //升序降序
+            class_id: $('#stu_class').val(),
+            tea_no:$('#teacc').val(),
+            search:params.search
+
+        };
+        return temp;
+    };
+    return oTableInit;
+
+};
+
+var ButtonInit = function () {
+    var oInit = new Object();
+    var postdata = {};
+
+    oInit.Init = function () {
+ $.getJSON("{% url 'director_gettime' %}", function(ret){
+var select1_start=ret.date[0].superintendent_s;
+            var select1_end=ret.date[0].superintendent_e;
+             var today=new Date().toJSON().slice(0,10);
+             var info = "对不起，您的操作未在规定时间范围内进行，请于"+select1_start+"至"+select1_end+"之间进行指派学生";
+        $("#btn_edit").click(function () {
+            $('#userid').html(getCookie('userid'));
+if((today>=select1_start)&&(today<=select1_end)){
+         var select = $("#tb_company").bootstrapTable('getSelections');
+            if (select.length > 1) {
+                Alert('只能选择一行进行编辑');
+                return;
+            }
+            if (select.length <= 0) {
+                Alert('请选择有效数据');
+                return;
+            }
+            if (select[0].topic==null){
+
+            edit_info(select[0].id);
+                refresh();
+            }
+            else{
+                Alert('不能给已选题目学生指派题目');}
+        }else
+        alert(info);
+
+
+        });
+        $("#btn_submit").click(function () {
+                 submit=1;
+                submit_info();
+            });
+});
+    };
+
+    return oInit;
+};
+
+</script>
+
+</body>
+</html>

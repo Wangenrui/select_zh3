@@ -1,0 +1,2622 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="blastsystem@127.0.0.1">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.0">
+    <root id="1"/>
+    <schema id="2" parent="1" name="blastsystem">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="blast"/>
+    <schema id="4" parent="1" name="information_schema"/>
+    <schema id="5" parent="1" name="mysql"/>
+    <schema id="6" parent="1" name="performance_schema"/>
+    <schema id="7" parent="1" name="sys"/>
+    <table id="8" parent="2" name="app_blastrole"/>
+    <table id="9" parent="2" name="app_blastroletype"/>
+    <table id="10" parent="2" name="app_certificatetype"/>
+    <table id="11" parent="2" name="app_city"/>
+    <table id="12" parent="2" name="app_company"/>
+    <table id="13" parent="2" name="app_companytype"/>
+    <table id="14" parent="2" name="app_county"/>
+    <table id="15" parent="2" name="app_departofcompany"/>
+    <table id="16" parent="2" name="app_equipment"/>
+    <table id="17" parent="2" name="app_equipmentsubtype"/>
+    <table id="18" parent="2" name="app_equipmenttype"/>
+    <table id="19" parent="2" name="app_filekit"/>
+    <table id="20" parent="2" name="app_filetype"/>
+    <table id="21" parent="2" name="app_menu"/>
+    <table id="22" parent="2" name="app_messagetype"/>
+    <table id="23" parent="2" name="app_province"/>
+    <table id="24" parent="2" name="app_role"/>
+    <table id="25" parent="2" name="app_role_menu"/>
+    <table id="26" parent="2" name="app_role_sysuser"/>
+    <table id="27" parent="2" name="app_sextype"/>
+    <table id="28" parent="2" name="app_sysuser"/>
+    <table id="29" parent="2" name="app_userofdepart"/>
+    <table id="30" parent="2" name="app_usertype"/>
+    <table id="31" parent="2" name="auth_group"/>
+    <table id="32" parent="2" name="auth_group_permissions"/>
+    <table id="33" parent="2" name="auth_permission"/>
+    <table id="34" parent="2" name="auth_user"/>
+    <table id="35" parent="2" name="auth_user_groups"/>
+    <table id="36" parent="2" name="auth_user_user_permissions"/>
+    <table id="37" parent="2" name="blast_record"/>
+    <table id="38" parent="2" name="burst_company"/>
+    <table id="39" parent="2" name="burst_district"/>
+    <table id="40" parent="2" name="burst_person"/>
+    <table id="41" parent="2" name="burst_project"/>
+    <table id="42" parent="2" name="company_type"/>
+    <table id="43" parent="2" name="deto_transfer_record"/>
+    <table id="44" parent="2" name="deto_transport_record"/>
+    <table id="45" parent="2" name="district_sign_record"/>
+    <table id="46" parent="2" name="django_content_type"/>
+    <table id="47" parent="2" name="django_migrations"/>
+    <table id="48" parent="2" name="django_session"/>
+    <table id="49" parent="2" name="equipment"/>
+    <table id="50" parent="2" name="equipment_sub_type"/>
+    <table id="51" parent="2" name="equipment_type"/>
+    <table id="52" parent="2" name="explosive_record_item"/>
+    <table id="53" parent="2" name="file_kit_output"/>
+    <table id="54" parent="2" name="id_list"/>
+    <table id="55" parent="2" name="project_blast_type"/>
+    <table id="56" parent="2" name="project_burst_company"/>
+    <table id="57" parent="2" name="project_persons"/>
+    <table id="58" parent="2" name="project_supervisor"/>
+    <table id="59" parent="2" name="protected_obj_type"/>
+    <table id="60" parent="2" name="seismometer"/>
+    <table id="61" parent="2" name="seismometer_files"/>
+    <table id="62" parent="2" name="user_type"/>
+    <table id="63" parent="2" name="video_camera"/>
+    <table id="64" parent="2" name="workflow"/>
+    <column id="65" parent="8" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="66" parent="8" name="brole_current_state">
+      <Position>2</Position>
+      <DataType>varchar(2)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="67" parent="8" name="brole_is_login">
+      <Position>3</Position>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="68" parent="8" name="brole_reg_status">
+      <Position>4</Position>
+      <DataType>varchar(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="69" parent="8" name="brole_work_status">
+      <Position>5</Position>
+      <DataType>varchar(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="70" parent="8" name="brole_supervisor">
+      <Position>6</Position>
+      <DataType>varchar(2)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="71" parent="8" name="brole_supervisor_code">
+      <Position>7</Position>
+      <DataType>varchar(25)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="72" parent="8" name="brole_describe">
+      <Position>8</Position>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="73" parent="8" name="brole_file">
+      <Position>9</Position>
+      <DataType>longtext|0</DataType>
+    </column>
+    <column id="74" parent="8" name="brole_cert_type_id">
+      <Position>10</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="75" parent="8" name="brole_type_id">
+      <Position>11</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="76" parent="8" name="user_id_id">
+      <Position>12</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="77" parent="8" name="brole_cert">
+      <Position>13</Position>
+      <DataType>varchar(25)|0</DataType>
+    </column>
+    <index id="78" parent="8" name="app_blastrole_18624dd3">
+      <ColNames>user_id_id</ColNames>
+    </index>
+    <index id="79" parent="8" name="app_blastrole_67fbe3a1">
+      <ColNames>brole_cert_type_id</ColNames>
+    </index>
+    <index id="80" parent="8" name="app_blastrole_9a04eebb">
+      <ColNames>brole_type_id</ColNames>
+    </index>
+    <key id="81" parent="8" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="82" parent="8" name="app_blastr_brole_cert_type_id_9871ec59_fk_app_certificatetype_id">
+      <ColNames>brole_cert_type_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_certificatetype</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="83" parent="8" name="app_blastrole_brole_type_id_efd8469b_fk_app_blastroletype_id">
+      <ColNames>brole_type_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_blastroletype</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="84" parent="8" name="app_blastrole_user_id_id_fd7d1ad8_fk">
+      <ColNames>user_id_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_sysuser</RefTableName>
+      <RefColNames>user_id</RefColNames>
+    </foreign-key>
+    <column id="85" parent="9" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="86" parent="9" name="brt_name">
+      <Position>2</Position>
+      <DataType>varchar(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="87" parent="9" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="88" parent="10" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="89" parent="10" name="cert_name">
+      <Position>2</Position>
+      <DataType>varchar(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="90" parent="10" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="91" parent="11" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="92" parent="11" name="city_name">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="93" parent="11" name="province_id">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="94" parent="11" name="latitude">
+      <Position>4</Position>
+      <DataType>decimal(10,7)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="95" parent="11" name="longitude">
+      <Position>5</Position>
+      <DataType>decimal(10,7)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="96" parent="11" name="short_name">
+      <Position>6</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="97" parent="11" name="sort">
+      <Position>7</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="98" parent="11" name="app_city_4a5754ed">
+      <ColNames>province_id</ColNames>
+    </index>
+    <key id="99" parent="11" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="100" parent="11" name="app_city_province_id_68c81600_fk_app_province_id">
+      <ColNames>province_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_province</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="101" parent="12" name="id">
+      <Position>1</Position>
+      <DataType>char(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="102" parent="12" name="company_name">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="103" parent="12" name="company_short_name">
+      <Position>3</Position>
+      <DataType>varchar(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="104" parent="12" name="company_code">
+      <Position>4</Position>
+      <DataType>varchar(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="105" parent="12" name="company_manager">
+      <Position>5</Position>
+      <DataType>varchar(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="106" parent="12" name="company_manager_tel">
+      <Position>6</Position>
+      <DataType>varchar(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="107" parent="12" name="company_address">
+      <Position>7</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="108" parent="12" name="company_create_time">
+      <Position>8</Position>
+      <DataType>datetime(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="109" parent="12" name="company_city_id">
+      <Position>9</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="110" parent="12" name="company_county_id">
+      <Position>10</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="111" parent="12" name="company_province_id">
+      <Position>11</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="112" parent="12" name="company_type_id">
+      <Position>12</Position>
+      <DataType>varchar(2)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="113" parent="12" name="company_reg_type">
+      <Position>13</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="114" parent="12" name="company_description">
+      <Position>14</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="115" parent="12" name="latitude">
+      <Position>15</Position>
+      <DataType>decimal(10,7)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="116" parent="12" name="longitude">
+      <Position>16</Position>
+      <DataType>decimal(10,7)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="117" parent="12" name="app_company_067bfe8b">
+      <ColNames>company_type_id</ColNames>
+    </index>
+    <index id="118" parent="12" name="app_company_67ff14d3">
+      <ColNames>company_province_id</ColNames>
+    </index>
+    <index id="119" parent="12" name="app_company_935c637d">
+      <ColNames>company_county_id</ColNames>
+    </index>
+    <index id="120" parent="12" name="app_company_company_city_id_025b184b_fk_app_city_id">
+      <ColNames>company_city_id</ColNames>
+    </index>
+    <key id="121" parent="12" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="122" parent="12" name="app_company_company_city_id_025b184b_fk_app_city_id">
+      <ColNames>company_city_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_city</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="123" parent="12" name="app_company_company_county_id_d9a783c7_fk_app_county_id">
+      <ColNames>company_county_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_county</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="124" parent="12" name="app_company_company_province_id_acabf92f_fk_app_province_id">
+      <ColNames>company_province_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_province</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="125" parent="12" name="app_company_company_type_id_69855d9e_fk_app_companytype_type_id">
+      <ColNames>company_type_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_companytype</RefTableName>
+      <RefColNames>type_id</RefColNames>
+    </foreign-key>
+    <column id="126" parent="13" name="id">
+      <Position>1</Position>
+      <DataType>tinyint(3)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="127" parent="13" name="type_id">
+      <Position>2</Position>
+      <DataType>varchar(3)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="128" parent="13" name="type_name">
+      <Position>3</Position>
+      <DataType>varchar(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="129" parent="13" name="id_UNIQUE">
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="130" parent="13" name="type_id_UNIQUE">
+      <ColNames>type_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="131" parent="13" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="132" parent="13" name="id_UNIQUE">
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>id_UNIQUE</UnderlyingIndexName>
+    </key>
+    <key id="133" parent="13" name="type_id_UNIQUE">
+      <ColNames>type_id</ColNames>
+      <UnderlyingIndexName>type_id_UNIQUE</UnderlyingIndexName>
+    </key>
+    <column id="134" parent="14" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="135" parent="14" name="county_name">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="136" parent="14" name="city_id">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="137" parent="14" name="latitude">
+      <Position>4</Position>
+      <DataType>decimal(10,7)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="138" parent="14" name="longitude">
+      <Position>5</Position>
+      <DataType>decimal(10,7)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="139" parent="14" name="short_name">
+      <Position>6</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="140" parent="14" name="sort">
+      <Position>7</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="141" parent="14" name="app_county_city_id_8dd799f5_fk_app_city_id">
+      <ColNames>city_id</ColNames>
+    </index>
+    <key id="142" parent="14" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="143" parent="14" name="app_county_city_id_8dd799f5_fk_app_city_id">
+      <ColNames>city_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_city</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="144" parent="15" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="145" parent="15" name="depart_name">
+      <Position>2</Position>
+      <DataType>varchar(64)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="146" parent="15" name="company_id">
+      <Position>3</Position>
+      <DataType>char(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="147" parent="15" name="parent_id">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <index id="148" parent="15" name="app_departofcompany_company_id_d0afe502_fk_app_company_id">
+      <ColNames>company_id</ColNames>
+    </index>
+    <index id="149" parent="15" name="app_departofcompany_parent_id_c8971850_fk_app_departofcompany_id">
+      <ColNames>parent_id</ColNames>
+    </index>
+    <key id="150" parent="15" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="151" parent="15" name="app_departofcompany_company_id_d0afe502_fk">
+      <ColNames>company_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_company</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="152" parent="15" name="app_departofcompany_parent_id_c8971850_fk_app_departofcompany_id">
+      <ColNames>parent_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_departofcompany</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="153" parent="16" name="id">
+      <Position>1</Position>
+      <DataType>char(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="154" parent="16" name="equipment_name">
+      <Position>2</Position>
+      <DataType>varchar(64)|0</DataType>
+    </column>
+    <column id="155" parent="16" name="equipment_code">
+      <Position>3</Position>
+      <DataType>varchar(64)|0</DataType>
+    </column>
+    <column id="156" parent="16" name="reg_status">
+      <Position>4</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="157" parent="16" name="work_status">
+      <Position>5</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="158" parent="16" name="create_time">
+      <Position>6</Position>
+      <DataType>datetime(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="159" parent="16" name="valid_time">
+      <Position>7</Position>
+      <DataType>datetime(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="160" parent="16" name="allot_company_id">
+      <Position>8</Position>
+      <DataType>char(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="161" parent="16" name="company_id">
+      <Position>9</Position>
+      <DataType>char(32)|0</DataType>
+    </column>
+    <column id="162" parent="16" name="equipment_sub_type_id">
+      <Position>10</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <index id="163" parent="16" name="app_equipment_company_id_95184a9e_fk_app_company_id">
+      <ColNames>company_id</ColNames>
+    </index>
+    <index id="164" parent="16" name="app_eq_equipment_sub_type_id_609a8a3e_fk_app_equipmentsubtype_id">
+      <ColNames>equipment_sub_type_id</ColNames>
+    </index>
+    <key id="165" parent="16" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="166" parent="16" name="app_equipment_company_id_95184a9e_fk_app_company_id">
+      <ColNames>company_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_company</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="167" parent="16" name="app_eq_equipment_sub_type_id_609a8a3e_fk_app_equipmentsubtype_id">
+      <ColNames>equipment_sub_type_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_equipmentsubtype</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="168" parent="17" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="169" parent="17" name="name">
+      <Position>2</Position>
+      <DataType>varchar(12)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="170" parent="17" name="type_id">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="171" parent="17" name="app_equipemntsubtype_type_id_cc29c23c_fk_app_equipmenttype_id">
+      <ColNames>type_id</ColNames>
+    </index>
+    <key id="172" parent="17" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="173" parent="17" name="app_equipemntsubtype_type_id_cc29c23c_fk_app_equipmenttype_id">
+      <ColNames>type_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_equipmenttype</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="174" parent="18" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="175" parent="18" name="name">
+      <Position>2</Position>
+      <DataType>varchar(12)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="176" parent="18" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="177" parent="19" name="id">
+      <Position>1</Position>
+      <DataType>char(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="178" parent="19" name="user">
+      <Position>2</Position>
+      <DataType>char(32)|0</DataType>
+    </column>
+    <column id="179" parent="19" name="apply_user">
+      <Position>3</Position>
+      <DataType>char(32)|0</DataType>
+    </column>
+    <column id="180" parent="19" name="company">
+      <Position>4</Position>
+      <DataType>char(32)|0</DataType>
+    </column>
+    <column id="181" parent="19" name="code">
+      <Position>5</Position>
+      <DataType>varchar(64)|0</DataType>
+    </column>
+    <column id="182" parent="19" name="create_time">
+      <Position>6</Position>
+      <DataType>datetime(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="183" parent="19" name="content">
+      <Position>7</Position>
+      <DataType>longtext|0</DataType>
+    </column>
+    <column id="184" parent="19" name="filetype_id">
+      <Position>8</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="185" parent="19" name="app_filekit_filetype_id_c5c2b67d_fk_app_filetype_id">
+      <ColNames>filetype_id</ColNames>
+    </index>
+    <key id="186" parent="19" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="187" parent="19" name="app_filekit_filetype_id_c5c2b67d_fk_app_filetype_id">
+      <ColNames>filetype_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_filetype</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="188" parent="20" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="189" parent="20" name="filetype_name">
+      <Position>2</Position>
+      <DataType>varchar(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="190" parent="20" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="191" parent="21" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="192" parent="21" name="menu_name">
+      <Position>2</Position>
+      <DataType>varchar(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="193" parent="21" name="menu_classify">
+      <Position>3</Position>
+      <DataType>varchar(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="194" parent="21" name="menu_addr">
+      <Position>4</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="195" parent="21" name="menu_icon">
+      <Position>5</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <key id="196" parent="21" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="197" parent="22" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="198" parent="22" name="message_type">
+      <Position>2</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <key id="199" parent="22" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="200" parent="23" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="201" parent="23" name="province_name">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="202" parent="23" name="latitude">
+      <Position>3</Position>
+      <DataType>decimal(10,7)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="203" parent="23" name="longitude">
+      <Position>4</Position>
+      <DataType>decimal(10,7)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="204" parent="23" name="parent_id">
+      <Position>5</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="205" parent="23" name="short_name">
+      <Position>6</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="206" parent="23" name="sort">
+      <Position>7</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="207" parent="23" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="208" parent="24" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="209" parent="24" name="role_name">
+      <Position>2</Position>
+      <DataType>varchar(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="210" parent="24" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="211" parent="25" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="212" parent="25" name="role_id">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="213" parent="25" name="menu_id">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="214" parent="25" name="app_role_menu_menu_id_1ce94944_fk_app_menu_id">
+      <ColNames>menu_id</ColNames>
+    </index>
+    <index id="215" parent="25" name="app_role_menu_role_id_e833efc9_uniq">
+      <ColNames>role_id
+menu_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="216" parent="25" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="217" parent="25" name="app_role_menu_role_id_e833efc9_uniq">
+      <ColNames>role_id
+menu_id</ColNames>
+      <UnderlyingIndexName>app_role_menu_role_id_e833efc9_uniq</UnderlyingIndexName>
+    </key>
+    <foreign-key id="218" parent="25" name="app_role_menu_role_id_81cabe0d_fk_app_role_id">
+      <ColNames>role_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_role</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="219" parent="25" name="app_role_menu_menu_id_1ce94944_fk_app_menu_id">
+      <ColNames>menu_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_menu</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="220" parent="26" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="221" parent="26" name="role_id">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="222" parent="26" name="sysuser_id">
+      <Position>3</Position>
+      <DataType>char(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="223" parent="26" name="app_role_sysuser_role_id_76b1680d_fk_app_role_id">
+      <ColNames>role_id</ColNames>
+    </index>
+    <key id="224" parent="26" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="225" parent="26" name="app_role_sysuser_role_id_76b1680d_fk_app_role_id">
+      <ColNames>role_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_role</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="226" parent="27" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="227" parent="27" name="sex_type">
+      <Position>2</Position>
+      <DataType>varchar(8)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="228" parent="27" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="229" parent="28" name="id">
+      <Position>1</Position>
+      <DataType>char(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="230" parent="28" name="user_id">
+      <Position>2</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="231" parent="28" name="password">
+      <Position>3</Position>
+      <DataType>varchar(256)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="232" parent="28" name="company_id">
+      <Position>4</Position>
+      <DataType>char(32)|0</DataType>
+    </column>
+    <column id="233" parent="28" name="user_type_id">
+      <Position>5</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="234" parent="28" name="address">
+      <Position>6</Position>
+      <DataType>varchar(128)|0</DataType>
+    </column>
+    <column id="235" parent="28" name="burst_code">
+      <Position>7</Position>
+      <DataType>longtext|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="236" parent="28" name="current_status">
+      <Position>8</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="237" parent="28" name="describe">
+      <Position>9</Position>
+      <DataType>longtext|0</DataType>
+    </column>
+    <column id="238" parent="28" name="email">
+      <Position>10</Position>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="239" parent="28" name="fullname">
+      <Position>11</Position>
+      <DataType>varchar(64)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="240" parent="28" name="id_card">
+      <Position>12</Position>
+      <DataType>varchar(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="241" parent="28" name="is_login">
+      <Position>13</Position>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="242" parent="28" name="photo">
+      <Position>14</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="243" parent="28" name="reg_status">
+      <Position>15</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="244" parent="28" name="telephone">
+      <Position>16</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="245" parent="28" name="user_name">
+      <Position>17</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="246" parent="28" name="work_status">
+      <Position>18</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="247" parent="28" name="sex">
+      <Position>19</Position>
+      <DataType>longtext|0</DataType>
+    </column>
+    <column id="248" parent="28" name="is_supervisor">
+      <Position>20</Position>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="249" parent="28" name="certificate_type_id">
+      <Position>21</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="250" parent="28" name="supervisor_id">
+      <Position>22</Position>
+      <DataType>varchar(128)|0</DataType>
+    </column>
+    <column id="251" parent="28" name="file_kit">
+      <Position>23</Position>
+      <DataType>varchar(128)|0</DataType>
+    </column>
+    <column id="252" parent="28" name="file_name">
+      <Position>24</Position>
+      <DataType>varchar(256)|0</DataType>
+    </column>
+    <column id="253" parent="28" name="message_type_id">
+      <Position>25</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="254" parent="28" name="app_sysuser_4da4d835">
+      <ColNames>user_type_id</ColNames>
+    </index>
+    <index id="255" parent="28" name="app_sysuser_company_id_9dcaed21_fk_app_company_id">
+      <ColNames>company_id</ColNames>
+    </index>
+    <index id="256" parent="28" name="app_sysuser_message_type_id_198f88b5_fk_app_messagetype_id">
+      <ColNames>message_type_id</ColNames>
+    </index>
+    <index id="257" parent="28" name="app_sysus_certificate_type_id_526815d6_fk_app_certificatetype_id">
+      <ColNames>certificate_type_id</ColNames>
+    </index>
+    <index id="258" parent="28" name="user_id">
+      <ColNames>user_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="259" parent="28" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="260" parent="28" name="user_id">
+      <ColNames>user_id</ColNames>
+      <UnderlyingIndexName>user_id</UnderlyingIndexName>
+    </key>
+    <foreign-key id="261" parent="28" name="app_sysuser_company_id_9dcaed21_fk">
+      <ColNames>company_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_company</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="262" parent="28" name="app_sysuser_user_type_id_cdbbc799_fk_app_usertype_id">
+      <ColNames>user_type_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_usertype</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="263" parent="28" name="app_sysus_certificate_type_id_526815d6_fk_app_certificatetype_id">
+      <ColNames>certificate_type_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_certificatetype</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="264" parent="28" name="app_sysuser_message_type_id_198f88b5_fk_app_messagetype_id">
+      <ColNames>message_type_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_messagetype</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="265" parent="29" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="266" parent="29" name="is_manager">
+      <Position>2</Position>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="267" parent="29" name="depart_id">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="268" parent="29" name="user_id">
+      <Position>4</Position>
+      <DataType>char(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="269" parent="29" name="app_userofdepart_depart_id_3359e7a6_fk_app_departofcompany_id">
+      <ColNames>depart_id</ColNames>
+    </index>
+    <index id="270" parent="29" name="app_userofdepart_user_id_1723ad8f_fk_app_sysuser_id">
+      <ColNames>user_id</ColNames>
+    </index>
+    <key id="271" parent="29" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="272" parent="29" name="app_userofdepart_depart_id_3359e7a6_fk_app_departofcompany_id">
+      <ColNames>depart_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_departofcompany</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="273" parent="29" name="app_userofdepart_user_id_1723ad8f_fk">
+      <ColNames>user_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>app_sysuser</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="274" parent="30" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="275" parent="30" name="usertype_name">
+      <Position>2</Position>
+      <DataType>varchar(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="276" parent="30" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="277" parent="31" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="278" parent="31" name="name">
+      <Position>2</Position>
+      <DataType>varchar(80)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="279" parent="31" name="name">
+      <ColNames>name</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="280" parent="31" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="281" parent="31" name="name">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>name</UnderlyingIndexName>
+    </key>
+    <column id="282" parent="32" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="283" parent="32" name="group_id">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="284" parent="32" name="permission_id">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="285" parent="32" name="auth_group_permissions_group_id_0cd325b0_uniq">
+      <ColNames>group_id
+permission_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="286" parent="32" name="auth_group_permissi_permission_id_84c5c92e_fk_auth_permission_id">
+      <ColNames>permission_id</ColNames>
+    </index>
+    <key id="287" parent="32" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="288" parent="32" name="auth_group_permissions_group_id_0cd325b0_uniq">
+      <ColNames>group_id
+permission_id</ColNames>
+      <UnderlyingIndexName>auth_group_permissions_group_id_0cd325b0_uniq</UnderlyingIndexName>
+    </key>
+    <foreign-key id="289" parent="32" name="auth_group_permissions_group_id_b120cbf9_fk_auth_group_id">
+      <ColNames>group_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>auth_group</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="290" parent="32" name="auth_group_permissi_permission_id_84c5c92e_fk_auth_permission_id">
+      <ColNames>permission_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>auth_permission</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="291" parent="33" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="292" parent="33" name="name">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="293" parent="33" name="content_type_id">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="294" parent="33" name="codename">
+      <Position>4</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="295" parent="33" name="auth_permission_content_type_id_01ab375a_uniq">
+      <ColNames>content_type_id
+codename</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="296" parent="33" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="297" parent="33" name="auth_permission_content_type_id_01ab375a_uniq">
+      <ColNames>content_type_id
+codename</ColNames>
+      <UnderlyingIndexName>auth_permission_content_type_id_01ab375a_uniq</UnderlyingIndexName>
+    </key>
+    <foreign-key id="298" parent="33" name="auth_permissi_content_type_id_2f476e4b_fk_django_content_type_id">
+      <ColNames>content_type_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>django_content_type</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="299" parent="34" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="300" parent="34" name="password">
+      <Position>2</Position>
+      <DataType>varchar(128)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="301" parent="34" name="last_login">
+      <Position>3</Position>
+      <DataType>datetime(6)|0</DataType>
+    </column>
+    <column id="302" parent="34" name="is_superuser">
+      <Position>4</Position>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="303" parent="34" name="username">
+      <Position>5</Position>
+      <DataType>varchar(150)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="304" parent="34" name="first_name">
+      <Position>6</Position>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="305" parent="34" name="last_name">
+      <Position>7</Position>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="306" parent="34" name="email">
+      <Position>8</Position>
+      <DataType>varchar(254)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="307" parent="34" name="is_staff">
+      <Position>9</Position>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="308" parent="34" name="is_active">
+      <Position>10</Position>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="309" parent="34" name="date_joined">
+      <Position>11</Position>
+      <DataType>datetime(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="310" parent="34" name="username">
+      <ColNames>username</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="311" parent="34" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="312" parent="34" name="username">
+      <ColNames>username</ColNames>
+      <UnderlyingIndexName>username</UnderlyingIndexName>
+    </key>
+    <column id="313" parent="35" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="314" parent="35" name="user_id">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="315" parent="35" name="group_id">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="316" parent="35" name="auth_user_groups_group_id_97559544_fk_auth_group_id">
+      <ColNames>group_id</ColNames>
+    </index>
+    <index id="317" parent="35" name="auth_user_groups_user_id_94350c0c_uniq">
+      <ColNames>user_id
+group_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="318" parent="35" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="319" parent="35" name="auth_user_groups_user_id_94350c0c_uniq">
+      <ColNames>user_id
+group_id</ColNames>
+      <UnderlyingIndexName>auth_user_groups_user_id_94350c0c_uniq</UnderlyingIndexName>
+    </key>
+    <foreign-key id="320" parent="35" name="auth_user_groups_user_id_6a12ed8b_fk_auth_user_id">
+      <ColNames>user_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>auth_user</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="321" parent="35" name="auth_user_groups_group_id_97559544_fk_auth_group_id">
+      <ColNames>group_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>auth_group</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="322" parent="36" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="323" parent="36" name="user_id">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="324" parent="36" name="permission_id">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="325" parent="36" name="auth_user_user_permissions_user_id_14a6b632_uniq">
+      <ColNames>user_id
+permission_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="326" parent="36" name="auth_user_user_perm_permission_id_1fbb5f2c_fk_auth_permission_id">
+      <ColNames>permission_id</ColNames>
+    </index>
+    <key id="327" parent="36" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="328" parent="36" name="auth_user_user_permissions_user_id_14a6b632_uniq">
+      <ColNames>user_id
+permission_id</ColNames>
+      <UnderlyingIndexName>auth_user_user_permissions_user_id_14a6b632_uniq</UnderlyingIndexName>
+    </key>
+    <foreign-key id="329" parent="36" name="auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id">
+      <ColNames>user_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>auth_user</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="330" parent="36" name="auth_user_user_perm_permission_id_1fbb5f2c_fk_auth_permission_id">
+      <ColNames>permission_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>auth_permission</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="331" parent="37" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="332" parent="37" name="blasting_time">
+      <Position>2</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="333" parent="37" name="create_time">
+      <Position>3</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="334" parent="37" name="deto_transfer_record_id">
+      <Position>4</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="335" parent="37" name="blast_mode">
+      <Position>5</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="336" parent="37" name="blast_type">
+      <Position>6</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="337" parent="37" name="longitude">
+      <Position>7</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="338" parent="37" name="latitude">
+      <Position>8</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="339" parent="37" name="project_id">
+      <Position>9</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="340" parent="37" name="district_id">
+      <Position>10</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="341" parent="37" name="company_id">
+      <Position>11</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="342" parent="37" name="police_company_id">
+      <Position>12</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="343" parent="37" name="scanner_equip_id">
+      <Position>13</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="344" parent="37" name="blast_auth_user1_id">
+      <Position>14</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="345" parent="37" name="blast_auth_user2_id">
+      <Position>15</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="346" parent="37" name="user1_id">
+      <Position>16</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="347" parent="37" name="user2_id">
+      <Position>17</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <index id="348" parent="37" name="company_id_idx">
+      <ColNames>company_id</ColNames>
+    </index>
+    <index id="349" parent="37" name="deto_trans_record_id_idx">
+      <ColNames>deto_transfer_record_id</ColNames>
+    </index>
+    <index id="350" parent="37" name="district_id_idx">
+      <ColNames>district_id</ColNames>
+    </index>
+    <index id="351" parent="37" name="project_id_idx">
+      <ColNames>project_id</ColNames>
+    </index>
+    <index id="352" parent="37" name="scanner_equip_id_idx">
+      <ColNames>scanner_equip_id</ColNames>
+    </index>
+    <key id="353" parent="37" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="354" parent="37" name="deto_trans_record_id">
+      <ColNames>deto_transfer_record_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>deto_transfer_record</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>update</OnUpdate>
+      <OnDelete>set-null</OnDelete>
+    </foreign-key>
+    <foreign-key id="355" parent="37" name="project_id">
+      <ColNames>project_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>burst_project</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>update</OnUpdate>
+      <OnDelete>set-null</OnDelete>
+    </foreign-key>
+    <foreign-key id="356" parent="37" name="district_id">
+      <ColNames>district_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>burst_district</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>update</OnUpdate>
+      <OnDelete>set-null</OnDelete>
+    </foreign-key>
+    <foreign-key id="357" parent="37" name="company_id">
+      <ColNames>company_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>burst_company</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>update</OnUpdate>
+      <OnDelete>set-null</OnDelete>
+    </foreign-key>
+    <foreign-key id="358" parent="37" name="scanner_equip_id">
+      <ColNames>scanner_equip_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>equipment</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>update</OnUpdate>
+      <OnDelete>set-null</OnDelete>
+    </foreign-key>
+    <column id="359" parent="38" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="360" parent="38" name="create_time">
+      <Position>2</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="361" parent="38" name="province">
+      <Position>3</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="362" parent="38" name="city">
+      <Position>4</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="363" parent="38" name="county">
+      <Position>5</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="364" parent="38" name="company_code">
+      <Position>6</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="365" parent="38" name="short_name">
+      <Position>7</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="366" parent="38" name="name">
+      <Position>8</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="367" parent="38" name="person_tel">
+      <Position>9</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="368" parent="38" name="description">
+      <Position>10</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="369" parent="38" name="company_type_id">
+      <Position>11</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="370" parent="38" name="company_reg_type">
+      <Position>12</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="371" parent="38" name="longitude">
+      <Position>13</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="372" parent="38" name="latitude">
+      <Position>14</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="373" parent="38" name="contact_person">
+      <Position>15</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="374" parent="38" name="address">
+      <Position>16</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <index id="375" parent="38" name="fk_burst_company_1_idx">
+      <ColNames>company_type_id</ColNames>
+    </index>
+    <key id="376" parent="38" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="377" parent="38" name="fk_burst_company_1">
+      <ColNames>company_type_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>company_type</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>no-action</OnUpdate>
+      <OnDelete>no-action</OnDelete>
+    </foreign-key>
+    <column id="378" parent="39" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="379" parent="39" name="company_id">
+      <Position>2</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="380" parent="39" name="project_id">
+      <Position>3</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="381" parent="39" name="work_flow_id">
+      <Position>4</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="382" parent="39" name="apply_user_id">
+      <Position>5</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="383" parent="39" name="name">
+      <Position>6</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="384" parent="39" name="description">
+      <Position>7</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="385" parent="39" name="create_time">
+      <Position>8</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="386" parent="39" name="status">
+      <Position>9</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="387" parent="39" name="reg_status">
+      <Position>10</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="388" parent="39" name="report_status">
+      <Position>11</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="389" parent="39" name="gps_latitude">
+      <Position>12</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="390" parent="39" name="gps_longitude">
+      <Position>13</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="391" parent="39" name="baidu_latitude">
+      <Position>14</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="392" parent="39" name="baidu_longitude">
+      <Position>15</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="393" parent="39" name="radius">
+      <Position>16</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="394" parent="39" name="plan_deto_num">
+      <Position>17</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="395" parent="39" name="plan_explosive_num">
+      <Position>18</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <index id="396" parent="39" name="apply_user_id_idx">
+      <ColNames>apply_user_id</ColNames>
+    </index>
+    <index id="397" parent="39" name="company_id_idx">
+      <ColNames>company_id</ColNames>
+    </index>
+    <index id="398" parent="39" name="prj_id_idx">
+      <ColNames>project_id</ColNames>
+    </index>
+    <index id="399" parent="39" name="project_id_idx">
+      <ColNames>project_id</ColNames>
+    </index>
+    <index id="400" parent="39" name="work_flow_id_idx">
+      <ColNames>work_flow_id</ColNames>
+    </index>
+    <key id="401" parent="39" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="402" parent="39" name="cmp_id">
+      <ColNames>company_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>burst_company</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>update</OnUpdate>
+      <OnDelete>set-null</OnDelete>
+    </foreign-key>
+    <foreign-key id="403" parent="39" name="prj_id">
+      <ColNames>project_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>burst_project</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>update</OnUpdate>
+      <OnDelete>set-null</OnDelete>
+    </foreign-key>
+    <foreign-key id="404" parent="39" name="wf_id">
+      <ColNames>work_flow_id</ColNames>
+      <RefSchemaName>blastsystem</RefSchemaName>
+      <RefTableName>workflow</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>update</OnUpdate>
+      <OnDelete>set-null</OnDelete>
+    </foreign-key>
+    <column id="405" parent="40" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="406" parent="40" name="create_time">
+      <Position>2</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="407" parent="40" name="name">
+      <Position>3</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="408" parent="40" name="fullname">
+      <Position>4</Position>
+      <DataType>varchar(64)|0</DataType>
+    </column>
+    <column id="409" parent="40" name="identity_card_number">
+      <Position>5</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="410" parent="40" name="company_id">
+      <Position>6</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="411" parent="40" name="file_kit_id">
+      <Position>7</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="412" parent="40" name="photo">
+      <Position>8</Position>
+      <DataType>mediumblob|0</DataType>
+    </column>
+    <column id="413" parent="40" name="description">
+      <Position>9</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="414" parent="40" name="burst_code">
+      <Position>10</Position>
+      <DataType>varchar(128)|0</DataType>
+    </column>
+    <column id="415" parent="40" name="user_type_value">
+      <Position>11</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="416" parent="40" name="sex">
+      <Position>12</Position>
+      <DataType>varchar(16)|0</DataType>
+    </column>
+    <column id="417" parent="40" name="type_name">
+      <Position>13</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="418" parent="40" name="email">
+      <Position>14</Position>
+      <DataType>varchar(64)|0</DataType>
+    </column>
+    <column id="419" parent="40" name="phone_number">
+      <Position>15</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="420" parent="40" name="reg_status">
+      <Position>16</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="421" parent="40" name="address">
+      <Position>17</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="422" parent="40" name="current_status">
+      <Position>18</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="423" parent="40" name="is_login_user">
+      <Position>19</Position>
+      <DataType>tinyint(4)|0</DataType>
+    </column>
+    <column id="424" parent="40" name="work_status">
+      <Position>20</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="425" parent="40" name="supervisor">
+      <Position>21</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="426" parent="40" name="supervisor_code">
+      <Position>22</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <key id="427" parent="40" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="428" parent="41" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="429" parent="41" name="name">
+      <Position>2</Position>
+      <DataType>varchar(128)|0</DataType>
+    </column>
+    <column id="430" parent="41" name="create_time">
+      <Position>3</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="431" parent="41" name="project_code">
+      <Position>4</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="432" parent="41" name="status">
+      <Position>5</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="433" parent="41" name="address">
+      <Position>6</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="434" parent="41" name="province">
+      <Position>7</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="435" parent="41" name="city">
+      <Position>8</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="436" parent="41" name="county">
+      <Position>9</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="437" parent="41" name="police_company_id">
+      <Position>10</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="438" parent="41" name="supervisor_company_id">
+      <Position>11</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="439" parent="41" name="longitude">
+      <Position>12</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="440" parent="41" name="latitude">
+      <Position>13</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="441" parent="41" name="radius">
+      <Position>14</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="442" parent="41" name="work_flow_id">
+      <Position>15</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="443" parent="41" name="apply_user_id">
+      <Position>16</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="444" parent="41" name="companys_id">
+      <Position>17</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="445" parent="41" name="file_kit_id">
+      <Position>18</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="446" parent="41" name="description">
+      <Position>19</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <key id="447" parent="41" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="448" parent="42" name="id">
+      <Position>1</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="449" parent="42" name="name">
+      <Position>2</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <key id="450" parent="42" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="451" parent="43" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="452" parent="43" name="create_time">
+      <Position>2</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="453" parent="43" name="transfer_time">
+      <Position>3</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="454" parent="43" name="counts">
+      <Position>4</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="455" parent="43" name="record_type">
+      <Position>5</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="456" parent="43" name="resource_type">
+      <Position>6</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="457" parent="43" name="province">
+      <Position>7</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="458" parent="43" name="city">
+      <Position>8</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="459" parent="43" name="county">
+      <Position>9</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="460" parent="43" name="longitude">
+      <Position>10</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="461" parent="43" name="latitude">
+      <Position>11</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="462" parent="43" name="project_id">
+      <Position>12</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="463" parent="43" name="district_id">
+      <Position>13</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="464" parent="43" name="company_id">
+      <Position>14</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="465" parent="43" name="police_company_id">
+      <Position>15</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="466" parent="43" name="scanner_equip_id">
+      <Position>16</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="467" parent="43" name="from_user1_id">
+      <Position>17</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="468" parent="43" name="from_user2_id">
+      <Position>18</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="469" parent="43" name="to_user1_id">
+      <Position>19</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="470" parent="43" name="to_user2_id">
+      <Position>20</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <key id="471" parent="43" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="472" parent="44" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="473" parent="44" name="create_time">
+      <Position>2</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="474" parent="44" name="province">
+      <Position>3</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="475" parent="44" name="city">
+      <Position>4</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="476" parent="44" name="county">
+      <Position>5</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="477" parent="44" name="police_company_id">
+      <Position>6</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="478" parent="44" name="car_code">
+      <Position>7</Position>
+      <DataType>varchar(16)|0</DataType>
+    </column>
+    <column id="479" parent="44" name="company_id">
+      <Position>8</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="480" parent="44" name="project_id">
+      <Position>9</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="481" parent="44" name="district_id">
+      <Position>10</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="482" parent="44" name="transport_time">
+      <Position>11</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="483" parent="44" name="user_id">
+      <Position>12</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="484" parent="44" name="scanner_equip_id">
+      <Position>13</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="485" parent="44" name="resource_count">
+      <Position>14</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="486" parent="44" name="resource_type">
+      <Position>15</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <key id="487" parent="44" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="488" parent="45" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="489" parent="45" name="sign_time">
+      <Position>2</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="490" parent="45" name="create_time">
+      <Position>3</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="491" parent="45" name="police_company_id">
+      <Position>4</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="492" parent="45" name="supervisor_company_id">
+      <Position>5</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="493" parent="45" name="user_id">
+      <Position>6</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="494" parent="45" name="company_id">
+      <Position>7</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="495" parent="45" name="sign_type">
+      <Position>8</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="496" parent="45" name="longitude">
+      <Position>9</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="497" parent="45" name="latitude">
+      <Position>10</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="498" parent="45" name="project_id">
+      <Position>11</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="499" parent="45" name="scanner_equip_id">
+      <Position>12</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="500" parent="45" name="district_id">
+      <Position>13</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <key id="501" parent="45" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="502" parent="46" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="503" parent="46" name="app_label">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="504" parent="46" name="model">
+      <Position>3</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="505" parent="46" name="django_content_type_app_label_76bd3d3b_uniq">
+      <ColNames>app_label
+model</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="506" parent="46" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="507" parent="46" name="django_content_type_app_label_76bd3d3b_uniq">
+      <ColNames>app_label
+model</ColNames>
+      <UnderlyingIndexName>django_content_type_app_label_76bd3d3b_uniq</UnderlyingIndexName>
+    </key>
+    <column id="508" parent="47" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="509" parent="47" name="app">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="510" parent="47" name="name">
+      <Position>3</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="511" parent="47" name="applied">
+      <Position>4</Position>
+      <DataType>datetime(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="512" parent="47" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="513" parent="48" name="session_key">
+      <Position>1</Position>
+      <DataType>varchar(40)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="514" parent="48" name="session_data">
+      <Position>2</Position>
+      <DataType>longtext|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="515" parent="48" name="expire_date">
+      <Position>3</Position>
+      <DataType>datetime(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="516" parent="48" name="django_session_de54fa62">
+      <ColNames>expire_date</ColNames>
+    </index>
+    <key id="517" parent="48" name="PRIMARY">
+      <ColNames>session_key</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="518" parent="49" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="519" parent="49" name="valid_time">
+      <Position>2</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="520" parent="49" name="equipment_name">
+      <Position>3</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="521" parent="49" name="equipment_type_id">
+      <Position>4</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="522" parent="49" name="reg_status">
+      <Position>5</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="523" parent="49" name="company_id">
+      <Position>6</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="524" parent="49" name="equipment_code">
+      <Position>7</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="525" parent="49" name="work_status">
+      <Position>8</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="526" parent="49" name="create_time">
+      <Position>9</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="527" parent="49" name="equipment_sub_type_id">
+      <Position>10</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="528" parent="49" name="allot_company_id">
+      <Position>11</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <key id="529" parent="49" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="530" parent="50" name="id">
+      <Position>1</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="531" parent="50" name="name">
+      <Position>2</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <key id="532" parent="50" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="533" parent="51" name="id">
+      <Position>1</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="534" parent="51" name="name">
+      <Position>2</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <key id="535" parent="51" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="536" parent="52" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="537" parent="52" name="main_type">
+      <Position>2</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="538" parent="52" name="record_id">
+      <Position>3</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="539" parent="52" name="district_id">
+      <Position>4</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="540" parent="52" name="main_code">
+      <Position>5</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="541" parent="52" name="simple_code">
+      <Position>6</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="542" parent="52" name="user_id">
+      <Position>7</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="543" parent="52" name="resource_count">
+      <Position>8</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="544" parent="52" name="record_type">
+      <Position>9</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="545" parent="52" name="transfer_time">
+      <Position>10</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="546" parent="52" name="resource_type">
+      <Position>11</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="547" parent="52" name="resource_sub_type">
+      <Position>12</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="548" parent="52" name="start_index">
+      <Position>13</Position>
+      <DataType>smallint(5) unsigned|0</DataType>
+    </column>
+    <column id="549" parent="52" name="end_index">
+      <Position>14</Position>
+      <DataType>smallint(5) unsigned|0</DataType>
+    </column>
+    <column id="550" parent="52" name="unit">
+      <Position>15</Position>
+      <DataType>smallint(5) unsigned|0</DataType>
+    </column>
+    <column id="551" parent="52" name="version_id">
+      <Position>16</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="552" parent="52" name="deto_status">
+      <Position>17</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="553" parent="52" name="produce_code">
+      <Position>18</Position>
+      <DataType>smallint(5) unsigned|0</DataType>
+    </column>
+    <column id="554" parent="52" name="soc_code">
+      <Position>19</Position>
+      <DataType>smallint(5) unsigned|0</DataType>
+    </column>
+    <key id="555" parent="52" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="556" parent="53" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="557" parent="53" name="primary_id">
+      <Position>2</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="558" parent="53" name="user_id">
+      <Position>3</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="559" parent="53" name="company_id">
+      <Position>4</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="560" parent="53" name="create_time">
+      <Position>5</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="561" parent="53" name="file_kit_type">
+      <Position>6</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="562" parent="53" name="content">
+      <Position>7</Position>
+      <DataType>mediumblob|0</DataType>
+    </column>
+    <key id="563" parent="53" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="564" parent="54" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="565" parent="54" name="old_id">
+      <Position>2</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="566" parent="54" name="table_name">
+      <Position>3</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <key id="567" parent="54" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="568" parent="55" name="it">
+      <Position>1</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="569" parent="55" name="name">
+      <Position>2</Position>
+      <DataType>varchar(64)|0</DataType>
+    </column>
+    <key id="570" parent="55" name="PRIMARY">
+      <ColNames>it</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="571" parent="56" name="project_id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="572" parent="56" name="company_id">
+      <Position>2</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="573" parent="57" name="project_id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="574" parent="57" name="person_id">
+      <Position>2</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="575" parent="58" name="project_id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="576" parent="58" name="supervisor_id">
+      <Position>2</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="577" parent="59" name="it">
+      <Position>1</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="578" parent="59" name="name">
+      <Position>2</Position>
+      <DataType>varchar(64)|0</DataType>
+    </column>
+    <key id="579" parent="59" name="PRIMARY">
+      <ColNames>it</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="580" parent="60" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="581" parent="60" name="company_id">
+      <Position>2</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="582" parent="60" name="project_id">
+      <Position>3</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="583" parent="60" name="district_id">
+      <Position>4</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="584" parent="60" name="user_id">
+      <Position>5</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="585" parent="60" name="scanner_equip_id">
+      <Position>6</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="586" parent="60" name="data_type">
+      <Position>7</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="587" parent="60" name="protected_obj_type">
+      <Position>8</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="588" parent="60" name="protected_obj_name">
+      <Position>9</Position>
+      <DataType>varchar(128)|0</DataType>
+    </column>
+    <column id="589" parent="60" name="protected_obj_distance">
+      <Position>10</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="590" parent="60" name="project_blast_type">
+      <Position>11</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="591" parent="60" name="create_time">
+      <Position>12</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="592" parent="60" name="occur_time">
+      <Position>13</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="593" parent="60" name="blast_transmission_v">
+      <Position>14</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="594" parent="60" name="blast_shake_hz">
+      <Position>15</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <key id="595" parent="60" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="596" parent="61" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="597" parent="61" name="district_id">
+      <Position>2</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="598" parent="61" name="apply_user_id">
+      <Position>3</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="599" parent="61" name="seismometer_time">
+      <Position>4</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="600" parent="61" name="seismometer_type">
+      <Position>5</Position>
+      <DataType>varchar(128)|0</DataType>
+    </column>
+    <column id="601" parent="61" name="seismometer_factory">
+      <Position>6</Position>
+      <DataType>varchar(128)|0</DataType>
+    </column>
+    <column id="602" parent="61" name="status">
+      <Position>7</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="603" parent="61" name="create_time">
+      <Position>8</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="604" parent="61" name="file_name">
+      <Position>9</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="605" parent="61" name="file_path">
+      <Position>10</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="606" parent="62" name="value">
+      <Position>1</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="607" parent="62" name="name">
+      <Position>2</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="608" parent="63" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="609" parent="63" name="create_time">
+      <Position>2</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="610" parent="63" name="video_camera_type">
+      <Position>3</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="611" parent="63" name="status">
+      <Position>4</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="612" parent="63" name="province">
+      <Position>5</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="613" parent="63" name="city">
+      <Position>6</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="614" parent="63" name="county">
+      <Position>7</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="615" parent="63" name="company_id">
+      <Position>8</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="616" parent="63" name="responsible_person">
+      <Position>9</Position>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="617" parent="63" name="monitory_point_name">
+      <Position>10</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="618" parent="63" name="monitory_point_address">
+      <Position>11</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="619" parent="63" name="camera_manufacturers">
+      <Position>12</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="620" parent="63" name="contact_phone">
+      <Position>13</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="621" parent="63" name="camera_code">
+      <Position>14</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="622" parent="63" name="camera_type">
+      <Position>15</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="623" parent="63" name="visit_url">
+      <Position>16</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="624" parent="63" name="login_user_name">
+      <Position>17</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="625" parent="63" name="login_user_password">
+      <Position>18</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <key id="626" parent="63" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="627" parent="64" name="id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="628" parent="64" name="state">
+      <Position>2</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="629" parent="64" name="lock_mode">
+      <Position>3</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="630" parent="64" name="status">
+      <Position>4</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="631" parent="64" name="comment_type">
+      <Position>5</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="632" parent="64" name="b_require_select_user">
+      <Position>6</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="633" parent="64" name="b_can_rollback">
+      <Position>7</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="634" parent="64" name="b_can_terminate">
+      <Position>8</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <column id="635" parent="64" name="b_can_translate">
+      <Position>9</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+    </column>
+    <key id="636" parent="64" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>

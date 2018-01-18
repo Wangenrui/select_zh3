@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <meta charset="utf-8">
+    <title>信息学院本科生毕业设计管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+
+    <!-- The styles -->
+    {% load static %}
+    <link id="bs-css" href="{% static 'css/bootstrap-cerulean.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/charisma-app.css' %}" rel="stylesheet">
+    <link href="{% static 'bower_components/fullcalendar/dist/fullcalendar.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/fullcalendar/dist/fullcalendar.print.css' %}" rel='stylesheet' media='print'>
+    <link href="{% static 'bower_components/chosen/chosen.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/colorbox/example3/colorbox.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/responsive-tables/responsive-tables.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/bootstrap-tour/build/css/bootstrap-tour.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/jquery.noty.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/noty_theme_default.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/elfinder.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/elfinder.theme.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/jquery.iphone.toggle.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/uploadify.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/animate.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-treeview.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-table.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-select.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/summernote.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/plugin/font-awesome.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-datepicker.css' %}" rel='stylesheet'>
+
+    <!-- jQuery -->
+    <script src="{% static 'bower_components/jquery/jquery.min.js' %}"></script>
+
+    <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- The fav icon -->
+    <link rel="shortcut icon" href="{% static 'img/logo3.png' %}">
+
+</head>
+
+<body>
+    <!-- topbar starts -->
+<div class="navbar navbar-default" role="navigation">
+
+    <div class="navbar-inner" >
+        <button type="button" class="navbar-toggle pull-left animated flip">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+         <img  src="{% static 'img/index.png' %}" />
+        <a class="navbar-brand" href="{% url 'student_index' %}" > 信息学院本科生毕业设计管理系统</a>
+
+        <!-- user dropdown starts -->
+        <div class="btn-group pull-right">
+            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <i class="glyphicon glyphicon-user"></i>
+                <span class="hidden-sm hidden-xs"> 用户名: </span>
+                <span id="userid"> 异常</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a  onclick="changepwd_onclick()">修改密码</a></li>
+                <li class="divider"></li>
+                <li><a href="/app/">退出</a></li>
+            </ul>
+        </div>
+        <!-- user dropdown ends -->
+
+    </div>
+</div>
+    <!-- topbar ends -->
+<div class="ch-container">
+
+    <!-- system modal start -->
+    <div id="ycf-alert" class="modal">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h3 class="modal-title"><i class="fa fa-exclamation-circle"></i> [Title]</h3>
+          </div>
+          <div class="modal-body">
+              <div class="input-group input-group-lg" >[Message]
+              </div>
+          </div>
+          <div class="modal-footer" >
+            <button type="button" class="btn btn-primary ok" data-dismiss="modal">[BtnOk]</button>
+            <button type="button" class="btn btn-default cancel" data-dismiss="modal">[BtnCancel]</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- system modal end -->
+
+    <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel"
+         aria-hidden="true">
+        <form class="form-horizontal" method="get" enctype="multipart/form-data" id="pwdform">
+        <div class="modal-dialog">
+            <div class="modal-content" role="document">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>修改密码</h3>
+                </div>
+
+                <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i>&nbsp;新密码</span>
+                        <input id="newpwd" type="password" class="form-control" placeholder="Password" required="true">
+                </div>
+                <br>
+                <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i>&nbsp;确认密码</span>
+                        <input id="conpwd" type="password" class="form-control" placeholder="Password" required="true">
+                </div>
+                <div class="modal-footer">
+                    <!-- style="display:none;"
+                    <button type="button" id="disbutton" onclick="pwd_onclick()"  ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;确定修改</button>
+                    -->
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;关闭</button>
+                    <button type="button" class="btn btn-default" onclick="pwd_onclick()" ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;确定修改</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+
+
+    <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="submitModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" role="document">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>提交志愿</h3>
+                </div>
+                <center>
+                   <h4>志愿提交后不能更改，请三思！</h4>
+                </center>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;关闭</button>
+                    <button type="button" class="btn btn-default" onclick="pre_save_application()" ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;提交</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+     <div class="modal fade" id="introductionModal" tabindex="-1" role="dialog" aria-labelledby="introductionModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:750px;">
+            <div class="modal-content" role="document">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3 >填写个人简介(500字内)</h3>
+                </div>
+                <div class="modsal-body" >
+                    <div class="modsal-body" >
+                    <div class="input-group input-group" style="margin:10px 0px 0px 30px;">
+                        <!-- modal content begin -->
+
+                        <div class="form-group ">
+                            <div class="col-sm-8" style="width:700px">
+                                <textarea name="name" id="txtIntroduction" class="form-control "style="height:120px;" placeholder="个人信息简介" maxlength="500"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- modal content end -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn_submit" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> 保存 </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 关闭 </button>
+                </div>
+            </div>
+        </div>
+        </div>
+            </form>
+    </div>
+
+    <div class="row">
+
+        <!-- left menu starts -->
+        <div class="col-sm-2 col-lg-2">
+            <div class="sidebar-nav">
+                <div class="nav-canvas">
+                    <div class="nav-sm nav nav-stacked">
+
+                    </div>
+                    <ul class="nav nav-pills nav-stacked main-menu">
+                        {% for menu1 in menus %}
+                        {% if menu1 %}
+                            <li class="nav-header"><i class="glyphicon glyphicon-star"></i>&nbsp;&nbsp;{{menu1.0.menu_classify}}</li>
+                            {% for menu in menu1 %}
+                                <li><a class="ajax-link" href="{{menu.menu_addr}}"><i class="glyphicon glyphicon-{{menu.menu_icon}}"></i><span>&nbsp;&nbsp;{{menu.menu_name}}</span></a>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                        {% endfor %}
+                        <div class="row">
+                                     <div class="box col-md-12">
+                                          <div class="box-inner">
+                                               <div class="box-header well" data-original-title="">
+                                                    <h2><i class="glyphicon glyphicon-user"></i>&nbsp;用户信息</h2>
+                                               </div>
+                                               <div class="box-content">
+                                                    <ul class="dashboard-list">
+                                                        <li>
+                                                        <div class="row">
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">姓&nbsp;&nbsp;名:</span>
+                                                               <label style="color: #999999;" id="stuname"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">专&nbsp;&nbsp;业:</span>
+                                                               <label style="color: #999999;" id="stumajor"> sss</label>
+                                                             </div>
+                                                            <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">班&nbsp;&nbsp;级:</span>
+                                                               <label style="color: #999999;" id="stuclass"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">学&nbsp;&nbsp;号:</span>
+                                                               <label style="color: #999999;" id="stuid"> sss</label>
+                                                             </div>
+
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">性&nbsp;&nbsp;别:</span>
+                                                               <label style="color: #999999;" id="stusex"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">电&nbsp;&nbsp;话:</span>
+                                                               <label style="color: #999999;" id="stutel"> sss</label>
+                                                             </div>
+                                                        </div>
+                                                        </li>
+                                                    </ul>
+                                               </div>
+                                          </div>
+                                     </div>
+                                </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--/span-->
+        <!-- left menu ends -->
+
+
+        <div id="content" class="col-lg-10 col-sm-10">
+                    <!-- content starts -->
+            <div>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/app/student_index/" >毕设双选系统</a>
+                    </li>
+
+                    <li>
+                        <a href="/app/student_chooseTopic/" >填报志愿</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="row">
+
+            <form  >
+                <div class="box col-md-12">
+                    <div class="box-inner">
+                        <div class="box-content">
+                            <div class="box-header well" data-original-title="">
+                            <h2><i class="glyphicon glyphicon-check"></i>&nbsp;填报志愿</h2>
+                        </div><br/><br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                            <div id="toolbar" class="btn-group">
+                                 <button type="button" class="btn btn-default" onclick="add_introduction()">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 填写个人简介 </button>
+                                <button  type="button" class="btn btn-default" onclick="add_application()">
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> 保存 </button>
+                                <button  type="button" class="btn btn-default" onclick="submit_application()">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 提交 </button>
+                                <button  type="button" class="btn btn-default" onclick="btnSummaryTitle()">
+                                    <span class="glyphicon glyphicon-download" aria-hidden="true"></span> 下载题目汇总 </button>
+                            </div>
+                            <br/>
+                            <ul class="dashboard-list">
+                                <li>
+                                    <div class="row">
+                                        <div class="text-center  col-md-10">
+                                            <div class="panel-group" id="accordion" >
+	                                             <div class="panel panel-default">
+		                                              <div class="panel-heading">
+			                                              <h4 class="panel-title" >
+                                                              <span>志愿一：</span>
+                                                              <select class="selectpicker" data-width="500"  title="选择课题" id="choosetopic1" onchange="introduction1()" >
+                                                              </select>
+				                                              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" >
+                                                                  <button type="button" class="btn btn-default" onclick="introduction1()">查看简介</button>
+                                                              </a>
+			                                              </h4>
+		                                              </div>
+		                                              <div id="collapseOne" class="panel-collapse collapse ">
+			                                              <div class="panel-body ">
+                                                               <strong class="blue" id="introduction1" ></strong>
+                                                          </div>
+		                                              </div>
+	                                             </div>
+                                                 <div class="panel panel-default">
+		                                              <div class="panel-heading">
+			                                              <h4 class="panel-title">
+                                                              <span>志愿二：</span>
+                                                              <select class="selectpicker" data-width="500"  title="选择课题" id="choosetopic2"  onchange="introduction2()">
+                                                              </select>
+				                                              <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                                                  <button type="button" class="btn btn-default" onclick="introduction2()">查看简介</button>
+                                                              </a>
+			                                              </h4>
+		                                              </div>
+		                                              <div id="collapseTwo" class="panel-collapse collapse ">
+			                                              <div class="panel-body">
+                                                               <strong class="blue" id="introduction2" ></strong>
+                                                          </div>
+		                                              </div>
+	                                             </div>
+                                                <div class="panel panel-default">
+		                                              <div class="panel-heading">
+			                                              <h4 class="panel-title">
+                                                              <span>志愿三：</span>
+                                                              <select class="selectpicker" data-width="500"  title="选择课题" id="choosetopic3"  onchange="introduction3()">
+                                                              </select>
+				                                              <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                                                  <button type="button" class="btn btn-default" onclick="introduction3()">查看简介</button>
+                                                              </a>
+			                                              </h4>
+		                                              </div>
+		                                              <div id="collapseThree" class="panel-collapse collapse ">
+			                                              <div class="panel-body">
+                                                               <strong class="blue" id="introduction3" ></strong>
+                                                          </div>
+		                                              </div>
+                                                </div>
+                                                <div class="panel panel-default">
+		                                              <div class="panel-heading">
+			                                              <h4 class="panel-title">
+                                                              <span>志愿四：</span>
+                                                              <select class="selectpicker" data-width="500"  title="选择课题" id="choosetopic4"  onchange="introduction4()">
+                                                              </select>
+				                                              <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                                                  <button type="button" class="btn btn-default" onclick="introduction4()">查看简介</button>
+                                                              </a>
+			                                              </h4>
+		                                              </div>
+		                                              <div id="collapseFour" class="panel-collapse collapse ">
+			                                              <div class="panel-body">
+                                                               <strong class="blue" id="introduction4" ></strong>
+                                                          </div>
+		                                              </div>
+                                                </div>
+                                                <div class="panel panel-default">
+		                                              <div class="panel-heading">
+			                                              <h4 class="panel-title">
+                                                              <span>志愿五：</span>
+                                                              <select class="selectpicker" data-width="500"  title="选择课题" id="choosetopic5"  onchange="introduction5()">
+                                                              </select>
+				                                              <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+                                                                  <button type="button" class="btn btn-default" onclick="introduction5()">查看简介</button>
+                                                              </a>
+			                                              </h4>
+		                                              </div>
+		                                              <div id="collapseFive" class="panel-collapse collapse ">
+			                                              <div class="panel-body">
+                                                               <strong class="blue" id="introduction5" ></strong>
+                                                          </div>
+		                                              </div>
+                                                </div>
+                                                <div class="panel panel-default">
+		                                              <div class="panel-heading">
+			                                              <h4 class="panel-title">
+                                                              <span>志愿六：</span>
+                                                              <select class="selectpicker" data-width="500"  title="选择课题" id="choosetopic6"  onchange="introduction6()">
+                                                              </select>
+				                                              <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+                                                                  <button type="button" class="btn btn-default" onclick="introduction6()">查看简介</button>
+                                                              </a>
+			                                              </h4>
+		                                              </div>
+		                                              <div id="collapseSix" class="panel-collapse collapse ">
+			                                              <div class="panel-body">
+                                                               <strong class="blue" id="introduction6" ></strong>
+                                                          </div>
+		                                              </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            </div><!--/row-->
+
+        </div><!--/#content.col-md-0-->
+    </div><!--/fluid-row-->
+
+
+</div><!--/.fluid-container-->
+
+<!-- external javascript -->
+
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+<script src="{% static 'js/bootstrap-table-zh-CN.js' %}"></script>
+
+<!-- library for cookie management
+<script src="{% static 'js/jquery.cookie.js' %}"></script>-->
+<!-- calender plugin -->
+<script src="{% static 'bower_components/moment/min/moment.min.js' %}"></script>
+<script src="{% static 'bower_components/fullcalendar/dist/fullcalendar.min.js' %}"></script>
+<!-- data table plugin -->
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+
+<!-- select or dropdown enhancer -->
+<script src="{% static 'bower_components/chosen/chosen.jquery.min.js' %}"></script>
+<!-- plugin for gallery image view -->
+<script src="{% static 'bower_components/colorbox/jquery.colorbox-min.js' %}"></script>
+<!-- notification plugin -->
+<script src="{% static 'js/jquery.noty.js' %}"></script>
+<!-- library for making tables responsive -->
+<script src="{% static 'bower_components/responsive-tables/responsive-tables.js' %}"></script>
+<!-- tour plugin -->
+<script src="{% static 'bower_components/bootstrap-tour/build/js/bootstrap-tour.min.js' %}"></script>
+<!-- star rating plugin -->
+<script src="{% static 'js/jquery.raty.min.js' %}"></script>
+<!-- for iOS style toggle switch -->
+<script src="{% static 'js/jquery.iphone.toggle.js' %}"></script>
+<!-- autogrowing textarea plugin -->
+<script src="{% static 'js/jquery.autogrow-textarea.js' %}"></script>
+<!-- multiple file upload plugin -->
+<script src="{% static 'js/jquery.uploadify-3.1.min.js' %}"></script>
+<!-- history.js for cross-browser state change on ajax -->
+<script src="{% static 'js/jquery.history.js' %}"></script>
+<!-- application script for Charisma demo
+<script src="{% static 'js/charisma.js' %}"></script>-->
+<script type="text/javascript" src="{% static 'js/dialog.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-treeview.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-select.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.validate.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/message_cn.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/icheck.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/summernote.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'css/lang/summernote-zh-CN.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.zh-CN.min.js' %}"></script>
+
+<script>
+    $(function(){
+        $('#userid').html(getCookie('userid'));
+        $.getJSON("{% url 'student_getstuinfo' %}", function(ret){
+            $('#stuname').html(ret.data[0].name);
+            $('#stusex').html(ret.data[0].sex);
+            $('#stuclass').html(ret.data[0].stu_class);
+            $('#stumajor').html(ret.major[0].major);
+            $('#stuid').html(ret.data[0].user_id);
+            $('#stutel').html(ret.data[0].tel);
+        });
+
+
+    });
+    function changepwd_onclick(){
+          $('#newpwd').val('');
+          $('#conpwd').val('');
+        $('#passwordModal').modal();
+    }
+
+    function pwd_onclick(){
+        if(checkPwd()){
+            if($('#newpwd').val()!=$('#conpwd').val()){
+                Alert(
+                {
+                    msg: '两次密码输入不一致，请重新输入',
+                });
+            }
+            else{
+                $('#passwordModal').modal('hide');
+                //$('#passwordModal').removeData("bs.modal");
+                //$('#pwdform').submit();
+                var new_pwd = $('#newpwd').val();
+                $.get("{% url 'changepassword' %}?new_pwd="+new_pwd, function(ret){
+
+
+                    Alert('密码修改成功！');
+                });
+            }
+        }
+    }
+
+    function checkPwd(){
+        if($('#newpwd').val() == ""){
+            Alert("新密码不能为空");
+            return false;
+        }
+        else if($('#conpwd').val() == ""){
+            Alert("确认密码不能为空");
+            return false;
+        }
+        return true;
+    }
+    function chineseSort(a, b){
+        return a.localeCompare(b);
+    }
+</script>
+
+<script>
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg)) {
+            return decodeURI(arr[2]);
+        }
+        else
+            return null;
+    }
+
+    var stu_no;
+    var submit=0;
+    var stuinstitution;
+    var stuMajor;
+
+    var volunteer_topic_no_id1,volunteer_topic_no_id2,volunteer_topic_no_id3,
+        volunteer_topic_no_id4,volunteer_topic_no_id5,volunteer_topic_no_id6;
+    $(function(){
+
+        $('#userid').html(getCookie('userid'));
+        $.getJSON("{% url 'student_getstuinfo' %}", function(ret){
+            //stuinstitution=ret.institution[0].id;
+            stuMajor = ret.major[0].id;
+        });
+        $.getJSON("{% url 'student_getdate' %}", function(ret){
+            var select1_start=ret.date[0].select1_start;
+            var select1_end=ret.date[0].select1_end;
+            var today=new Date().toJSON().slice(0,10);
+
+            $.getJSON("{% url 'student_getstate' %}", function(ret){
+                 test=ret.message;
+                 if(test!=="数据库错误") {
+                    alert('你已双选成功，请去查看结果');
+                    $('#content').hide();
+                 } else {
+                        if(today<select1_start)
+                    {
+                        alert('第一轮志愿填报将于'+select1_start+'开启！');
+                        $('#content').hide();
+                    }
+                    else{
+                            if((today>=select1_start)&&(today<=select1_end))
+                            {
+                                active();
+                            }
+                            else{
+
+                                if(today>select1_end){
+                                    alert('该功能已关闭');
+                                    $('#content').hide();
+                                }
+                            }
+                    }
+                 }
+            });
+        });
+    });
+
+    function CurentTime(){
+        var now = new Date();
+        var year = now.getFullYear();       //年
+        var month = now.getMonth() + 1;     //月
+        var day = now.getDate();           //日
+        var hh = now.getHours();            //时
+        var mm = now.getMinutes();          //分
+        var ss = now.getSeconds();          //分
+        clock = year + "-";
+
+        if(month < 10)
+            clock += "0";
+        clock += month + "-";
+
+        if(day < 10)
+            clock += "0";
+        clock += day + " ";
+
+        if(hh < 10)
+            clock += "0";
+        clock += hh + ":";
+
+        if (mm < 10) clock += '0';
+        clock += mm + ":";
+
+        if (ss < 10) clock += '0';
+        clock += ss;
+
+        return(clock);
+    }
+
+    function active(){
+        stu_no=getCookie('userid');
+        var x1,x2,x3,x4,x5,x6;
+        $.getJSON("{% url 'student_get_application' %}",function(ret){
+            x1=ret[0].volunteer_topic_no_id;
+            x2=ret[1].volunteer_topic_no_id;
+            x3=ret[2].volunteer_topic_no_id;
+            x4=ret[3].volunteer_topic_no_id;
+            x5=ret[4].volunteer_topic_no_id;
+            x6=ret[5].volunteer_topic_no_id;
+
+            submit=ret[0].submit;
+        });
+        $.getJSON("{% url 'student_get_topic' %}?stuMajor="+stuMajor, function(ret){
+            var number = 1;
+            for(var i=0; i < ret.length; i++){
+                $("<option value=" + ret[i].id + ">" + "("+number+")"+ ret[i].subject +"--"+ret[i].name+"</option>").appendTo($('#choosetopic1'));
+                $("<option value=" + ret[i].id + ">" + "("+number+")"+ ret[i].subject +"--"+ret[i].name+ "</option>").appendTo($('#choosetopic2'));
+                $("<option value=" + ret[i].id + ">" + "("+number+")"+ ret[i].subject +"--"+ret[i].name+ "</option>").appendTo($('#choosetopic3'));
+                $("<option value=" + ret[i].id + ">" + "("+number+")"+ ret[i].subject +"--"+ret[i].name+ "</option>").appendTo($('#choosetopic4'));
+                $("<option value=" + ret[i].id + ">" + "("+number+")"+ ret[i].subject +"--"+ret[i].name+ "</option>").appendTo($('#choosetopic5'));
+                $("<option value=" + ret[i].id + ">" + "("+number+")"+ ret[i].subject +"--"+ret[i].name+ "</option>").appendTo($('#choosetopic6'));
+                number++;
+            }
+            $('#choosetopic1').val(x1);
+            $('#choosetopic2').val(x2);
+            $('#choosetopic3').val(x3);
+            $('#choosetopic4').val(x4);
+            $('#choosetopic5').val(x5);
+            $('#choosetopic6').val(x6);
+            setTimeout(function() {
+                $('#choosetopic1').selectpicker('refresh');
+                $('#choosetopic2').selectpicker('refresh');
+                $('#choosetopic3').selectpicker('refresh');
+                $('#choosetopic4').selectpicker('refresh');
+                $('#choosetopic5').selectpicker('refresh');
+                $('#choosetopic6').selectpicker('refresh');
+            },  300);
+        });
+        if(disable1==1){
+           document.getElementById("choosetopic1").disabled=true;
+        }
+        if(disable2==1){
+           document.getElementById("choosetopic2").disabled=true;
+        }
+        if(disable3==1){
+           document.getElementById("choosetopic3").disabled=true;
+        }
+        if(disable4==1){
+           document.getElementById("choosetopic4").disabled=true;
+        }
+        if(disable5==1){
+           document.getElementById("choosetopic5").disabled=true;
+        }
+        if(disable6==1){
+           document.getElementById("choosetopic6").disabled=true;
+        }
+    }
+
+
+    function introduction1(){
+        var topic_id=$('#choosetopic1').val();
+        $.get("{% url 'student_get_topic_introduction' %}?topic_id="+topic_id,function(ret){
+             $('#introduction1').html(ret);
+        });
+    }
+
+    function introduction2(){
+        var topic_id=$('#choosetopic2').val();
+        $.get("{% url 'student_get_topic_introduction' %}?topic_id="+topic_id,function(ret){
+             $('#introduction2').html(ret);
+        });
+    }
+
+    function introduction3(){
+        var topic_id=$('#choosetopic3').val();
+        $.get("{% url 'student_get_topic_introduction' %}?topic_id="+topic_id,function(ret){
+             $('#introduction3').html(ret);
+        });
+    }
+    function introduction4(){
+        var topic_id=$('#choosetopic4').val();
+        $.get("{% url 'student_get_topic_introduction' %}?topic_id="+topic_id,function(ret){
+             $('#introduction4').html(ret);
+        });
+    }
+    function introduction5(){
+        var topic_id=$('#choosetopic5').val();
+        $.get("{% url 'student_get_topic_introduction' %}?topic_id="+topic_id,function(ret){
+             $('#introduction5').html(ret);
+        });
+    }
+    function introduction6(){
+        var topic_id=$('#choosetopic6').val();
+        $.get("{% url 'student_get_topic_introduction' %}?topic_id="+topic_id,function(ret){
+             $('#introduction6').html(ret);
+        });
+    }
+    function btnSummaryTitle(){
+        $.getJSON("{% url 'summary_title' %}?type=title&stuMajor=" + stuMajor, function (ret) {
+                if (ret == '-1') {
+                    Alert('生成报表异常，请联系系统管理员！');
+                }
+                else {
+                    report_name = ret.report_name;
+                    setTimeout(function () {
+                        window.open("{% url 'download_title' %}?filename=" + report_name);
+                    }, 200);
+                }
+            });
+    }
+
+
+
+function add_application(){
+    var y1,y2,y3,y4,y5,y6;
+    if(submit==1){
+        alert('志愿提交后不能更改！');
+    }else{
+         if(document.getElementById("choosetopic1").selectedIndex<=0){
+              y1=-1;
+              volunteer_topic_no_id1=-1;
+         }else{
+              y1=document.getElementById("choosetopic1").selectedIndex;
+              volunteer_topic_no_id1=$('#choosetopic1').val();
+         }
+
+         if(document.getElementById("choosetopic2").selectedIndex<=0){
+              y2=-2;
+              volunteer_topic_no_id2=-2;
+         }else{
+              y2=document.getElementById("choosetopic2").selectedIndex;
+              volunteer_topic_no_id2=$('#choosetopic2').val();
+         }
+
+         if(document.getElementById("choosetopic3").selectedIndex<=0){
+              y3=-3;
+              volunteer_topic_no_id3=-3;
+         }else{
+              y3=document.getElementById("choosetopic3").selectedIndex;
+              volunteer_topic_no_id3=$('#choosetopic3').val();
+         }
+
+         if(document.getElementById("choosetopic4").selectedIndex<=0){
+              y4=-4;
+              volunteer_topic_no_id4=-4;
+         }else{
+              y4=document.getElementById("choosetopic4").selectedIndex;
+              volunteer_topic_no_id4=$('#choosetopic4').val();
+         }
+
+         if(document.getElementById("choosetopic5").selectedIndex<=0){
+              y5=-5;
+              volunteer_topic_no_id5=-5;
+         }else{
+              y5=document.getElementById("choosetopic5").selectedIndex;
+              volunteer_topic_no_id5=$('#choosetopic5').val();
+         }
+
+         if(document.getElementById("choosetopic6").selectedIndex<=0){
+              y6=-6;
+              volunteer_topic_no_id6=-6;
+         }else{
+              y6=document.getElementById("choosetopic6").selectedIndex;
+              volunteer_topic_no_id6=$('#choosetopic6').val();
+         }
+
+         if((y1==y2)||(y2==y3)||(y1==y3)||(y1==y4)||(y1==y5)||(y1==y6)||(y2==y4)||(y2==y5)||(y2==y6)||(y3==y4)||(y3==y5)||(y3==y6)||(y4==y5)||(y4==y6)||(y5==y6)){
+              alert('志愿不能相同！');
+         }else{
+              student_save_application();
+         }
+    }
+}
+
+function add_introduction(){
+    if(submit==1){
+        alert('志愿提交后不能更改！');
+    }else {
+        $.get("{% url 'student_getintroduction' %}",function(ret){
+
+             $('#txtIntroduction').html(ret);
+        });
+        $('#introductionModal').modal({backdrop: 'static', keyboard: false});
+        //student_save_introduction();
+    }
+}
+
+function submit_application(){
+    var y1,y2,y3,y4,y5,y6;
+    if(submit==1){
+        alert('志愿提交后不能更改！');
+    }else{
+         if(document.getElementById("choosetopic1").selectedIndex<=0){
+              y1=-1;
+              volunteer_topic_no_id1=-1;
+         }else{
+              y1=document.getElementById("choosetopic1").selectedIndex;
+              volunteer_topic_no_id1=$('#choosetopic1').val();
+         }
+
+         if(document.getElementById("choosetopic2").selectedIndex<=0){
+              y2=-2;
+              volunteer_topic_no_id2=-2;
+         }else{
+              y2=document.getElementById("choosetopic2").selectedIndex;
+              volunteer_topic_no_id2=$('#choosetopic2').val();
+         }
+
+         if(document.getElementById("choosetopic3").selectedIndex<=0){
+              y3=-3;
+              volunteer_topic_no_id3=-3;
+         }else{
+              y3=document.getElementById("choosetopic3").selectedIndex;
+              volunteer_topic_no_id3=$('#choosetopic3').val();
+         }
+
+         if(document.getElementById("choosetopic4").selectedIndex<=0){
+              y4=-4;
+              volunteer_topic_no_id4=-4;
+         }else{
+              y4=document.getElementById("choosetopic4").selectedIndex;
+              volunteer_topic_no_id4=$('#choosetopic4').val();
+         }
+
+         if(document.getElementById("choosetopic5").selectedIndex<=0){
+              y5=-5;
+              volunteer_topic_no_id5=-5;
+         }else{
+              y5=document.getElementById("choosetopic5").selectedIndex;
+              volunteer_topic_no_id5=$('#choosetopic5').val();
+         }
+
+         if(document.getElementById("choosetopic6").selectedIndex<=0){
+              y6=-6;
+              volunteer_topic_no_id6=-6;
+         }else{
+              y6=document.getElementById("choosetopic6").selectedIndex;
+              volunteer_topic_no_id6=$('#choosetopic6').val();
+         }
+
+         if((y1==y2)||(y2==y3)||(y1==y3)||(y1==y4)||(y1==y5)||(y1==y6)||(y2==y4)||(y2==y5)||(y2==y6)||(y3==y4)||(y3==y5)||(y3==y6)||(y4==y5)||(y4==y6)||(y5==y6)){
+              alert('志愿不能相同！');
+         }else{
+              $('#submitModal').modal();
+         }
+    }
+}
+
+$("#btn_submit").click(function () {
+        $('#introductionModal').modal('hide');
+        student_save_introduction();
+    });
+
+function pre_save_application(){
+     submit=1;
+     $('#submitModal').modal('hide');
+     student_submit_application();
+}
+function student_save_introduction() {
+    var url = "{% url 'student_addintroduction' %}";
+    var parameters = {
+
+            introduction: $('#txtIntroduction').val()
+
+        };
+
+        $.ajax({
+                type: "POST",
+                url: url,
+                data: parameters,
+                dataType: "json",
+                success: function(data){
+                    //dat = JSON.parse(data);
+                    alert(data.message);
+                    $('#introductionModal').modal('hide');
+                    refresh();
+                },
+                error:  function(XMLHttpRequest, textStatus, errorThrown) {
+                    //alert(XMLHttpRequest.status);
+                    //alert(XMLHttpRequest.readyState);
+                    //alert(textStatus);
+                    alert('请检查数据并重试！');
+                }
+            });
+}
+
+
+function student_save_application(){
+    var url = "{% url 'student_addapplication' %}";
+    var parameters = {
+        id1:stu_no+'1',
+        id2:stu_no+'2',
+        id3:stu_no+'3',
+        id4:stu_no+'4',
+        id5:stu_no+'5',
+        id6:stu_no+'6',
+
+        stu_no:stu_no,
+        volunteer_no1:1,
+        volunteer_no2:2,
+        volunteer_no3:3,
+        volunteer_no4:4,
+        volunteer_no5:5,
+        volunteer_no6:6,
+        volunteer_topic_no_id1:volunteer_topic_no_id1,
+        volunteer_topic_no_id2:volunteer_topic_no_id2,
+        volunteer_topic_no_id3:volunteer_topic_no_id3,
+        volunteer_topic_no_id4:volunteer_topic_no_id4,
+        volunteer_topic_no_id5:volunteer_topic_no_id5,
+        volunteer_topic_no_id6:volunteer_topic_no_id6,
+
+        };
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: parameters,
+        dataType: "json",
+        success: function(data){
+                   alert(data.message);
+                   refresh();
+                 },
+        error:  function(XMLHttpRequest, textStatus, errorThrown) {
+                  alert('请检查数据并重试！');
+                }
+    });
+
+}
+
+
+function student_submit_application(){
+    var url = "{% url 'stu_submitapplication' %}";
+    var parameters = {
+        id1:stu_no+'1',
+        id2:stu_no+'2',
+        id3:stu_no+'3',
+        id4:stu_no+'4',
+        id5:stu_no+'5',
+        id6:stu_no+'6',
+        submit:1
+        };
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: parameters,
+        dataType: "json",
+        success: function(data){
+                   alert(data.message);
+                   refresh();
+                 },
+        error:  function(XMLHttpRequest, textStatus, errorThrown) {
+                  alert('请检查数据并重试！');
+                }
+    });
+
+}
+
+
+function initstudent(){
+       var parameters = { };
+        url = "{% url 'supervisor_init_student' %}";
+        $.ajax({
+                type: "POST",
+                url: url,
+                data: parameters,
+                dataType: "json",
+                success: function(data){
+                    //dat = JSON.parse(data);
+                    alert(data.message);
+                    //$('#mdlInformation').modal('hide');
+                    refresh();
+                },
+                error:  function(XMLHttpRequest, textStatus, errorThrown) {
+                    //alert(XMLHttpRequest.status);
+                    //alert(XMLHttpRequest.readyState);
+                    //alert(textStatus);
+                    alert('请检查数据并重试！');
+                }
+        });
+
+    }
+
+
+
+</script>
+
+</body>
+</html>
+
+
+
+

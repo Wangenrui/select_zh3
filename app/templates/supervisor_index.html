@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=12" />
+    <meta charset="utf-8">
+    <title>信息学院本科生毕业设计管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+
+    <!-- The styles -->
+    {% load static %}
+    <link id="bs-css" href="{% static 'css/bootstrap-cerulean.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/charisma-app.css' %}" rel="stylesheet">
+    <link href="{% static 'bower_components/fullcalendar/dist/fullcalendar.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/fullcalendar/dist/fullcalendar.print.css' %}" rel='stylesheet' media='print'>
+    <link href="{% static 'bower_components/chosen/chosen.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/colorbox/example3/colorbox.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/responsive-tables/responsive-tables.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/bootstrap-tour/build/css/bootstrap-tour.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/jquery.noty.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/noty_theme_default.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/elfinder.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/elfinder.theme.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/jquery.iphone.toggle.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/uploadify.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/animate.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-treeview.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-table.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-select.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/summernote.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/plugin/font-awesome.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-datepicker.css' %}" rel='stylesheet'>
+
+    <!-- jQuery -->
+    <script src="{% static 'bower_components/jquery/jquery.min.js' %}"></script>
+
+    <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- The fav icon -->
+    <link rel="shortcut icon" href="{% static 'img/logo3.png' %}">
+
+</head>
+
+<body>
+    <!-- topbar starts -->
+<div class="navbar navbar-default" role="navigation">
+
+    <div class="navbar-inner" >
+        <button type="button" class="navbar-toggle pull-left animated flip">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+         <img  src="{% static 'img/index.png' %}" />
+        <a class="navbar-brand" href="{% url 'supervisor_index' %}" > 信息学院本科生毕业设计管理系统</a>
+
+        <!-- user dropdown starts -->
+        <div class="btn-group pull-right">
+            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <i class="glyphicon glyphicon-user"></i>
+                <span class="hidden-sm hidden-xs"> 用户名: </span>
+                <span id="userid"> 异常</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a  onclick="changepwd_onclick()">修改密码</a></li>
+                <li class="divider"></li>
+                <li><a href="/app/">退出</a></li>
+            </ul>
+        </div>
+        <!-- user dropdown ends -->
+
+    </div>
+</div>
+    <!-- topbar ends -->
+<div class="ch-container">
+
+    <!-- system modal start -->
+    <div id="ycf-alert" class="modal">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h3 class="modal-title"><i class="fa fa-exclamation-circle"></i> [Title]</h3>
+          </div>
+          <div class="modal-body">
+              <div class="input-group input-group-lg" >[Message]
+              </div>
+          </div>
+          <div class="modal-footer" >
+            <button type="button" class="btn btn-primary ok" data-dismiss="modal">[BtnOk]</button>
+            <button type="button" class="btn btn-default cancel" data-dismiss="modal">[BtnCancel]</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- system modal end -->
+
+    <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel"
+         aria-hidden="true">
+        <form class="form-horizontal" method="get" enctype="multipart/form-data" id="pwdform">
+        <div class="modal-dialog">
+            <div class="modal-content" role="document">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>修改密码</h3>
+                </div>
+
+                <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i>&nbsp;新密码</span>
+                        <input id="newpwd" type="password" class="form-control" placeholder="Password" required="true">
+                </div>
+                <br>
+                <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i>&nbsp;确认密码</span>
+                        <input id="conpwd" type="password" class="form-control" placeholder="Password" required="true">
+                </div>
+                <div class="modal-footer">
+                    <!-- style="display:none;"
+                    <button type="button" id="disbutton" onclick="pwd_onclick()"  ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;确定修改</button>
+                    -->
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;关闭</button>
+                    <button type="button" class="btn btn-default" onclick="pwd_onclick()" ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;确定修改</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+
+    <div class="column">
+
+        <!-- left menu starts -->
+        <div class="col-sm-2 col-lg-2">
+            <div class="sidebar-nav">
+                <div class="nav-canvas">
+                    <div class="nav-sm nav nav-stacked">
+                    </div>
+                    <ul class="nav nav-pills nav-stacked main-menu">
+
+                        <li><a class="ajax-link" href="/app/supervisor_Maintain/"><i class="glyphicon glyphicon-cog"></i><span>&nbsp;&nbsp;维护毕业设计活动</span></a>
+                        </li>
+
+                        <li><a class="ajax-link" href="/app/supervisor_teacherMessage/"><i class="glyphicon glyphicon-user"></i><span>&nbsp;&nbsp;教师信息管理</span></a>
+                        </li>
+
+                        <li><a class="ajax-link" href="/app/supervisor_studentMessage/"><i class="glyphicon glyphicon-user"></i><span>&nbsp;&nbsp;学生信息管理</span></a>
+                        </li>
+
+                        <li><a class="ajax-link" href="/app/supervisor_download/"><i class="glyphicon glyphicon-circle-arrow-down"></i><span>&nbsp;&nbsp;下载汇总文件</span></a>
+                        </li>
+                        <div class="row">
+                                     <div class="box col-md-12">
+                                          <div class="box-inner">
+                                               <div class="box-header well" data-original-title="">
+                                                    <h2><i class="glyphicon glyphicon-user"></i>&nbsp;用户信息</h2>
+                                               </div>
+                                               <div class="box-content">
+                                                    <ul class="dashboard-list">
+                                                        <li>
+                                                        <div class="row">
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">姓&nbsp;&nbsp;名:</span>
+                                                               <label style="color: #999999;" id="labname"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">角&nbsp;&nbsp;色:</span>
+                                                               <label style="color: #999999;" id="labrole"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">工&nbsp;&nbsp;号:</span>
+                                                               <label style="color: #999999;" id="labid"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">部&nbsp&nbsp门:</span>
+                                                               <label style="color: #999999;" id="labinstitution1">教学办公室</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">性&nbsp;&nbsp;别:</span>
+                                                               <label style="color: #999999;" id="labsex"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">电&nbsp;&nbsp;话:</span>
+                                                               <label style="color: #999999;" id="labtel"> sss</label>
+                                                             </div>
+                                                        </div>
+                                                        </li>
+                                                    </ul>
+                                               </div>
+                                          </div>
+                                     </div>
+                                </div><!--/row-->
+                    </ul>
+                    <br>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="content" class="col-lg-10 col-sm-10">
+                    <!-- content starts -->
+            <div>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/app/supervisor_index/" id="company_name">教办管理员</a>
+                    </li>
+                    <li>
+                        <a href="#">汇总信息</a>
+                    </li>
+                </ul>
+                <div class="box-inner">
+                    <div class="box-header well" data-original-title="">
+                        <h2>汇总信息管理</h2>
+                    </div>
+                    <div class="box-content">
+                        <div class="form-group form-inline" id="tabletoolbar">
+                            <div id="toolbar" class="btn-group">
+                                <button id="btn_set_topicnum" type="button" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> 题目下限设置</button>
+
+                                <button id="btn_update_topicnum" type="button" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 修改题目下限</button>
+                            </div>
+                        </div>
+                        <table id="tb_info"></table>
+
+                    </div>
+                </div>
+                <div class="modal fade" id="institution_topic_num" tabindex="-1" role="dialog" aria-labelledby="mdlInformationLabel" aria-hidden="true">
+                    <form class="form-horizontal" method="post" enctype="multipart/form-data" id="companyform"  role="form" onsubmit="formSubmit()">
+                        <div class="modal-dialog" style="width:400px;">
+                            <div class="modal-content" role="document">
+                                <div class="modal-header" style="height:50px;">
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
+                                    <h4 id="mdlTitle">题目下限信息</h4>
+                                    <h4 hidden="true" id="mdlPara"></h4>
+                                </div>
+                                <div class="modsal-body" >
+                                  <div class="input-group input-group" style="margin:10px 0px 0px 30px;">
+                                    <!-- modal content begin -->
+                                    <div class="form-group has-warning" hidden="true">
+                                        <label class="col-sm-4 control-label">Id: </label>
+                                        <div class="col-sm-8 ">
+                                             <input type="text" name="Id" id="txtId" class="form-control" placeholder="Id">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group has-warning">
+                                        <label class="col-sm-4 control-label ">研究所：</label>
+                                        <div class="col-sm-8">
+                                            <select class="selectpicker" data-width="150" title="研究所" id="selectInstitution" onchange="InstitutionChange()" selected="selected" >
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group "  id="TopicMin">
+                                        <label class="col-sm-4 control-label ">题目下限：</label>
+                                        <div class="col-sm-8 ">
+                                            <input type="text" name="name" id="txtTopicMin" class="form-control" placeholder="题目下限">
+                                        </div>
+                                    </div>
+                                    <!-- modal content end -->
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="btn_submit" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> 保存 </button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 关闭 </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div><!--/#content.col-md-0-->
+    </div><!--/fluid-row-->
+</div><!--/.fluid-container-->
+
+<!-- external javascript -->
+
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+<script src="{% static 'js/bootstrap-table-zh-CN.js' %}"></script>
+
+<!-- library for cookie management
+<script src="{% static 'js/jquery.cookie.js' %}"></script>-->
+<!-- calender plugin -->
+<script src="{% static 'bower_components/moment/min/moment.min.js' %}"></script>
+<script src="{% static 'bower_components/fullcalendar/dist/fullcalendar.min.js' %}"></script>
+<!-- data table plugin -->
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+
+<!-- select or dropdown enhancer -->
+<script src="{% static 'bower_components/chosen/chosen.jquery.min.js' %}"></script>
+<!-- plugin for gallery image view -->
+<script src="{% static 'bower_components/colorbox/jquery.colorbox-min.js' %}"></script>
+<!-- notification plugin -->
+<script src="{% static 'js/jquery.noty.js' %}"></script>
+<!-- library for making tables responsive -->
+<script src="{% static 'bower_components/responsive-tables/responsive-tables.js' %}"></script>
+<!-- tour plugin -->
+<script src="{% static 'bower_components/bootstrap-tour/build/js/bootstrap-tour.min.js' %}"></script>
+<!-- star rating plugin -->
+<script src="{% static 'js/jquery.raty.min.js' %}"></script>
+<!-- for iOS style toggle switch -->
+<script src="{% static 'js/jquery.iphone.toggle.js' %}"></script>
+<!-- autogrowing textarea plugin -->
+<script src="{% static 'js/jquery.autogrow-textarea.js' %}"></script>
+<!-- multiple file upload plugin -->
+<script src="{% static 'js/jquery.uploadify-3.1.min.js' %}"></script>
+<!-- history.js for cross-browser state change on ajax -->
+<script src="{% static 'js/jquery.history.js' %}"></script>
+<!-- application script for Charisma demo
+<script src="{% static 'js/charisma.js' %}"></script>-->
+<script type="text/javascript" src="{% static 'js/dialog.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-treeview.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-select.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.validate.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/message_cn.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/icheck.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/summernote.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'css/lang/summernote-zh-CN.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.zh-CN.min.js' %}"></script>
+
+<script>
+    function changepwd_onclick(){
+          $('#newpwd').val('');
+          $('#conpwd').val('');
+        $('#passwordModal').modal();
+    }
+
+    function pwd_onclick(){
+        if(checkPwd()){
+            if($('#newpwd').val()!=$('#conpwd').val()){
+                Alert(
+                {
+                    msg: '两次密码输入不一致，请重新输入',
+                });
+            }
+            else{
+                $('#passwordModal').modal('hide');
+                //$('#passwordModal').removeData("bs.modal");
+                //$('#pwdform').submit();
+                var new_pwd = $('#newpwd').val();
+                $.get("{% url 'changepassword' %}?new_pwd="+new_pwd, function(ret){
+
+
+                    Alert('密码修改成功！');
+                });
+            }
+        }
+    }
+
+    function checkPwd(){
+        if($('#newpwd').val() == ""){
+            Alert("新密码不能为空");
+            return false;
+        }
+        else if($('#conpwd').val() == ""){
+            Alert("确认密码不能为空");
+            return false;
+        }
+        return true;
+    }
+    function chineseSort(a, b){
+        return a.localeCompare(b);
+    }
+</script>
+
+<script>
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg)) {
+            return decodeURI(arr[2]);
+        }
+        else
+            return null;
+    }
+
+    $(function(){
+        $('#userid').html(getCookie('userid'));
+
+        $.getJSON("{% url 'supervisor_getuserinfo' %}", function(ret){
+
+            $('#labname').html(ret.data[0].name);
+            $('#labrole').html(ret.data[0].role_name);
+            $('#labid').html(ret.data[0].user_id);
+            $('#labinstitution').html(ret.data[0].institution_name);
+            $('#labsex').html(ret.data[0].sex);
+            $('#labtel').html(ret.data[0].tel);
+
+        });
+
+       $.getJSON("{% url 'supervisor_getinstitution' %}", function(ret){
+            for(var i=1; i < ret.length; i++){
+                $("<option value="+ret[i]['id']+">  "+ret[i]['institution_name']+" </option>").appendTo($('#selectInstitution'));
+            }
+            $('#selectInstitution').selectpicker('refresh');
+        });
+
+        /*$.getJSON("{% url 'supervisor_getmajor' %}", function(ret){
+            $('#selectMajor').html('');
+            for(var i=0; i < ret.length; i++){
+                $("<option value="+ret[i]['id']+">  "+ret[i]['major']+" </option>").appendTo($('#selectMajor'));
+            }
+            $('#selectMajor').selectpicker('refresh');
+        });*/
+
+        var oTable = new TableInit();
+        oTable.Init();
+    });
+
+    /*function InstitutionChange(){
+
+        var objS = document.getElementById("selectInstitution");
+        var institution_id = objS.options[objS.selectedIndex].value;
+
+        $.getJSON("{% url 'supervisor_getthismajor' %}?institution_id="+institution_id, function(ret){
+            $('#selectMajor').html('');
+            for(var i=0; i < ret.length; i++){
+                $("<option value="+ret[i]['major_id']+">  "+ret[i]['major']+" </option>").appendTo($('#selectMajor'));
+                //showmajor(ret[i]['major']);
+            }
+            $('#selectMajor').selectpicker('refresh');
+        });
+    }*/
+
+    /*function showmajor(major){
+        $('#Automation').hide();
+        $('#Electrical').hide();
+        $('#Measurement').hide();
+        $('#Electronic').hide();
+        switch (major){
+            case "自动化":
+                $('#Automation').show();
+                break;
+            case "电气工程及其自动化":
+                $('#Electrical').show();
+                break;
+            case "测控技术与仪器":
+                $('#Measurement').show();
+                break;
+            case "电子科学与技术":
+                $('#Electronic').show();
+                break;
+            defult :
+                alert("专业不存在");
+        }
+    }*/
+
+    $("#btn_set_topicnum").click(function () {
+        resetform();
+        $('#mdlPara').html('');
+        $('#mdlTitle').html('题目下限设置');
+        $('#institution_topic_num').modal({backdrop: 'static', keyboard: false});
+    });
+
+    $("#btn_update_topicnum").click(function () {
+        resetform();
+        var select = $("#tb_info").bootstrapTable('getSelections');
+        if (select.length > 1) {
+            Alert('只能选择一行进行编辑');
+            return;
+        }
+        if (select.length <= 0) {
+            Alert('请选择有效数据');
+            return;
+        }
+        var id =select[0].id ;
+
+        $.getJSON("{% url 'super_get_topicnumbyid' %}?id="+id, function(ret){
+            $('#txtId').val(id);
+            $('#txtId').attr("disabled",true);
+
+            $('#selectInstitution').selectpicker('val', ret[0].institution_id);
+            $('#txtTopicMin').val(ret[0].min);
+        });
+
+        $('#mdlPara').html(id);
+        $('#mdlTitle').html('题目下限修改');
+        $('#institution_topic_num').modal({backdrop: 'static', keyboard: false});
+
+    });
+
+    $("#btn_submit").click(function () {
+
+        var parameters = {
+            id: $('#txtId').val(),
+            institution_id: $('#selectInstitution').val(),
+            topic_min: $('#txtTopicMin').val(),
+
+        };
+
+        if(validform().form()){
+
+            var url = '';
+            if($('#mdlPara').html() == ''){
+                url = "{% url 'supervisor_set_topicnum' %}";
+            } else {
+                url = "{% url 'super_update_topicnum' %}";
+            }
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: parameters,
+                dataType: "json",
+                success: function(data){
+                    //dat = JSON.parse(data);
+                    alert(data.message);
+                    //$('#institution_topic_num').modal('hide');
+                    refresh();
+                },
+                error:  function(XMLHttpRequest, textStatus, errorThrown) {
+                    //alert(XMLHttpRequest.status);
+                    //alert(XMLHttpRequest.readyState);
+                    //alert(textStatus);
+                    alert('请检查数据并重试！');
+                }
+            });
+        }
+        $('#institution_topic_num').modal('hide');
+        $('#tb_info').bootstrapTable('refresh');
+    });
+
+    function validform(){
+
+        if ($('#selectInstitution').val() == '') {
+            alert('请选择所在研究所！');
+	        return false;
+        }
+
+        if ($('#txtTopicMin').val().match(/^\d+$/) == null) {
+            alert('题目数量为整数，请重新填写！');
+	        return false;
+        }
+
+        return $("#companyform").validate({
+            rules : {
+            }
+        });
+    }
+
+    function resetform(){
+        $('#companyform')[0].reset();
+        $('#selectInstitution').selectpicker('refresh');
+    }
+
+    var TableInit = function () {
+        var oTableInit = new Object();
+        oTableInit.Init = function () {
+            $('#tb_info').bootstrapTable({
+                url: '/app/supervisor_get_topicnum$',      //请求后台的URL（*）
+                method: 'get',                      //请求方式（*）
+                toolbar: '#tabletoolbar',           //工具按钮用哪个容器
+                striped: true,                      //是否显示行间隔色
+                locale:'zh-CN',
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                sortable: true,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                queryParams: oTableInit.queryParams,//传递参数（*）
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber:1,                       //初始化加载第一页，默认第一页
+                pageSize: 10,                       //每页的记录行数（*）
+                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                //search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                strictSearch: true,
+                showColumns: false,                 //是否显示所有的列
+                showRefresh: true,                  //是否显示刷新按钮
+                minimumCountColumns: 2,             //最少允许的列数
+                clickToSelect: true,                //是否启用点击选中行
+                //height: 541,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+                showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
+                cardView: false,                    //是否显示详细视图
+                detailView: false,                  //是否显示父子表
+                rowStyle: function (row, index) {
+                    //这里有5个取值代表5中颜色['active', 'success', 'info', 'warning', 'danger'];
+                    var strclass = "";
+                    if (row.work_status == '未启用') {
+                        strclass = 'danger'; //还有一个active
+                    }
+                    else {
+                        return {};
+                    }
+                    return { classes: strclass }
+                },
+
+                columns:[ {
+                checkbox: true
+                },{
+                    title: "Id",
+                    field: 'id',
+                    //sortable : true,
+                    valign: "middle"//垂直
+                },{
+                    title: "研究所",
+                    field: 'institution_name',
+                    //sortable : true,
+                    valign: "middle"//垂直
+                },{
+                    title: "题目下限",
+                    field: 'min',
+                    //sortable : true,
+                    valign: "middle"//垂直
+                },{
+                    field: 'topic_num',
+                    title: '已填报题目数',
+                    //sortable : true,
+                    valign: "middle"
+                },{
+                    field:'unselect_num',
+                    title: '未选题目数',
+                    //sortable : true,
+                    valign: "middle"
+                },{
+                    title: "已选学生数",
+                    field: 'select_num',
+                    //sortable : true,
+                    valign: "middle"//垂直
+                }
+            ]
+
+            });
+
+           $('#tb_info').bootstrapTable('hideColumn', 'id');
+
+        };
+
+
+        oTableInit.queryParams = function (params) {
+            var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                limit: params.limit,   //页面大小
+                offset: params.offset, //页码
+                sort: params.sort,
+                order: params.order,
+                search: params.search
+            };
+            return temp;
+        };
+        return oTableInit;
+    };
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/html">
+<head>
+    <!--
+        ===
+        This comment should NOT be removed.
+
+        Charisma v2.0.0
+
+        Copyright 2012-2014 Muhammad Usman
+        Licensed under the Apache License v2.0
+        http://www.apache.org/licenses/LICENSE-2.0
+
+        http://usman.it
+        http://twitter.com/halalit_usman
+        ===
+    -->
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <meta charset="utf-8">
+    <title>信息学院本科生毕业设计管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+
+    <!-- The styles -->
+    {% load static %}
+    <link id="bs-css" href="{% static 'css/bootstrap-cerulean.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/charisma-app.css' %}" rel="stylesheet">
+    <link href="{% static 'bower_components/fullcalendar/dist/fullcalendar.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/fullcalendar/dist/fullcalendar.print.css' %}" rel='stylesheet' media='print'>
+    <link href="{% static 'bower_components/chosen/chosen.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/colorbox/example3/colorbox.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/responsive-tables/responsive-tables.css' %}" rel='stylesheet'>
+    <link href="{% static 'bower_components/bootstrap-tour/build/css/bootstrap-tour.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/jquery.noty.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/noty_theme_default.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/elfinder.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/elfinder.theme.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/jquery.iphone.toggle.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/uploadify.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/animate.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-treeview.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-table.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/bootstrap-select.css' %}" rel='stylesheet'>
+    <link href="{% static 'css/summernote.css' %}" rel='stylesheet'>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link href="{% static 'css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/bootstrap-datepicker.css' %}" rel='stylesheet'>
+    <script src="{% static 'bower_components/jquery/jquery.min.js' %}"></script>
+    <!-- jQuery -->
+    <script src="{% static 'bower_components/jquery/jquery.min.js' %}"></script>
+
+    <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <!--script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script-->
+    <![endif]-->
+
+    <!-- The fav icon -->
+    <link rel="shortcut icon" href="{% static 'img/logo3.png' %}">
+
+<style type="text/css">
+.uploadtxt{ height:35px; border:1px solid #cdcdcd; width:212px;}
+.uploadfile{ position:absolute; top:0px; right:0px; height:35px; opacity:0; width:212px }
+</style>
+
+
+</head>
+
+<body>
+   <!-- topbar starts -->
+<div class="navbar navbar-default" role="navigation">
+
+    <div class="navbar-inner" >
+        <button type="button" class="navbar-toggle pull-left animated flip">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+         <img  src="{% static 'img/index.png' %}" />
+        <a class="navbar-brand" href="{% url 'supervisor_index' %}" > 信息学院本科生毕业设计管理系统</a>
+
+        <!-- user dropdown starts -->
+        <div class="btn-group pull-right">
+            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <i class="glyphicon glyphicon-user"></i>
+                <span class="hidden-sm hidden-xs"> 用户名: </span>
+                <span id="userid"> 异常</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a  onclick="changepwd_onclick()">修改密码</a></li>
+                <li class="divider"></li>
+                <li><a href="/app/">退出</a></li>
+            </ul>
+        </div>
+        <!-- user dropdown ends -->
+
+    </div>
+</div>
+    <!-- topbar ends -->
+<div class="ch-container">
+
+    <!-- system modal start -->
+    <div id="ycf-alert" class="modal">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h3 class="modal-title"><i class="fa fa-exclamation-circle"></i> [Title]</h3>
+          </div>
+          <div class="modal-body">
+              <div class="input-group input-group-lg" >[Message]
+              </div>
+          </div>
+          <div class="modal-footer" >
+            <button type="button" class="btn btn-primary ok" data-dismiss="modal">[BtnOk]</button>
+            <button type="button" class="btn btn-default cancel" data-dismiss="modal">[BtnCancel]</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- system modal end -->
+
+    <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel"
+         aria-hidden="true">
+        <form class="form-horizontal" method="get" enctype="multipart/form-data" id="pwdform">
+        <div class="modal-dialog">
+            <div class="modal-content" role="document">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>修改密码</h3>
+                </div>
+
+                <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i>&nbsp;新密码</span>
+                        <input id="newpwd" type="password" class="form-control" placeholder="Password" required="required">
+                </div>
+                <br>
+                <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i>&nbsp;确认密码</span>
+                        <input id="conpwd" type="password" class="form-control" placeholder="Password" required="required">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;关闭</button>
+                    <button type="button" class="btn btn-default" onclick="pwd_onclick()" ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;确定修改</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2 col-lg-2">
+            <div class="sidebar-nav">
+                <div class="nav-canvas">
+                    <div class="nav-sm nav nav-stacked">
+                    </div>
+                    <ul class="nav nav-pills nav-stacked main-menu">
+
+
+                                <li><a class="ajax-link" href="/app/supervisor_Maintain/"><i class="glyphicon glyphicon-cog"></i><span>&nbsp;&nbsp;维护毕业设计活动</span></a>
+                                </li>
+
+                                <li><a class="ajax-link" href="/app/supervisor_teacherMessage/"><i class="glyphicon glyphicon-user"></i><span>&nbsp;&nbsp;教师信息管理</span></a>
+                                </li>
+
+                                <li><a class="ajax-link" href="/app/supervisor_studentMessage/"><i class="glyphicon glyphicon-user"></i><span>&nbsp;&nbsp;学生信息管理</span></a>
+                                </li>
+<!--
+                                <li><a class="ajax-link"><i class="glyphicon glyphicon-fullscreen"></i><span>&nbsp;&nbsp;查看双选结果</span></a>
+                                    <ul>
+                                        <li><a class="ajax-link" href="/app/supervisor_checkByTeacher/"><span>&nbsp;&nbsp;按教师查看</span></a></li>
+                                        <li><a class="ajax-link" href="/app/supervisor_checkByStudent/"><span>&nbsp;&nbsp;按学生查看</span></a></li>
+                                        <li><a class="ajax-link" href="/app/supervisor_checkByTopic/"><span>&nbsp;&nbsp;按未选题目查看</span></a></li>
+
+                                    </ul>
+                                </li>
+-->
+                                <li><a class="ajax-link" href="/app/supervisor_download/"><i class="glyphicon glyphicon-circle-arrow-down"></i><span>&nbsp;&nbsp;下载汇总文件</span></a>
+                                </li>
+
+                                <div class="row">
+                                     <div class="box col-md-12">
+                                          <div class="box-inner">
+                                               <div class="box-header well" data-original-title="">
+                                                    <h2><i class="glyphicon glyphicon-user"></i>&nbsp;用户信息</h2>
+                                               </div>
+                                               <div class="box-content">
+                                                    <ul class="dashboard-list">
+                                                        <li>
+                                                        <div class="row">
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">姓&nbsp;&nbsp;名:</span>
+                                                               <label style="color: #999999;" id="labname"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">角&nbsp;&nbsp;色:</span>
+                                                               <label style="color: #999999;" id="labrole"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">工&nbsp;&nbsp;号:</span>
+                                                               <label style="color: #999999;" id="labid"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">部&nbsp;&nbsp;门:</span>
+                                                               <label style="color: #999999;" id="labinstitution"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">性&nbsp;&nbsp;别:</span>
+                                                               <label style="color: #999999;" id="labsex"> sss</label>
+                                                             </div>
+                                                             <div>
+                                                               <span class="blue" style="width:150px;font-size:16px;">电&nbsp;&nbsp;话:</span>
+                                                               <label style="color: #999999;" id="labtel"> sss</label>
+                                                             </div>
+                                                        </div>
+                                                        </li>
+                                                    </ul>
+                                               </div>
+                                          </div>
+                                     </div>
+                                </div><!--/row-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- left menu starts
+        <div class="col-sm-2 col-lg-2">
+            <div class="sidebar-nav">
+                <div class="nav-canvas">
+                    <div class="nav-sm nav nav-stacked">
+
+                    </div>
+                    <ul class="nav nav-pills nav-stacked main-menu">
+                        {% for menu1 in menus %}
+                        {% if menu1 %}
+                            <li class="nav-header"><i class="glyphicon glyphicon-star"></i>&nbsp;&nbsp;{{menu1.0.menu_classify}}</li>
+                            {% for menu in menu1 %}
+                                <li><a class="ajax-link" href="{{menu.menu_addr}}"><i class="glyphicon glyphicon-{{menu.menu_icon}}"></i><span>&nbsp;&nbsp;{{menu.menu_name}}</span></a>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--/span-->
+        <!-- left menu ends -->
+
+        <div id="content" class="col-lg-10 col-sm-10">
+                <!-- content starts -->
+            <div>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/app/supervisor_index/" id="company_name">主页</a>
+                    </li>
+                    <li>
+                        <a href="#">维护毕业设计活动</a>
+                    </li>
+                </ul>
+                <div class="box-inner" >
+                    <div class="box-header well" data-original-title="">
+                        <h2>维护毕业设计活动</h2>
+                    </div>
+                    <div class="box-content">
+                         <table border="0" >
+                         <tr>
+                         <td><font color="red" style="position:relative; top:6px;font-size:23px;">*</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                         <td><i class="glyphicon glyphicon-star" style = "font-size:15px;color:#006000">&nbsp;</i><span style="color:#006000;font-size:16px;font-weight:bold;">开启本年度毕业设计</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                         <td><select class="selectpicker" data-width="100" title="选择年份" id="selectYear" selected="selected" onchange="showDate()">
+                             </select></td>
+                         <td><button id="btn_confirm" type="button" class="btn btn-primary" onclick="confirm_onclick()" >
+                             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;开启</button></td>
+
+                         <td></td>
+                         <td></td>
+                         </tr>
+                         <tr>
+                         <td><font color="red" style="position:relative; top:6px;font-size:23px;">*</font></td>
+                         <td><i class="glyphicon glyphicon-time">&nbsp;</i><span>毕业设计设置:</span></td>
+                         <td align="center">日期起点:</td>
+                         <td><div class="input-group date" style="width:150px;">
+                                  <input type="text" class="form-control" id="ActivityStartDate" title="日期起点" value="日期起点" >
+                                  <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                             </div></td>
+                         <td align='right'>日期终点:</td>
+                         <td><div class="input-group date" style="width:150px;">
+                                        <input type="text" class="form-control" id="ActivityEndDate" title="日期终点" value="日期终点" >
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div></td>
+                         </tr>
+                         <tr>
+                         <td><font color="red" style="position:relative; top:6px;font-size:23px;">*</font></td>
+                         <td><i class="glyphicon glyphicon-time">&nbsp;</i><span>教师填写毕设题目设置:</span></td>
+                         <td align='right'>日期起点:</td>
+                         <td><div class="input-group date" style="width:150px;">
+                                        <input type="text" class="form-control" id="TeaWriteStartDate" title="日期起点" value="日期起点" >
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div></td>
+                         <td>日期终点:</td>
+                         <td><div class="input-group date" style="width:150px;">
+                                        <input type="text" class="form-control" id="TeaWriteEndDate" title="日期终点" value="日期终点" >
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div></td>
+                         <td></td>
+                         </tr>
+                         <tr>
+                         <td><font color="red" style="position:relative; top:6px;font-size:23px;">*</font></td>
+                         <td><i class="glyphicon glyphicon-time">&nbsp;</i><span>学生选题设置:</span></td>
+                         <td>日期起点:</td>
+                         <td><div class="input-group date" style="width:150px;">
+                                             <input type="text" class="form-control" id="StuSelectStartDate" title="日期起点" value="日期起点">
+                                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div></td>
+                         <td>日期终点:</td>
+                         <td><div class="input-group date" style="width:150px;">
+                                             <input type="text" class="form-control" id="StuSelectEndDate" title="日期终点" value="日期终点" >
+                                              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div></td>
+                         <td></td>
+                         </tr>
+                         <tr>
+                         <td><font color="red" style="position:relative; top:6px;font-size:23px;">*</font></td>
+                         <td><i class="glyphicon glyphicon-time">&nbsp;</i><span>教师选学生设置:</span></td>
+                         <td>日期起点:</td>
+                         <td><div class="input-group date" style="width:150px;">
+                                             <input type="text" class="form-control" id="TeaSelectStartDate" title="日期起点" value="日期起点">
+                                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div></td>
+                         <td></td>
+                         </tr>
+                         </table>
+
+                         <table border="0" >
+                         <tr>
+                         <td><font color="red" style="position:relative; top:6px;font-size:23px;">*</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                         <td><span>(提示：教师选择学生过程中，上午一志愿选择，下午二至六志愿分时段选择！)</span></td>
+                         <td></td>
+
+
+                         <table border="0" >
+                         <tr>
+                         <td><font color="white" style="position:relative; top:6px;font-size:23px;">*</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                         <td><i  class="glyphicon glyphicon-floppy-disk" style="color:#1C86EE">&nbsp;</i><span style="color:#1C86EE">保存时间设置：</span></td>
+                         <td><button id="btn_submit" type="button" class="btn btn-primary" onclick="submit_onclick()"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> 保存 </button></td>
+                         <td></td>
+                         <td></td>
+
+                         </tr>
+                         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- external javascript -->
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+<script src="{% static 'js/bootstrap-table-zh-CN.js' %}"></script>
+<script src="{% static 'bower_components/moment/min/moment.min.js' %}"></script>
+<script src="{% static 'bower_components/fullcalendar/dist/fullcalendar.min.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'bower_components/chosen/chosen.jquery.min.js' %}"></script>
+<script src="{% static 'bower_components/colorbox/jquery.colorbox-min.js' %}"></script>
+<script src="{% static 'js/jquery.noty.js' %}"></script>
+<script src="{% static 'bower_components/responsive-tables/responsive-tables.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap-tour/build/js/bootstrap-tour.min.js' %}"></script>
+<script src="{% static 'js/jquery.raty.min.js' %}"></script>
+<script src="{% static 'js/jquery.iphone.toggle.js' %}"></script>
+<script src="{% static 'js/jquery.autogrow-textarea.js' %}"></script>
+<script src="{% static 'js/jquery.uploadify-3.1.min.js' %}"></script>
+<script src="{% static 'js/jquery.history.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/dialog.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-treeview.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-select.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.validate.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/message_cn.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/icheck.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/summernote.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'css/lang/summernote-zh-CN.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.zh-CN.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.js' %}" charset="UTF-8"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.zh-CN.js' %}" charset="UTF-8"></script>
+<script>
+    function changepwd_onclick(){
+          $('#newpwd').val('');
+          $('#conpwd').val('');
+        $('#passwordModal').modal();
+    }
+
+    function pwd_onclick(){
+        if(checkPwd()){
+            if($('#newpwd').val()!=$('#conpwd').val()){
+                Alert(
+                {
+                    msg: '两次密码输入不一致，请重新输入',
+                });
+            }
+            else{
+                $('#passwordModal').modal('hide');
+                //$('#passwordModal').removeData("bs.modal");
+                //$('#pwdform').submit();
+                var new_pwd = $('#newpwd').val();
+                $.get("{% url 'changepassword' %}?new_pwd="+new_pwd, function(ret){
+
+
+                    Alert('密码修改成功！');
+                });
+            }
+        }
+    }
+
+    function checkPwd(){
+        if($('#newpwd').val() == ""){
+            Alert("新密码不能为空");
+            return false;
+        }
+        else if($('#conpwd').val() == ""){
+            Alert("确认密码不能为空");
+            return false;
+        }
+        return true;
+    }
+    function chineseSort(a, b){
+        return a.localeCompare(b);
+    }
+
+</script>
+
+<script>
+
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg)) {
+            return decodeURI(arr[2]);
+        }
+        else
+            return null;
+    }
+
+
+    $(function(){
+        id = "{{id}}";
+        var myDate = new Date();
+        var thisyear = myDate.getFullYear();
+        var years=[thisyear,thisyear+1,thisyear+2];
+
+        $('#userid').html(getCookie('userid'));
+
+        $.getJSON("{% url 'supervisor_getuserinfo' %}", function(ret){
+
+            $('#labname').html(ret.data[0].name);
+            $('#labrole').html(ret.data[0].role_name);
+            $('#labid').html(ret.data[0].user_id);
+            $('#labinstitution').html(ret.data[0].institution_name);
+            $('#labsex').html(ret.data[0].sex);
+            $('#labtel').html(ret.data[0].tel);
+
+        });
+
+        $.getJSON("{% url 'supervisor_getYear' %}", function(ret){
+          if(ret.length > 0){
+            for(var i=0; i < ret.length; i++){
+                $("<option value="+ret[i]['id']+">"+ret[i]['year']+"</option>").appendTo($('#selectYear'));
+            }
+          }else{
+            for(var j=0; j < 3;j++){
+                $("<option value="+-j+">"+years[j]+"</option>").appendTo($('#selectYear'));
+            }
+          }
+          for(var i=0; i < ret.length; i++){
+               if(ret[i].activation==1){
+                 $('#selectYear').selectpicker('val', ret[i].id);
+                 $('#ActivityStartDate').val(ret[i].av_start);
+                 $('#ActivityEndDate').val(ret[i].av_end);
+                 $('#TeaWriteStartDate').val(ret[i].write_sub_s);
+                 $('#TeaWriteEndDate').val(ret[i].write_sub_e);
+                 $('#StuSelectStartDate').val(ret[i].select1_start);
+                 $('#StuSelectEndDate').val(ret[i].select1_end);
+                 $('#TeaSelectStartDate').val(ret[i].select3_start);
+                 $('#selectYear').selectpicker('refresh')
+
+               }
+          }
+          $('#selectYear').selectpicker('refresh');
+        });
+
+        $('#ActivityStartDate').datepicker({
+            language: "zh-CN",
+            format: "yyyy-mm-dd",
+            todayBtn: "linked",
+            clearBtn: true,
+            orientation: "bottom auto",
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        $('#ActivityEndDate').datepicker({
+            language: "zh-CN",
+            format: "yyyy-mm-dd",
+            todayBtn: "linked",
+            clearBtn: true,
+            orientation: "bottom auto",
+            autoclose: true,
+            todayHighlight: true,
+            disable: true
+        });
+
+        $('#TeaWriteStartDate').datepicker({
+            language: "zh-CN",
+            format: "yyyy-mm-dd",
+            todayBtn: "linked",
+            clearBtn: true,
+            orientation: "bottom auto",
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        $('#TeaWriteEndDate').datepicker({
+            language: "zh-CN",
+            format: "yyyy-mm-dd",
+            todayBtn: "linked",
+            clearBtn: true,
+            orientation: "bottom auto",
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        $('#StuSelectStartDate').datepicker({
+            language: "zh-CN",
+            format: "yyyy-mm-dd",
+            todayBtn: "linked",
+            clearBtn: true,
+            orientation: "top auto",
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        $('#StuSelectEndDate').datepicker({
+            language: "zh-CN",
+            format: "yyyy-mm-dd",
+            todayBtn: "linked",
+            clearBtn: true,
+            orientation: "top auto",
+            autoclose: true,
+            todayHighlight: true
+        });
+        $('#TeaSelectStartDate').datepicker({
+            language: "zh-CN",
+            format: "yyyy-mm-dd",
+            todayBtn: "linked",
+            clearBtn: true,
+            orientation: "top auto",
+            autoclose: true,
+            todayHighlight: true
+        });
+
+    });
+
+
+    function showDate(){
+        var objS = document.getElementById("selectYear");
+        var id = objS.options[objS.selectedIndex].value;
+        $.getJSON("{% url 'supervisor_get_datebyid' %}?id="+id, function(ret){
+            $('#ActivityStartDate').val(ret[0].av_start);
+            $('#ActivityEndDate').val(ret[0].av_end);
+            $('#TeaWriteStartDate').val(ret[0].write_sub_s);
+            $('#TeaWriteEndDate').val(ret[0].write_sub_e);
+            $('#StuSelectStartDate').val(ret[0].select1_start);
+            $('#StuSelectEndDate').val(ret[0].select1_end);
+            $('#TeaSelectStartDate').val(ret[0].select3_start);
+        });
+
+    }
+
+
+    function confirm_onclick(){
+
+        achieve_year = $("#selectYear").find("option:selected").text();
+        var nextyear = parseInt(achieve_year)+1;
+
+        var parameters = {
+            achieve_year:achieve_year,
+            nextyear: nextyear
+        };
+        url = "{% url 'supervisor_add_achieve_year' %}";
+
+        $.ajax({
+                type: "POST",
+                url: url,
+                data: parameters,
+                dataType: "json",
+                success: function(data){
+                    alert(data.message);
+                    refresh();
+
+                },
+                error:  function(XMLHttpRequest, textStatus, errorThrown) {
+                    //alert(XMLHttpRequest.status);
+                    //alert(XMLHttpRequest.readyState);
+                    //alert(textStatus);
+                    alert('请检查数据并重试！');
+                }
+        });
+        window.setTimeout("refreshPage()",100);
+    }
+
+    function refreshPage(){
+        window.location.reload();
+    }
+
+    function submit_onclick(){
+
+        var tea_select_start = $('#TeaSelectStartDate').val();
+        var endTime = new Date(tea_select_start);
+        date1 = endTime.setDate(endTime.getDate()+1);
+        var year = new Date(date1).getFullYear();
+        var month = new Date(date1).getMonth() + 1;
+        var day = new Date(date1).getDate();
+        var tea_select_end = year+"-"+month+"-"+day;
+
+        if($('#ActivityStartDate').val()>$('#ActivityEndDate').val()){
+        alert('毕业设计设置时间终点不能早于时间起点');
+        }
+        else if($('#ActivityStartDate').val()>$('#TeaWriteStartDate').val()){
+        alert('教师填写毕业设计设置时间起点不能早于毕业设计设置时间起点');
+        }
+        else if($('#TeaWriteStartDate').val()>$('#TeaWriteEndDate').val()){
+        alert('教师填写毕业设计设置时间终点不能早于时间起点');
+        }
+        else if($('#TeaWriteEndDate').val()>$('#StuSelectStartDate').val()){
+        alert('学生选题设置时间起点不能早于教师填写毕业设计设置时间终点');
+        }
+        else if($('#StuSelectStartDate').val()>$('#StuSelectEndDate').val()){
+        alert('学生选题设置时间终点不能早于时间起点');
+        }
+        else if($('#StuSelectEndDate').val()>$('#TeaSelectStartDate').val()){
+        alert('教师选学生设置时间起点不能早于学生选题设置时间终点');
+        }
+        else if($('#TeaSelectStartDate').val()>$('#ActivityEndDate').val()){
+        alert('毕业设计设置时间终点不能早于教师选学生设置时间终点');
+        }
+        else{
+             savedate();
+        }
+    }
+
+    function savedate(){
+
+        var parameters = {
+            year: $('#selectYear').val(),
+            av_start: $('#ActivityStartDate').val(),
+            av_end: $('#ActivityEndDate').val(),
+            write_sub_start: $('#TeaWriteStartDate').val(),
+            write_sub_end: $('#TeaWriteEndDate').val(),
+            stu_select_start: $('#StuSelectStartDate').val(),
+            stu_select_end: $('#StuSelectEndDate').val(),
+            tea_select_start: $('#TeaSelectStartDate').val(),
+        };
+            var url = '';
+            url = "{% url 'supervisor_set_date' %}";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: parameters,
+                dataType: "json",
+                success: function(data){
+                    //dat = JSON.parse(data);
+                    alert(data.message);
+                    //$('#mdlInformation').modal('hide');
+                    refresh();
+                },
+                error:  function(XMLHttpRequest, textStatus, errorThrown) {
+                    //alert(XMLHttpRequest.status);
+                    //alert(XMLHttpRequest.readyState);
+                    //alert(textStatus);
+                    alert('请检查数据并重试！');
+                }
+            });
+    }
+
+    function CurentTime(){
+        var now = new Date();
+        var year = now.getFullYear();       //年
+        var month = now.getMonth() + 1;     //月
+        var day = now.getDate();           //日
+        var hh = now.getHours();            //时
+        var mm = now.getMinutes();          //分
+        var ss = now.getSeconds();          //分
+        clock = year + "-";
+
+        if(month < 10)
+            clock += "0";
+        clock += month + "-";
+
+        if(day < 10)
+            clock += "0";
+        clock += day + " ";
+
+        if(hh < 10)
+            clock += "0";
+        clock += hh + ":";
+
+        if (mm < 10) clock += '0';
+        clock += mm + ":";
+
+        if (ss < 10) clock += '0';
+        clock += ss;
+
+        return(clock);
+    }
+
+    function initStudent_onclick(){
+
+        $.getJSON("{% url 'supervisor_get_date' %}", function(ret){
+
+            var select2_start=ret[0].select2_start;
+            select2_end=ret[0].select2_end;
+            var today=CurentTime();
+
+            if(today>=select2_start&&today<=select2_end){
+                initstudent();
+            }
+            if(today<=select2_start){
+                alert('第二轮选题还未开启');
+            }
+            if(today>=select2_end){
+                alert('第二轮选题已经结束');
+            }
+        });
+    }
+
+    function initstudent(){
+       var parameters = { };
+        url = "{% url 'supervisor_init_student' %}";
+        $.ajax({
+                type: "POST",
+                url: url,
+                data: parameters,
+                dataType: "json",
+                success: function(data){
+                    //dat = JSON.parse(data);
+                    alert(data.message);
+                    //$('#mdlInformation').modal('hide');
+                    refresh();
+                },
+                error:  function(XMLHttpRequest, textStatus, errorThrown) {
+                    //alert(XMLHttpRequest.status);
+                    //alert(XMLHttpRequest.readyState);
+                    //alert(textStatus);
+                    alert('请检查数据并重试！');
+                }
+        });
+
+    }
+
+</script>
+
+</body>
+</html>
